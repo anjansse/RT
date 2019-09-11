@@ -1,0 +1,6 @@
+[submodule "libft"]
+	path = libft
+	url = https://github.com/Themancrazy/libft.git
+[submodule "SDL2"]
+	path = SDL2
+	url = https://github.com/Themancrazy/SDL2.git
