@@ -6,13 +6,13 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/10 19:49:37 by anjansse         ###   ########.fr        #
+#    Updated: 2019/09/11 19:30:52 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RTv1
 
-GENERAL		= 	RT.c
+GENERAL		= 	RT.c game.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -22,7 +22,7 @@ CC			=	gcc
 
 MINILIBX	=	-L Minilibx/minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
-SDL			=	-I SDL2/include/ -L SDL2/lib -l SDL2-2.0.0
+SDL			=	-I SDL2/include/SDL2/ -L SDL2/lib -l SDL2-2.0.0
 
 DEBUG		=	-g -fsanitize=undefined -fsanitize=address
 

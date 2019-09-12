@@ -1,14 +1,5 @@
 #include "RT.h"
 
-	while (1)
-	{
-		if (SDL_PollEvent(&event))
-		{
-			if (SDL_QUIT == event.type )
-				break ;
-		}
-	}
-
 static void	rt_init(t_rt *rt)
 {
 	rt->win = SDL_CreateWindow("SDL_test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_ALLOW_HIGHDPI);
@@ -30,6 +21,7 @@ int         main(int ac, char *av[])
 {
 	t_rt	rt;
 
+	(void)av;
     if (ac != 2)
         send_error(ERROR_USAGE);
 	rt_init(&rt);
