@@ -6,13 +6,13 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/11 22:18:29 by anjansse         ###   ########.fr        #
+#    Updated: 2019/09/12 19:31:34 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RTv1
 
-GENERAL		= 	RT.c game.c
+GENERAL		= 	RT.c game.c parser.c free.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 

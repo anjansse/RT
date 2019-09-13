@@ -27,6 +27,7 @@ int         main(int ac, char *av[])
 	(void)av;
     if (ac != 2)
         send_error(ERROR_USAGE);
+	parser(av[1], &rt);
 	rt_init(&rt);
 	rt_quit(&rt);
     return (0);

@@ -5,13 +5,34 @@
 // DRAW IT DEPANDING ON RAYS GIVEN
 // ....
 
-static void			rt_print_pixels(t_rt *rt)
+static void			rt_print_background(t_rt *rt)
 {
-	int i;
+	double Orgb[3] = {95.0, 21.0, 252.0};
+	// double Frgb[3] = {244, 240, 255};
+	double Drgb[3] = {0.18625, 0.27375, 0.00375};
+	int y;
+	int x;
 
-	i = 0;
-	while (i < HEIGHT * WIDTH)
-		rt->win.pixels[++i] = 0x00FF00;
+	y = 0;
+	while (y < HEIGHT - 1)
+	{
+		x = y * WIDTH;
+		while (x < (y + 1) * WIDTH)
+		{
+			rt->win.pixels[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
+			++x;
+		}
+		Orgb[0] += Drgb[0];
+		Orgb[1] += Drgb[1];
+		Orgb[2] += Drgb[2];
+		++y;
+	}
+}
+
+static void			rt_print(t_rt *rt)
+{
+	rt_print_background(rt);
+	// rt_print_sphere(rt);
 	SDL_UpdateTexture(rt->win.framebuff , NULL, rt->win.pixels, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(rt->win.rend);
 	SDL_RenderCopy(rt->win.rend, rt->win.framebuff , NULL, NULL);
@@ -25,7 +46,7 @@ void				rt_game_loop(t_rt *rt)
 		SDL_PumpEvents();
 		if (SDL_PollEvent(&rt->win.e))
 		{
-			rt_print_pixels(rt);
+			rt_print(rt);
 			if (SDL_QUIT == rt->win.e.type )
 				break ;
 			else if (SDL_KEYDOWN == rt->win.e.type)
