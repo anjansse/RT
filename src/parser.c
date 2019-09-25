@@ -34,11 +34,11 @@ static void		rt_parse_line(t_rt *rt, char *line)
 	type = ft_strsub(line, 0, 2);
 	while (++i < ELEM)
 	{
-			if (ft_strequ(type, g_dis_table[i].type))
-			{
-					g_dis_table[i].function(rt, &line[2]);
-					return ;
-			}
+		if (ft_strequ(type, g_dis_table[i].type))
+		{
+				g_dis_table[i].function(rt, &line[2]);
+				return ;
+		}
 	}
 	free(type);
 }
@@ -77,4 +77,6 @@ void            rt_parser(char *filename, t_rt *rt)
 	}
 	else
 		send_error("Incorrect file.\n");
+	// printf("camera (%f, %f, %f)\n", rt->obj.cam.x, rt->obj.cam.y, rt->obj.cam.z);
+	// printf("center (%f, %f, %f)\n", rt->obj.sphere_head->next->center.x, rt->obj.sphere_head->center.y, rt->obj.sphere_head->center.z);
 }

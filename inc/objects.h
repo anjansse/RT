@@ -9,10 +9,9 @@
 # include <game.h>
 #endif
 
-# define CAM            0x01
-
 # define ELEM           3
 # define MIN_LINE_SIZE  11
+# define NUMBER			" 0123456789"
 
 typedef struct s_rt     t_rt;
 
@@ -31,10 +30,11 @@ typedef struct          s_light
 
 typedef struct			s_objects
 {
-    unsigned char       flag;
 	t_vec				cam;
-	t_light				light;
-	t_sphere			sphere;	
+	t_light				*light;
+	t_light				*light_head;
+	t_sphere			*sphere;
+	t_sphere			*sphere_head;
 }						t_objects;
 
 typedef void            (t_store_disp)(t_rt*, char*);
