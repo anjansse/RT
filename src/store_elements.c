@@ -1,23 +1,5 @@
 #include "RT.h"
 
-static int      find_open_p(char *str, int pos)
-{
-	while (pos < (int)ft_strlen(str) && str[pos] != '(')
-		++pos;
-	if (str[pos] != '(')
-		send_error("Syntax error -> (missing bracket error).\n");
-	return (pos + 1);
-}
-
-static int      find_close_p(char *str, int pos)
-{
-	while (pos < (int)ft_strlen(str) && str[pos] != ')')
-		++pos;
-	if (str[pos] != ')')
-		send_error("Syntax error -> (missing bracket error).\n");
-	return (pos - 2);
-}
-
 /*
 ** ----------------------------------------------------------------------------
 ** Function that gets and stores the camera's informations. 

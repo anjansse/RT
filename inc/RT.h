@@ -1,6 +1,12 @@
 #ifndef RT_H
 # define RT_H
 
+/*
+** ----------------------------------------------------------------------------
+** Main header file that calls all auxilaries structures.
+** ----------------------------------------------------------------------------
+*/
+
 #ifndef GAME_H
 # include <game.h>
 #endif

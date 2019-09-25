@@ -77,6 +77,4 @@ void            rt_parser(char *filename, t_rt *rt)
 	}
 	else
 		send_error("Incorrect file.\n");
-	// printf("camera (%f, %f, %f)\n", rt->obj.cam.x, rt->obj.cam.y, rt->obj.cam.z);
-	// printf("center (%f, %f, %f)\n", rt->obj.sphere_head->next->center.x, rt->obj.sphere_head->center.y, rt->obj.sphere_head->center.z);
 }

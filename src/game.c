@@ -1,9 +1,13 @@
 #include "RT.h"
 
-// PRINT LINEAR GRADIENT AS BACKGROUND (START FROM A COLOR TO ANOTHER COLOR BY ROWS)
-// DRAW A SIMPLE CIRCLE WITH KNOWLEDGE LINKS.
-// DRAW IT DEPANDING ON RAYS GIVEN
-// ....
+/*
+** ----------------------------------------------------------------------------
+** Prints the background on the frame buffer from OriginRGB to FinalRGB.
+** each rows (1 height unit) will add DeltaRGB to OriginRGB.
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
 
 static void			rt_print_background(t_rt *rt)
 {
@@ -29,33 +33,51 @@ static void			rt_print_background(t_rt *rt)
 	}
 }
 
+/*
+** ----------------------------------------------------------------------------
+** Function being called by `rt_game_loop` to update (clear and print) everything
+** to the frame buffer. (objects, background, ..)
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
+
 static void			rt_print(t_rt *rt)
 {
 	rt_print_background(rt);
-	// rt_print_sphere(rt);
 	SDL_UpdateTexture(rt->win.framebuff , NULL, rt->win.pixels, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(rt->win.rend);
 	SDL_RenderCopy(rt->win.rend, rt->win.framebuff , NULL, NULL);
 	SDL_RenderPresent(rt->win.rend);
 }
 
+/*
+** ----------------------------------------------------------------------------
+** Main while loop of RT, checks for events and updates the frame buffer
+** accordingly.
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
+
 void				rt_game_loop(t_rt *rt)
 {
 	while (1)
 	{
 		SDL_PumpEvents();
-		if (SDL_PollEvent(&rt->win.e))
+		if (SDL_PollEvent(&rt->win.event))
 		{
 			rt_print(rt);
-			if (SDL_QUIT == rt->win.e.type )
+			if (SDL_QUIT == rt->win.event.type )
 				break ;
-			else if (SDL_KEYDOWN == rt->win.e.type)
+			else if (SDL_KEYDOWN == rt->win.event.type)
 			{
-				if (rt->win.keys[SDL_SCANCODE_ESCAPE]) // DISPATCH FOR KEY PRESSED
-					send_error("Hello\n");
+				printf("Key Pressed\n");
+				if (rt->win.keys[SDL_SCANCODE_ESCAPE])
+					send_error("Exited\n");
 			}
-			else if (SDL_KEYUP == rt->win.e.type)
-				printf("oui\n");
+			else if (SDL_KEYUP == rt->win.event.type)
+				printf("Key Released\n");
 		}
 	}
 }
