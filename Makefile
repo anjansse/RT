@@ -6,13 +6,13 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/12 19:31:34 by anjansse         ###   ########.fr        #
+#    Updated: 2019/09/24 17:45:53 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 	RTv1
+NAME		= 	RT
 
-GENERAL		= 	RT.c game.c parser.c free.c
+GENERAL		= 	RT.c game.c parser.c free.c store_elements.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -35,16 +35,16 @@ reprog: fclean all
 all: $(NAME)
 
 $(NAME):
-	@echo -n 'Compiling RTv1...'
+	@echo -n 'Compiling RT...'
 	@cp libft/libft.a .
 	@$(CC) $(CFLAGS) $(SRCS) $(INCLUDES) $(LLIB) -o $(NAME)
-	@echo "\t\x1b[92m✓✓\x1b[0m\n"
+	@echo "\t\t\x1b[92m✓✓\x1b[0m\n"
 
 lib:
 	@echo -n 'Compiling libft...'
 	@make -C libft/ re
 	@cp libft/libft.a .
-	@echo "\t\t\x1b[92m✓\x1b[0m\n"
+	@echo "\t\x1b[92m✓\x1b[0m\n"
 
 totall: lib all
 
@@ -59,13 +59,15 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LLIB)
-	@echo "\t\n\x1b[96mRTv1 \x1b[91mlibrary has been cleaned!\x1b[0m\n"
+	@echo "\t\n\x1b[96mRT \x1b[91mlibrary has been cleaned!\x1b[0m\n"
 
 totfclean: fclean
 	@make -C libft/ fclean
 	@echo "\x1b[96mLibft has been cleaned.\x1b[0m\t\x1b[91mDon't forget to\
-		recompile it...\n\x1b[0m"
+	 recompile it...\n\x1b[0m"
 
 re: totfclean totall
+	@sleep 0.1
+	@clear
 
 tot: totfclean totall
