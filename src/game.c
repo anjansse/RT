@@ -14,16 +14,17 @@ static void			rt_print_background(t_rt *rt)
 	double Orgb[3] = {95.0, 21.0, 252.0};
 	// double Frgb[3] = {244, 240, 255};
 	double Drgb[3] = {0.18625, 0.27375, 0.00375};
+	// double Drgb[3] = {DELTA_COLOR(Orgb[0], Frgb[0]), DELTA_COLOR(Orgb[1], Frgb[1]), DELTA_COLOR(Orgb[2], Frgb[2])};
 	int y;
 	int x;
 
 	y = 0;
-	while (y < HEIGHT - 1)
+	while (y < HEIGHT)
 	{
 		x = y * WIDTH;
 		while (x < (y + 1) * WIDTH)
 		{
-			rt->win.pixels[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
+			rt->win.framebuff[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
 			++x;
 		}
 		Orgb[0] += Drgb[0];
@@ -45,9 +46,10 @@ static void			rt_print_background(t_rt *rt)
 static void			rt_print(t_rt *rt)
 {
 	rt_print_background(rt);
-	SDL_UpdateTexture(rt->win.framebuff , NULL, rt->win.pixels, WIDTH * sizeof (uint32_t));
+	rt_print_scene(rt);
+	SDL_UpdateTexture(rt->win.img_pointer, NULL, rt->win.framebuff, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(rt->win.rend);
-	SDL_RenderCopy(rt->win.rend, rt->win.framebuff , NULL, NULL);
+	SDL_RenderCopy(rt->win.rend, rt->win.img_pointer, NULL, NULL);
 	SDL_RenderPresent(rt->win.rend);
 }
 
@@ -74,7 +76,7 @@ void				rt_game_loop(t_rt *rt)
 			{
 				printf("Key Pressed\n");
 				if (rt->win.keys[SDL_SCANCODE_ESCAPE])
-					send_error("Exited\n");
+					exit(0);
 			}
 			else if (SDL_KEYUP == rt->win.event.type)
 				printf("Key Released\n");
