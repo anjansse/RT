@@ -67,9 +67,7 @@ typedef struct			s_objects
 {
 	t_vec				cam;
 	t_light				*light;
-	t_light				*light_head;
 	t_sphere			*sphere;
-	t_sphere			*sphere_head;
 }						t_objects;
 
 /*

@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <SDL.h>
+#include <SDL_thread.h>
 #include "../libft/includes/libft.h"
 
 #endif

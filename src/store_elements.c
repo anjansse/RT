@@ -40,6 +40,19 @@ void            rt_store_cam(t_rt *rt, char *info)
 ** ----------------------------------------------------------------------------
 */
 
+static void		light_add(t_light *light, double xyz[3])
+{
+	t_light		*head;
+
+	head = light;
+	while (head->next)
+		head = head->next;
+	vec_set(&(head->pos), xyz[0], xyz[1], xyz[2]);
+	head->next = malloc(sizeof(t_light));
+	head = head->next;
+	head->next = NULL;
+}
+
 void            rt_store_light(t_rt *rt, char *info)
 {
 	char		*tmp;
@@ -55,10 +68,7 @@ void            rt_store_light(t_rt *rt, char *info)
 	xyz[0] = (double)ft_atoi(vector[0]);
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
-	vec_set(&(rt->obj.light->pos), xyz[0], xyz[1], xyz[2]);
-	rt->obj.light->next = malloc(sizeof(t_light));
-	rt->obj.light = rt->obj.light->next;
-	rt->obj.light->next = NULL;
+	light_add(rt->obj.light, xyz);
 	ft_free_db_tab(vector);
 	free(tmp);
 }
@@ -72,6 +82,20 @@ void            rt_store_light(t_rt *rt, char *info)
 ** @param {char *} infos - All the informations needed for the sphere.
 ** ----------------------------------------------------------------------------
 */
+
+static void		sphere_add(t_sphere *sphere, double xyz[3], int radius)
+{
+	t_sphere		*head;
+
+	head = sphere;
+	while (head->next)
+		head = head->next;
+	vec_set(&(head->center), xyz[0], xyz[1], xyz[2]);
+	head->radius = radius;
+	head->next = malloc(sizeof(t_sphere));
+	head = head->next;
+	head->next = NULL;
+}
 
 void            rt_store_sphere(t_rt *rt, char *info)
 {
@@ -92,16 +116,12 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	xyz[0] = (double)ft_atoi(vector[0]);
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
-	vec_set(&(rt->obj.sphere->center), xyz[0], xyz[1], xyz[2]);
-	ft_free_db_tab(vector);
 	free(tmp);
 	tmp = ft_strsub(infos[1], find_open_p(infos[1], 0), find_close_p(infos[1], 0));
 	if (!ft_verifstr(tmp, NUMBER))
 		send_error("Radius of sphere should be a valid number.\n");
-	rt->obj.sphere->radius = ft_atoi(tmp);
-	rt->obj.sphere->next = malloc(sizeof(t_light));
-	rt->obj.sphere = rt->obj.sphere->next;
-	rt->obj.sphere->next = NULL;
+	sphere_add(rt->obj.sphere, xyz, ft_atoi(tmp));
 	ft_free_db_tab(infos);
+	ft_free_db_tab(vector);
 	free(tmp);
 }

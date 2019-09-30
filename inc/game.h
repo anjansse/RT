@@ -46,11 +46,10 @@ typedef struct s_objects	t_objects;
 **
 ** @element {SDL_Window*} win - Holds all info about the Window itself.
 ** @element {SDL_Renderer*} rend - Keeps track the settings related to the rendering.
-** @element {SDL_Texture*} framebuff - Stores the pixel information of one element.
+** @element {SDL_Texture*} img_pointer - Stores the pixel information of one element.
 ** @element {SDL_Event} event - Keeps track of what event has been enabled.
 ** @element {uint8_t} keys - Contains all the keys's informations.
-** @element {uint32_t*} pixel - Linked to the frame buffer, used to modify each
-**								pixels of the allocated screen.
+** @element {uint32_t*} framebuff - Used to modify each pixels for the current frame.
 ** ----------------------------------------------------------------------------
 */
 
@@ -58,10 +57,10 @@ typedef struct			s_window
 {
 	SDL_Window			*win;
 	SDL_Renderer		*rend;
-	SDL_Texture			*framebuff;
+	SDL_Texture			*img_pointer;
 	SDL_Event			event;
 	const uint8_t		*keys;
-	uint32_t			*pixels;
+	uint32_t			*framebuff;
 }						t_window;
 
 /*
@@ -73,16 +72,27 @@ typedef struct			s_window
 ** ----------------------------------------------------------------------------
 */
 
+typedef struct			s_thread
+{
+	SDL_Thread			*thread;
+	int					data;
+}						t_thread;
+
 typedef struct			s_rt
 {
 	t_window			win;
 	t_objects			obj;
+	t_thread			thread[4];
 }						t_rt;
 
 void				rt_game_loop(t_rt *rt);
+void				rt_print_scene(t_rt *rt);
 void				rt_parser(char *filename, t_rt *rt);
 
-int      find_open_p(char *str, int pos);
-int      find_close_p(char *str, int pos);
+
+int         		rt_check_object(t_rt *rt, int pix);
+
+int      			find_open_p(char *str, int pos);
+int      			find_close_p(char *str, int pos);
 
 #endif

@@ -6,13 +6,13 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/26 09:50:26 by anjansse         ###   ########.fr        #
+#    Updated: 2019/09/27 13:37:20 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RT
 
-GENERAL		= 	RT.c game.c parser.c store_elements.c extra.c
+GENERAL		= 	RT.c game.c parser.c store_elements.c print.c intersection.c extra.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -27,6 +27,8 @@ SDL			=	-I SDL2/include/ -L SDL2/lib -l SDL2-2.0.0
 DEBUG		=	-g -fsanitize=undefined -fsanitize=address
 
 OPTI		=	-O2
+
+PROFILER	=	-g -pg
 
 CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG)
 
