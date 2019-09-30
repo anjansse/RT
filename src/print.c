@@ -60,6 +60,16 @@
 // 	SDL_WaitThread(rt->thread[3].thread, NULL);
 // }
 
+/*
+** ----------------------------------------------------------------------------
+** Main printing function for the scene, parses all the pixels and casts rays
+** through them to check for intersection with objects, and get informations
+** on light, shadows and overall shade applied on the color of said object.
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
+
 void            rt_print_scene(t_rt *rt)
 {
 	int		i;
