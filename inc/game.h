@@ -90,7 +90,7 @@ void				rt_print_scene(t_rt *rt);
 void				rt_parser(char *filename, t_rt *rt);
 
 
-int         		rt_check_object(t_rt *rt, int pix);
+int         		rt_cast_ray(t_rt *rt, int pix);
 
 int      			find_open_p(char *str, int pos);
 int      			find_close_p(char *str, int pos);

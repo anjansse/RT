@@ -76,5 +76,5 @@ void            rt_print_scene(t_rt *rt)
 
 	i = -1;
 	while (++i < (HEIGHT * WIDTH))
-		rt_check_object(rt, i);
+		rt_cast_ray(rt, i);
 }
