@@ -15,6 +15,17 @@
 # include <game.h>
 #endif
 
+/*
+** ----------------------------------------------------------------------------
+** Some divers macros.
+**
+** @macro {ELEM} - Number of element for scene available (dispatch table).
+** @macro {MIN_LINE_SIZE} - Minimum size a line should have (at least name
+**							of element and a coordonate in plan).
+** @macro {NUMBER} - Available characters for parsing coordonare (x y z).
+** ----------------------------------------------------------------------------
+*/
+
 # define ELEM           3
 # define MIN_LINE_SIZE  11
 # define NUMBER			" 0123456789"

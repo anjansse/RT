@@ -21,7 +21,6 @@ static void	rt_init_game(t_rt *rt)
 	rt->win.keys = SDL_GetKeyboardState(NULL);
 	SDL_RenderClear(rt->win.rend);
 	SDL_RenderPresent(rt->win.rend);
-	rt_game_loop(rt);
 }
 
 /*
@@ -74,6 +73,7 @@ int         	main(int ac, char *av[])
 	rt_init_env(&rt);	
 	rt_parser(av[1], &rt);
 	rt_init_game(&rt);
+	rt_game_loop(&rt);
 	rt_quit_game(&rt);
     return (0);
 }
