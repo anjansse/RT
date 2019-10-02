@@ -65,23 +65,52 @@ typedef struct			s_window
 
 /*
 ** ----------------------------------------------------------------------------
-** Main RT's structure, contains all the important other structures.
+** Threads's structure, used to apply multithreading to the program.
 **
-** @element {t_window} win - Link to the window's structure.
-** @element {t_objects} obj - Link to the objects's structure.
+** @element {SDL_Thread*} thread - Pointer to the correct thread's id created
+**								   by SDL_CreateThread.
+** @element {void*} data - Any data used by the threads (most likely qa function).
 ** ----------------------------------------------------------------------------
 */
 
 typedef struct			s_thread
 {
 	SDL_Thread			*thread;
-	int					data;
+	void				*data;
 }						t_thread;
+
+/*
+** ----------------------------------------------------------------------------
+** Ray structure, used to cast ray through the projection plane and find
+** intersections with the objects/light/background.
+**
+** @element {t_vec} ray_o - Ray's origin.
+** @element {t_vec} ray_d - Ray's direction.
+** ----------------------------------------------------------------------------
+*/
+
+typedef struct 			s_ray
+{
+	t_vec				ray_o;
+	t_vec				ray_d;
+}						t_ray;
+
+/*
+** ----------------------------------------------------------------------------
+** Main RT's structure, contains all the important other structures.
+**
+** @element {t_window} win - Link to the window's structure.
+** @element {t_objects} obj - Link to the objects's structure.
+** @element {t_ray} ray - Link to the ray's structure.
+** @element {t_thread}  - Link to the thread's structure.
+** ----------------------------------------------------------------------------
+*/
 
 typedef struct			s_rt
 {
 	t_window			win;
 	t_objects			obj;
+	t_ray				ray;
 	t_thread			thread[4];
 }						t_rt;
 

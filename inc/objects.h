@@ -44,6 +44,7 @@ typedef struct s_rt     t_rt;
 typedef struct			s_sphere
 {
 	t_vec				center;
+	uint32_t			color;
 	uint32_t			radius;
 	struct s_sphere		*next;
 }						t_sphere;
@@ -59,8 +60,28 @@ typedef struct			s_sphere
 typedef struct          s_light
 {
     t_vec               pos;
+	t_vec				dir;
     struct s_light      *next;
 }                       t_light;
+
+/*
+** ----------------------------------------------------------------------------
+** Camera structure.
+**
+** @element {t_vec} pos - Camera's location stored in a vector (x y z).
+** @element {t_vec} dir - Camera's direction stored in a vector (x y z).
+** @element {t_vec} right - ?? (Arnaud fill plz gracias)
+** @element {t_vec} down - ?? (Arnaud fill plz gracias)
+** ----------------------------------------------------------------------------
+*/
+
+typedef struct			s_camera
+{
+	t_vec				pos;
+	t_vec				down;
+	t_vec				right;
+	t_vec				dir;
+}						t_camera;
 
 /*
 ** ----------------------------------------------------------------------------
@@ -76,7 +97,7 @@ typedef struct          s_light
 
 typedef struct			s_objects
 {
-	t_vec				cam;
+	t_camera			cam;
 	t_light				*light;
 	t_sphere			*sphere;
 }						t_objects;

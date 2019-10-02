@@ -33,5 +33,5 @@ int      find_close_p(char *str, int pos)
 		++pos;
 	if (str[pos] != ')')
 		send_error("Syntax error -> (missing bracket error).\n");
-	return (pos - 2);
+	return (pos);
 }

@@ -16,16 +16,16 @@ void            rt_store_cam(t_rt *rt, char *info)
 	char		**vector;
 	double      xyz[3];
 
-	tmp = ft_strsub(info, find_open_p(info, 0), find_close_p(info, 0));
+	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
 	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Vectors are supposed to be numbers (x, y, z).\n");
+		send_error("1Vectors are supposed to be numbers (x, y, z).\n");
 	vector = ft_strsplit(tmp, ' ');
 	if (ft_array_len(vector) != 3)
 		send_error("Syntax error in camera position.\n");
 	xyz[0] = (double)ft_atoi(vector[0]);
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
-	vec_set(&(rt->obj.cam), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(rt->obj.cam.pos), xyz[0], xyz[1], xyz[2]);
 	ft_free_db_tab(vector);
 	free(tmp);
 }
@@ -59,9 +59,9 @@ void            rt_store_light(t_rt *rt, char *info)
 	char		**vector;
 	double      xyz[3];
 
-	tmp = ft_strsub(info, find_open_p(info, 0), find_close_p(info, 0));
+	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
 	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Vectors are supposed to be numbers (x, y, z).\n");
+		send_error("2Vectors are supposed to be numbers (x, y, z).\n");
 	vector = ft_strsplit(tmp, ' ');
 	if (ft_array_len(vector) != 3)
 		send_error("Syntax error in camera position.\n");
@@ -107,9 +107,9 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	infos = ft_strsplit(info, '|');
 	if (ft_array_len(infos) != 2)
 		send_error("Error in sphere options -- should be [center(x y z)] | [radius].\n");
-	tmp = ft_strsub(infos[0], find_open_p(infos[0], 0), find_close_p(infos[0], 0));
+	tmp = ft_strsub(infos[0], find_open_p(infos[0], 0), (find_close_p(infos[0], 0) - find_open_p(infos[0], 0)));
 	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Vectors are supposed to be numbers (x, y, z).\n");
+		send_error("3Vectors are supposed to be numbers (x, y, z).\n");
 	vector = ft_strsplit(tmp, ' ');
 	if (ft_array_len(vector) != 3)
 		send_error("Syntax error in camera position.\n");
@@ -117,7 +117,7 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
 	free(tmp);
-	tmp = ft_strsub(infos[1], find_open_p(infos[1], 0), find_close_p(infos[1], 0));
+	tmp = ft_strsub(infos[1], find_open_p(infos[1], 0), (find_close_p(infos[1], 0) - find_open_p(infos[1], 0)));
 	if (!ft_verifstr(tmp, NUMBER))
 		send_error("Radius of sphere should be a valid number.\n");
 	sphere_add(rt->obj.sphere, xyz, ft_atoi(tmp));

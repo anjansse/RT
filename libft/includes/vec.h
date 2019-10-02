@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:15:05 by anjansse          #+#    #+#             */
-/*   Updated: 2019/09/28 19:47:14 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:59:22 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ void			vec_rotx(t_vec *vec, double angle);
 void			vec_roty(t_vec *vec, double angle);
 void			vec_rotz(t_vec *vec, double angle);
 void			vec_rotxyz(t_vec *vec, double angle);
+void        	vec_normalize(t_vec *vec);
+t_vec        	vec_cross_product(t_vec *vec1, t_vec *vec2);
 
 #endif

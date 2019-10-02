@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 09:51:04 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/28 19:45:42 by anjansse         ###   ########.fr        #
+#    Updated: 2019/10/01 17:19:53 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ PRINTF		= ft_printf.c check.c handle.c keys.c main_check.c manage.c\
 			  ft_itoa_base.c pf_functions.c pf_functions2.c pf_functions3.c
 
 VECTOR		= vec_add.c vec_new.c vec_rotx.c vec_roty.c vec_rotz.c vec_sub.c\
-			  vec_scale.c vec_rotxyz.c vec_set.c
+			  vec_scale.c vec_rotxyz.c vec_set.c vec_normalize.c\
+			  vec_cross_product.c
 
 FUNCTIONS	= $(IS) $(STRUCT) $(MEMORY) $(NUMBER) $(PRINT) $(STRING) $(CHAR)\
 			  $(READ_FILE)
