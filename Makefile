@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/09/27 13:37:20 by anjansse         ###   ########.fr        #
+#    Updated: 2019/10/03 12:51:19 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,19 @@ lib:
 	@echo "\t\x1b[92m✓\x1b[0m\n"
 
 totall: lib all
+
+sdl:
+	@brew install sdl2
+	@brew switch sdl2 2.0.10
+	@clear
+	@echo -n 'Adapting SDL to your computer...'
+	@rm -rf SDL2/include/*
+	@rm -rf SDL2/lib/*
+	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+	@echo "\t\x1b[92mDone\x1b[0m\n"
+	@sleep 0.3
+	@clear
 
 git:
 	@git add .
