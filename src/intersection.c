@@ -45,7 +45,7 @@ static void    ray_get_info(t_rt *rt, int pix)
 */
 
 static void    rt_find_intersection(t_rt *rt)
-{
+ {
    (void)rt;
 }
 
