@@ -1,5 +1,21 @@
 #include "RT.h"
 
+static void		init_camera(t_rt *rt)
+{
+	t_vec	tmp;
+	
+	tmp = rt->obj.cam.pos;
+	vec_scale(&tmp, -1.0);
+	vec_normalize(&tmp);
+	vec_set(&(rt->obj.cam.dir), tmp.x, tmp.y, tmp.z);
+	vec_set(&tmp, 0, 1, 0);
+	tmp = vec_cross_product(&tmp, &(rt->obj.cam.dir));
+	vec_normalize(&tmp);
+	vec_set(&(rt->obj.cam.right), tmp.x, tmp.y, tmp.z);
+	tmp = vec_cross_product(&(rt->obj.cam.right), &(rt->obj.cam.dir));
+	vec_set(&(rt->obj.cam.down), tmp.x, tmp.y, tmp.z);
+}
+
 /*
 ** ----------------------------------------------------------------------------
 ** Initialises the game by creating a window, a framebuffer and allocating it.
@@ -19,8 +35,7 @@ static void	rt_init_game(t_rt *rt)
 	SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
 	rt->win.framebuff = (uint32_t *)malloc(sizeof(uint32_t) * HEIGHT * WIDTH);
 	rt->win.keys = SDL_GetKeyboardState(NULL);
-	SDL_RenderClear(rt->win.rend);
-	SDL_RenderPresent(rt->win.rend);
+	init_camera(rt);
 }
 
 /*

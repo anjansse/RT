@@ -72,22 +72,9 @@
 
 void            rt_print_scene(t_rt *rt)
 {
-	t_vec	*tmp;
 	int		i;
 
 	i = -1;
-	/*----------------------Calculate camera infos-------------------------*/
-	tmp = &(rt->obj.cam.pos);
-	vec_scale(tmp, -1.0);
-	vec_normalize(tmp);
-	vec_set(&(rt->obj.cam.dir), tmp->x, tmp->y, tmp->z);
-	vec_set(tmp, 0, 1, 0);
-	*tmp = vec_cross_product(tmp, &(rt->obj.cam.dir));
-	vec_normalize(tmp);
-	vec_set(&(rt->obj.cam.right), tmp->x, tmp->y, tmp->z);
-	*tmp = vec_cross_product(&(rt->obj.cam.right), &(rt->obj.cam.dir));
-	vec_set(&(rt->obj.cam.down), tmp->x, tmp->y, tmp->z);
-	/*-------------------------------------------------------------------*/
 	while (++i < (HEIGHT * WIDTH))
 		rt_cast_ray(rt, i);
 }

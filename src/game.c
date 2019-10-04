@@ -13,7 +13,8 @@ static void			rt_print_background(t_rt *rt)
 {
 	double Orgb[3] = {95.0, 21.0, 252.0};
 	// double Frgb[3] = {244, 240, 255};
-	double Drgb[3] = {0.18625, 0.27375, 0.00375};
+	// double Drgb[3] = {0.18625, 0.27375, 0.00375};
+	double Drgb[3] = {0.18625 * 2.0, 0.27375 * 2.0, 0.00375 * 2.0};
 	// double Drgb[3] = {DELTA_COLOR(Orgb[0], Frgb[0]), DELTA_COLOR(Orgb[1], Frgb[1]), DELTA_COLOR(Orgb[2], Frgb[2])};
 	int y;
 	int x;
@@ -27,9 +28,18 @@ static void			rt_print_background(t_rt *rt)
 			rt->win.framebuff[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
 			++x;
 		}
-		Orgb[0] += Drgb[0];
-		Orgb[1] += Drgb[1];
-		Orgb[2] += Drgb[2];
+		if (y < HEIGHT / 2)
+		{
+			Orgb[0] += Drgb[0];
+			Orgb[1] += Drgb[1];
+			Orgb[2] += Drgb[2];
+		}
+		else
+		{
+			Orgb[0] -= Drgb[0];
+			Orgb[1] -= Drgb[1];
+			Orgb[2] -= Drgb[2];
+		}
 		++y;
 	}
 }

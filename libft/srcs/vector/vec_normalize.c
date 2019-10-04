@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:12:49 by anjansse          #+#    #+#             */
-/*   Updated: 2019/10/01 16:11:29 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:47:49 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void        vec_normalize(t_vec *vec)
 {
     double      magnitude;
 
-    magnitude = sqrtl(powl(vec->x, 2.0) + powl(vec->y, 2.0) + powl(vec->z, 2.0));
+    magnitude = sqrt(pow(vec->x, 2) + pow(vec->y, 2) + pow(vec->z, 2));
     vec->x /= magnitude;
     vec->y /= magnitude;
     vec->z /= magnitude;
