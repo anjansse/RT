@@ -11,13 +11,13 @@
 
 static void    ray_get_info(t_rt *rt, int pix)
 {
-   int      x;
-   int      y;
-   double   xa;
-   double   ya;
-   double   ratio;
-   t_vec       *scale1;
-   t_vec       *scale2;
+   double      x;
+   double      y;
+   double      xa;
+   double      ya;
+   double      ratio;
+   t_vec       product1;
+   t_vec       product2;
 
    ratio = (double)WIDTH / (double)HEIGHT;
    x = pix % WIDTH;
@@ -26,12 +26,13 @@ static void    ray_get_info(t_rt *rt, int pix)
    ya = ((HEIGHT - y) + 0.5) / HEIGHT;
    rt->ray.ray_o = rt->obj.cam.pos;
    rt->ray.ray_d = rt->ray.ray_o;
-   scale1 = &(rt->obj.cam.right);
-   vec_scale(scale1, (xa - 0.5));
-   scale2 = &(rt->obj.cam.down);
-   vec_scale(scale2, (ya - 0.5));
-   vec_add(scale1, scale2);
-   vec_add(&(rt->ray.ray_d), scale1);
+   vec_set(&product1, rt->obj.cam.right.x, rt->obj.cam.right.y, rt->obj.cam.right.z);
+   vec_scale(&product1, (xa - 0.5));
+   vec_set(&product2, rt->obj.cam.down.x, rt->obj.cam.down.y, rt->obj.cam.down.z);
+   vec_scale(&product2, (ya - 0.5));
+   vec_add(&product1, &product2);
+   vec_add(&(rt->ray.ray_d), &product1);
+   vec_normalize(&(rt->ray.ray_d));
    // printf("Ray direction (%f %f %f)\n", rt->ray.ray_d.x, rt->ray.ray_d.x, rt->ray.ray_d.x);
 }
 
@@ -44,9 +45,26 @@ static void    ray_get_info(t_rt *rt, int pix)
 ** ----------------------------------------------------------------------------
 */
 
-static void    rt_find_intersection(t_rt *rt)
- {
-   (void)rt;
+static void    rt_find_intersection(t_rt *rt, int pix)
+{
+   double   a;
+   double   b;
+   double   c;
+   double   disc;
+
+   (void)pix;
+   a = 1;
+   b = (2 * (rt->ray.ray_o.x - rt->obj.sphere->center.x) * rt->ray.ray_d.x) +\
+   (2 * (rt->ray.ray_o.y - rt->obj.sphere->center.y) * rt->ray.ray_d.y) +\
+   (2 * (rt->ray.ray_o.z - rt->obj.sphere->center.z) * rt->ray.ray_d.z);
+   c = pow(rt->ray.ray_o.x - rt->obj.sphere->center.x, 2) +\
+   pow(rt->ray.ray_o.y - rt->obj.sphere->center.y, 2) +\
+   pow(rt->ray.ray_o.z - rt->obj.sphere->center.z, 2) - (rt->obj.sphere->radius * rt->obj.sphere->radius);
+   disc = b * b - 4 * a * c;
+   if (disc > 0)
+   {
+      rt->win.framebuff[pix] = 0xFFFFFF;
+   }
 }
 
 /*
@@ -62,6 +80,6 @@ static void    rt_find_intersection(t_rt *rt)
 int         rt_cast_ray(t_rt *rt, int pix)
 {
    ray_get_info(rt, pix);
-   rt_find_intersection(rt);
+   rt_find_intersection(rt, pix);
    return (0);
 }

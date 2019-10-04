@@ -79,7 +79,6 @@ void				rt_game_loop(t_rt *rt)
 		SDL_PumpEvents();
 		if (SDL_PollEvent(&rt->win.event))
 		{
-			rt_print(rt);
 			if (SDL_QUIT == rt->win.event.type )
 				break ;
 			else if (SDL_KEYDOWN == rt->win.event.type)
@@ -90,6 +89,7 @@ void				rt_game_loop(t_rt *rt)
 			}
 			else if (SDL_KEYUP == rt->win.event.type)
 				printf("Key Released\n");
+			rt_print(rt);
 		}
 	}
 }

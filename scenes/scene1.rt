@@ -1,6 +1,3 @@
-C: position: (10 5 10)
+C: position: (150 150 150)
 L: position: (10 10 10)
-S: center-pos: (10 25 35) | radius: (25)
-S: center-pos: (11 25 35) | radius: (25)
-S: center-pos: (12 25 35) | radius: (25)
 L: position: (11 10 10)
