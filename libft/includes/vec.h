@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:15:05 by anjansse          #+#    #+#             */
-/*   Updated: 2019/10/01 18:59:22 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:46:58 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	s_vec
 }				t_vec;
 
 t_vec			vec_new(double x, double y, double z);
-void			vec_add(t_vec *v1, t_vec *v2);
+t_vec			vec_add(t_vec *v1, t_vec *v2);
 void			vec_sub(t_vec *v1, t_vec *v2);
 void			vec_scale(t_vec *vec, double n);
 void			vec_set(t_vec *v, double x, double y, double z);

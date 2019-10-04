@@ -7,7 +7,6 @@ static void		init_camera(t_rt *rt)
 	
 	vec_set(&look_at, 0, 5000, 0);
 	vec_set(&tmp, rt->obj.cam.pos.x - look_at.x, rt->obj.cam.pos.y - look_at.y, rt->obj.cam.pos.z - look_at.z);
-	// tmp = rt->obj.cam.pos;
 	vec_scale(&tmp, -1.0);
 	vec_normalize(&tmp);
 	vec_set(&(rt->obj.cam.dir), tmp.x, tmp.y, tmp.z);

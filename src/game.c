@@ -13,9 +13,7 @@ static void			rt_print_background(t_rt *rt)
 {
 	double Orgb[3] = {95.0, 21.0, 252.0};
 	// double Frgb[3] = {244, 240, 255};
-	// double Drgb[3] = {0.18625, 0.27375, 0.00375};
 	double Drgb[3] = {0.18625 * 2.0, 0.27375 * 2.0, 0.00375 * 2.0};
-	// double Drgb[3] = {DELTA_COLOR(Orgb[0], Frgb[0]), DELTA_COLOR(Orgb[1], Frgb[1]), DELTA_COLOR(Orgb[2], Frgb[2])};
 	int y;
 	int x;
 
@@ -74,6 +72,7 @@ static void			rt_print(t_rt *rt)
 
 void				rt_game_loop(t_rt *rt)
 {
+	rt_print(rt);
 	while (1)
 	{
 		SDL_PumpEvents();
@@ -89,7 +88,6 @@ void				rt_game_loop(t_rt *rt)
 			}
 			else if (SDL_KEYUP == rt->win.event.type)
 				printf("Key Released\n");
-			rt_print(rt);
 		}
 	}
 }

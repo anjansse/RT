@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   vec_add.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:12:06 by anjansse          #+#    #+#             */
-/*   Updated: 2019/09/11 12:12:24 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:47:46 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec.h"
 
-void			vec_add(t_vec *v1, t_vec *v2)
+t_vec			vec_add(t_vec *v1, t_vec *v2)
 {
-	v1->x += v2->x;
-	v1->y += v2->y;
-	v1->z += v2->z;
+	t_vec	res;
+
+	res.x = v1->x + v2->x;
+	res.y = v1->y + v2->y;
+	res.z = v1->z + v2->z;
+	return (res);
 }

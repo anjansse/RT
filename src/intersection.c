@@ -30,10 +30,9 @@ static void    ray_get_info(t_rt *rt, int pix)
    vec_scale(&product1, (xa - 0.5));
    vec_set(&product2, rt->obj.cam.down.x, rt->obj.cam.down.y, rt->obj.cam.down.z);
    vec_scale(&product2, (ya - 0.5));
-   vec_add(&product1, &product2);
-   vec_add(&(rt->ray.ray_d), &product1);
+   product1 = vec_add(&product1, &product2);
+   rt->ray.ray_d = vec_add(&(rt->ray.ray_d), &product1);
    vec_normalize(&(rt->ray.ray_d));
-   // printf("Ray direction (%f %f %f)\n", rt->ray.ray_d.x, rt->ray.ray_d.x, rt->ray.ray_d.x);
 }
 
 /*
@@ -45,26 +44,34 @@ static void    ray_get_info(t_rt *rt, int pix)
 ** ----------------------------------------------------------------------------
 */
 
-static void    rt_find_intersection(t_rt *rt, int pix)
+static void    intersection_sphere(t_rt *rt, int pix)
 {
    double   a;
    double   b;
    double   c;
    double   disc;
+   t_sphere *head;
 
-   (void)pix;
-   a = 1;
-   b = (2 * (rt->ray.ray_o.x - rt->obj.sphere->center.x) * rt->ray.ray_d.x) +\
-   (2 * (rt->ray.ray_o.y - rt->obj.sphere->center.y) * rt->ray.ray_d.y) +\
-   (2 * (rt->ray.ray_o.z - rt->obj.sphere->center.z) * rt->ray.ray_d.z);
-   c = pow(rt->ray.ray_o.x - rt->obj.sphere->center.x, 2) +\
-   pow(rt->ray.ray_o.y - rt->obj.sphere->center.y, 2) +\
-   pow(rt->ray.ray_o.z - rt->obj.sphere->center.z, 2) - (rt->obj.sphere->radius * rt->obj.sphere->radius);
-   disc = b * b - 4 * a * c;
-   if (disc > 0)
+   head = rt->obj.sphere;
+   while (head)
    {
-      rt->win.framebuff[pix] = 0xFFFFFF;
+      a = 1;
+      b = (2 * (rt->ray.ray_o.x - head->center.x) * rt->ray.ray_d.x) +\
+      (2 * (rt->ray.ray_o.y - head->center.y) * rt->ray.ray_d.y) +\
+      (2 * (rt->ray.ray_o.z - head->center.z) * rt->ray.ray_d.z);
+      c = pow(rt->ray.ray_o.x - head->center.x, 2) +\
+      pow(rt->ray.ray_o.y - head->center.y, 2) +\
+      pow(rt->ray.ray_o.z - head->center.z, 2) - (head->radius * head->radius);
+      disc = b * b - 4 * a * c;
+      if (disc > 0)
+         rt->win.framebuff[pix] = head->color;
+      head = head->next;
    }
+}
+
+static void    rt_find_intersection(t_rt *rt, int pix)
+{
+   intersection_sphere(rt, pix);
 }
 
 /*

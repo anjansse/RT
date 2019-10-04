@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/10/03 12:51:19 by anjansse         ###   ########.fr        #
+#    Updated: 2019/10/04 16:51:06 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ DEBUG		=	-g -fsanitize=undefined -fsanitize=address
 OPTI		=	-O2
 
 PROFILER	=	-g -pg
+
+NUKLEAR		=	-I nuklear/
 
 CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG)
 
