@@ -19,7 +19,7 @@
 #include <SDL.h>
 #include <SDL_thread.h>
 // #define NK_IMPLEMENTATION
-// #include <nuklear.h>
+#include <nuklear.h>
 #include "../libft/includes/libft.h"
 
 #endif
