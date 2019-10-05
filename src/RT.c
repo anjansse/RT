@@ -6,16 +6,16 @@ static void		init_camera(t_rt *rt)
 	t_vec	look_at;
 	
 	vec_set(&look_at, 0, 5000, 0);
-	vec_set(&tmp, rt->obj.cam.pos.x - look_at.x, rt->obj.cam.pos.y - look_at.y, rt->obj.cam.pos.z - look_at.z);
-	vec_scale(&tmp, -1.0);
-	vec_normalize(&tmp);
-	vec_set(&(rt->obj.cam.dir), tmp.x, tmp.y, tmp.z);
+	vec_set(&tmp, CAM_POS.x - look_at.x, CAM_POS.y - look_at.y, CAM_POS.z - look_at.z);
+	tmp = vec_scale(tmp, -1.0);
+	tmp = vec_normalize(tmp);
+	vec_set(&(CAM_DIR), tmp.x, tmp.y, tmp.z);
 	vec_set(&tmp, 0, 1, 0);
-	tmp = vec_cross_product(&tmp, &(rt->obj.cam.dir));
-	vec_normalize(&tmp);
-	vec_set(&(rt->obj.cam.right), tmp.x, tmp.y, tmp.z);
-	tmp = vec_cross_product(&(rt->obj.cam.right), &(rt->obj.cam.dir));
-	vec_set(&(rt->obj.cam.down), tmp.x, tmp.y, tmp.z);
+	tmp = vec_cross_product(&tmp, &(CAM_DIR));
+	tmp = vec_normalize(tmp);
+	vec_set(&(CAM_RIGHT), tmp.x, tmp.y, tmp.z);
+	tmp = vec_cross_product(&(CAM_RIGHT), &(CAM_DIR));
+	vec_set(&(CAM_DOWN), tmp.x, tmp.y, tmp.z);
 }
 
 /*
@@ -32,11 +32,11 @@ static void	rt_init_game(t_rt *rt)
 {
 	rt->win.win = SDL_CreateWindow("SDL_test", SDL_WINDOWPOS_UNDEFINED,\
 	SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
-	rt->win.rend = SDL_CreateRenderer(rt->win.win, -1, 0);
-	rt->win.img_pointer = SDL_CreateTexture(rt->win.rend, SDL_PIXELFORMAT_ARGB8888,\
+	RENDERER = SDL_CreateRenderer(rt->win.win, -1, 0);
+	IMG_POINT = SDL_CreateTexture(rt->win.rend, SDL_PIXELFORMAT_ARGB8888,\
 	SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
-	rt->win.framebuff = (uint32_t *)malloc(sizeof(uint32_t) * HEIGHT * WIDTH);
-	rt->win.keys = SDL_GetKeyboardState(NULL);
+	FRAMEBUFF = (uint32_t *)malloc(sizeof(uint32_t) * HEIGHT * WIDTH);
+	KEYS = SDL_GetKeyboardState(NULL);
 	init_camera(rt);
 }
 
@@ -50,9 +50,9 @@ static void	rt_init_game(t_rt *rt)
 
 static void	rt_quit_game(t_rt *rt)
 {
-	SDL_DestroyRenderer(rt->win.rend);
+	SDL_DestroyRenderer(RENDERER);
 	SDL_DestroyWindow(rt->win.win);
-	free(rt->win.framebuff);
+	free(FRAMEBUFF);
 	SDL_Quit();
 }
 
@@ -66,10 +66,8 @@ static void	rt_quit_game(t_rt *rt)
 
 static void		rt_init_env(t_rt *rt)
 {
-	rt->obj.light = malloc(sizeof(t_light));
-	rt->obj.light->next = NULL;
-	rt->obj.sphere = malloc(sizeof(t_sphere));
-	rt->obj.sphere->next = NULL;
+	SPHERE = NULL;
+	LIGHT = NULL;
 }
 
 /*

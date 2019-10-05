@@ -23,7 +23,7 @@ static void			rt_print_background(t_rt *rt)
 		x = y * WIDTH;
 		while (x < (y + 1) * WIDTH)
 		{
-			rt->win.framebuff[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
+			FRAMEBUFF[x] = ft_rgb(Orgb[0], Orgb[1], Orgb[2]);
 			++x;
 		}
 		if (y < HEIGHT / 2)
@@ -55,10 +55,10 @@ static void			rt_print(t_rt *rt)
 {
 	rt_print_background(rt);
 	rt_print_scene(rt);
-	SDL_UpdateTexture(rt->win.img_pointer, NULL, rt->win.framebuff, WIDTH * sizeof (uint32_t));
-	SDL_RenderClear(rt->win.rend);
-	SDL_RenderCopy(rt->win.rend, rt->win.img_pointer, NULL, NULL);
-	SDL_RenderPresent(rt->win.rend);
+	SDL_UpdateTexture(IMG_POINT, NULL, FRAMEBUFF, WIDTH * sizeof (uint32_t));
+	SDL_RenderClear(RENDERER);
+	SDL_RenderCopy(RENDERER, IMG_POINT, NULL, NULL);
+	SDL_RenderPresent(RENDERER);
 }
 
 /*
@@ -76,17 +76,17 @@ void				rt_game_loop(t_rt *rt)
 	while (1)
 	{
 		SDL_PumpEvents();
-		if (SDL_PollEvent(&rt->win.event))
+		if (SDL_PollEvent(&EVENT))
 		{
-			if (SDL_QUIT == rt->win.event.type )
+			if (SDL_QUIT == EVENT.type )
 				break ;
-			else if (SDL_KEYDOWN == rt->win.event.type)
+			else if (SDL_KEYDOWN == EVENT.type)
 			{
 				printf("Key Pressed\n");
-				if (rt->win.keys[SDL_SCANCODE_ESCAPE])
+				if (KEYS[SDL_SCANCODE_ESCAPE])
 					exit(0);
 			}
-			else if (SDL_KEYUP == rt->win.event.type)
+			else if (SDL_KEYUP == EVENT.type)
 				printf("Key Released\n");
 		}
 	}

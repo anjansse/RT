@@ -25,7 +25,7 @@ void            rt_store_cam(t_rt *rt, char *info)
 	xyz[0] = (double)ft_atoi(vector[0]);
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
-	vec_set(&(rt->obj.cam.pos), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(CAM_POS), xyz[0], xyz[1], xyz[2]);
 	ft_free_db_tab(vector);
 	free(tmp);
 }
@@ -40,17 +40,15 @@ void            rt_store_cam(t_rt *rt, char *info)
 ** ----------------------------------------------------------------------------
 */
 
-static void		light_add(t_light *light, double xyz[3])
+static void		light_add(t_light **light, double xyz[3])
 {
-	t_light		*head;
+	t_light		*newLight;
 
-	head = light;
-	while (head->next)
-		head = head->next;
-	vec_set(&(head->pos), xyz[0], xyz[1], xyz[2]);
-	head->next = malloc(sizeof(t_light));
-	head = head->next;
-	head->next = NULL;
+	if (!(newLight = (t_light*)malloc(sizeof(t_light))))
+		return ;
+	vec_set(&(newLight->pos), xyz[0], xyz[1], xyz[2]);
+	newLight->next = *light;
+	newLight = *light;
 }
 
 void            rt_store_light(t_rt *rt, char *info)
@@ -68,7 +66,7 @@ void            rt_store_light(t_rt *rt, char *info)
 	xyz[0] = (double)ft_atoi(vector[0]);
 	xyz[1] = (double)ft_atoi(vector[1]);
 	xyz[2] = (double)ft_atoi(vector[2]);
-	light_add(rt->obj.light, xyz);
+	light_add(&LIGHT, xyz);
 	ft_free_db_tab(vector);
 	free(tmp);
 }
@@ -83,18 +81,17 @@ void            rt_store_light(t_rt *rt, char *info)
 ** ----------------------------------------------------------------------------
 */
 
-static void		sphere_add(t_sphere *sphere, double xyz[3], int radius)
+static void		sphere_add(t_sphere **sphere, double xyz[3], double radius)
 {
-	t_sphere		*head;
+	t_sphere	*newSphere;
 
-	head = sphere;
-	while (head->next)
-		head = head->next;
-	vec_set(&(head->center), xyz[0], xyz[1], xyz[2]);
-	head->radius = radius;
-	head->next = malloc(sizeof(t_sphere));
-	head = head->next;
-	head->next = NULL;
+	if (!(newSphere = (t_sphere*)malloc(sizeof(t_sphere))))
+		return ;
+	vec_set(&(newSphere->center), xyz[0], xyz[1], xyz[2]);
+	newSphere->radius = radius;
+	newSphere->color = 0x00FF00;
+	newSphere->next = *sphere;
+	*sphere = newSphere;
 }
 
 void            rt_store_sphere(t_rt *rt, char *info)
@@ -120,7 +117,7 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	tmp = ft_strsub(infos[1], find_open_p(infos[1], 0), (find_close_p(infos[1], 0) - find_open_p(infos[1], 0)));
 	if (!ft_verifstr(tmp, NUMBER))
 		send_error("Radius of sphere should be a valid number.\n");
-	sphere_add(rt->obj.sphere, xyz, ft_atoi(tmp));
+	sphere_add(&SPHERE, xyz, (double)ft_atoi(tmp));
 	ft_free_db_tab(infos);
 	ft_free_db_tab(vector);
 	free(tmp);

@@ -89,9 +89,7 @@ typedef struct			s_camera
 **
 ** @element {t_vec} cam - Camera's location stored in a vector (x y z).
 ** @element {t_light} light - Pointer to light's structure (see above).
-** @element {t_light} light_head - Head node for light's linked list.
 ** @element {t_sphere} sphere - Pointer to sphere's structure (see above).
-** @element {t_sphere} sphere_head - Head node for sphere's linked list.
 ** ----------------------------------------------------------------------------
 */
 

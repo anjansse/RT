@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_cross_product.c                                :+:      :+:    :+:   */
+/*   vec_magnitude.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 12:12:49 by anjansse          #+#    #+#             */
-/*   Updated: 2019/10/05 11:45:36 by anjansse         ###   ########.fr       */
+/*   Created: 2019/10/05 11:48:35 by anjansse          #+#    #+#             */
+/*   Updated: 2019/10/05 11:49:02 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec.h"
 
-t_vec			vec_cross_product(t_vec *vec1, t_vec *vec2)
+double			vec_magnitude(t_vec vec)
 {
-    t_vec	result;
+	double		magnitude;
 
-    result.x = (vec1->y * vec2->z) - (vec1->z * vec2->y);
-    result.y = (vec1->z * vec2->x) - (vec1->x * vec2->z);
-    result.z = (vec1->x * vec2->y) - (vec1->y * vec2->x);
-    return (result);
+	magnitude = sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
+	return (magnitude);
 }

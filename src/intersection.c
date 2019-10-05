@@ -16,23 +16,27 @@ static void    ray_get_info(t_rt *rt, int pix)
    double      xa;
    double      ya;
    double      ratio;
-   t_vec       product1;
-   t_vec       product2;
+   // t_vec       product1;
+   // t_vec       product2;
 
    ratio = (double)WIDTH / (double)HEIGHT;
    x = pix % WIDTH;
-   y = (pix - x) / HEIGHT;
+   y = (pix - x) / WIDTH;
    xa = ((x + 0.5) / WIDTH) * ratio - (((WIDTH - HEIGHT) / (double)HEIGHT) / 2);
    ya = ((HEIGHT - y) + 0.5) / HEIGHT;
-   rt->ray.ray_o = rt->obj.cam.pos;
-   rt->ray.ray_d = rt->ray.ray_o;
-   vec_set(&product1, rt->obj.cam.right.x, rt->obj.cam.right.y, rt->obj.cam.right.z);
-   vec_scale(&product1, (xa - 0.5));
-   vec_set(&product2, rt->obj.cam.down.x, rt->obj.cam.down.y, rt->obj.cam.down.z);
-   vec_scale(&product2, (ya - 0.5));
-   product1 = vec_add(&product1, &product2);
-   rt->ray.ray_d = vec_add(&(rt->ray.ray_d), &product1);
-   vec_normalize(&(rt->ray.ray_d));
+   RAY_O = rt->obj.cam.pos;
+   // RAY_D = RAY_O;
+   // vec_set(&product1, CAM_RIGHT.x, CAM_RIGHT.y, CAM_RIGHT.z);
+   // product1 = vec_scale(product1, (xa - 0.5));
+   // vec_set(&product2, CAM_DOWN.x, CAM_DOWN.y, CAM_DOWN.z);
+   // product2 = vec_scale(product2, (ya - 0.5));
+   // product1 = vec_add(product1, product2);
+   // RAY_D = vec_add(RAY_D, product1);
+   // RAY_D = vec_normalize(RAY_D);
+   RAY_D = VEC((2 * (xa + 0.5) / (double)WIDTH - 1) * tan(60 * 0.5 * (M_PI / 180)),
+			(1 - 2 * (y + 0.5) / (double)HEIGHT) * tan(60 * 0.5 * (M_PI / 180)), -1);
+   // printf("pix: %d\tx: %f\ty: %f\txa: %f\tya: %f\n", pix, x, y, xa, ya);
+   // printf("rd (%f %f %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
 }
 
 /*
@@ -56,15 +60,15 @@ static void    intersection_sphere(t_rt *rt, int pix)
    while (head)
    {
       a = 1;
-      b = (2 * (rt->ray.ray_o.x - head->center.x) * rt->ray.ray_d.x) +\
-      (2 * (rt->ray.ray_o.y - head->center.y) * rt->ray.ray_d.y) +\
-      (2 * (rt->ray.ray_o.z - head->center.z) * rt->ray.ray_d.z);
-      c = pow(rt->ray.ray_o.x - head->center.x, 2) +\
-      pow(rt->ray.ray_o.y - head->center.y, 2) +\
-      pow(rt->ray.ray_o.z - head->center.z, 2) - (head->radius * head->radius);
+      b = (2 * (RAY_O.x - head->center.x) * RAY_D.x) +\
+      (2 * (RAY_O.y - head->center.y) * RAY_D.y) +\
+      (2 * (RAY_O.z - head->center.z) * RAY_D.z);
+      c = pow(RAY_O.x - head->center.x, 2) +\
+      pow(RAY_O.y - head->center.y, 2) +\
+      pow(RAY_O.z - head->center.z, 2) - (head->radius * head->radius);
       disc = b * b - 4 * a * c;
       if (disc > 0)
-         rt->win.framebuff[pix] = head->color;
+            FRAMEBUFF[pix] = head->color;
       head = head->next;
    }
 }
