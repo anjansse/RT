@@ -13,6 +13,7 @@
 # define RAY_D      rt->ray.ray_d
 
 # define CAM_POS    rt->obj.cam.pos
+# define CAM_LOOK   rt->obj.cam.look_at
 # define CAM_DIR    rt->obj.cam.dir
 # define CAM_RIGHT  rt->obj.cam.right
 # define CAM_DOWN   rt->obj.cam.down

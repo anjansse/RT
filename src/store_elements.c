@@ -12,22 +12,17 @@
 
 void            rt_store_cam(t_rt *rt, char *info)
 {
-	char		*tmp;
-	char		**vector;
+	char		**infos;
 	double      xyz[3];
 
-	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("1Vectors are supposed to be numbers (x, y, z).\n");
-	vector = ft_strsplit(tmp, ' ');
-	if (ft_array_len(vector) != 3)
-		send_error("Syntax error in camera position.\n");
-	xyz[0] = (double)ft_atoi(vector[0]);
-	xyz[1] = (double)ft_atoi(vector[1]);
-	xyz[2] = (double)ft_atoi(vector[2]);
+	infos = ft_strsplit(info, '|');
+	if (ft_array_len(infos) != 2)
+		send_error("Error in camera options -- should be [position(x y z)] | [look_at(xyz)].\n");
+	store_vector(infos[0], xyz);
 	vec_set(&(CAM_POS), xyz[0], xyz[1], xyz[2]);
-	ft_free_db_tab(vector);
-	free(tmp);
+	store_vector(infos[1], xyz);
+	vec_set(&(CAM_LOOK), xyz[0], xyz[1], xyz[2]);
+	ft_free_db_tab(infos);
 }
 
 /*
@@ -40,35 +35,31 @@ void            rt_store_cam(t_rt *rt, char *info)
 ** ----------------------------------------------------------------------------
 */
 
-static void		light_add(t_light **light, double xyz[3])
+static void		light_add(t_light **light, double pos[3], double dir[3])
 {
 	t_light		*newLight;
 
 	if (!(newLight = (t_light*)malloc(sizeof(t_light))))
 		return ;
-	vec_set(&(newLight->pos), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(newLight->pos), pos[0], pos[1], pos[2]);
+	vec_set(&(newLight->dir), dir[0], dir[1], dir[2]);
 	newLight->next = *light;
 	newLight = *light;
 }
 
 void            rt_store_light(t_rt *rt, char *info)
 {
-	char		*tmp;
-	char		**vector;
-	double      xyz[3];
+	char		**infos;
+	double      pos[3];
+	double      dir[3];
 
-	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("2Vectors are supposed to be numbers (x, y, z).\n");
-	vector = ft_strsplit(tmp, ' ');
-	if (ft_array_len(vector) != 3)
-		send_error("Syntax error in camera position.\n");
-	xyz[0] = (double)ft_atoi(vector[0]);
-	xyz[1] = (double)ft_atoi(vector[1]);
-	xyz[2] = (double)ft_atoi(vector[2]);
-	light_add(&LIGHT, xyz);
-	ft_free_db_tab(vector);
-	free(tmp);
+	infos = ft_strsplit(info, '|');
+	if (ft_array_len(infos) != 2)
+		send_error("Error in light options -- should be [position(x y z)] | [direction(xyz)].\n");
+	store_vector(infos[0], pos);
+	store_vector(infos[1], dir);
+	light_add(&LIGHT, pos, dir);
+	ft_free_db_tab(infos);
 }
 
 /*
@@ -81,7 +72,7 @@ void            rt_store_light(t_rt *rt, char *info)
 ** ----------------------------------------------------------------------------
 */
 
-static void		sphere_add(t_sphere **sphere, double xyz[3], double radius)
+static void		sphere_add(t_sphere **sphere, double xyz[3], double radius, double rgb[3])
 {
 	t_sphere	*newSphere;
 
@@ -89,36 +80,24 @@ static void		sphere_add(t_sphere **sphere, double xyz[3], double radius)
 		return ;
 	vec_set(&(newSphere->center), xyz[0], xyz[1], xyz[2]);
 	newSphere->radius = radius;
-	newSphere->color = 0x00FF00;
+	newSphere->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
 	newSphere->next = *sphere;
 	*sphere = newSphere;
 }
 
 void            rt_store_sphere(t_rt *rt, char *info)
 {
-	char		*tmp;
+	double		radius;
 	char		**infos;
-	char		**vector;
-	double      xyz[3];
+	double      center[3];
+	double      rgb[3];
 
 	infos = ft_strsplit(info, '|');
-	if (ft_array_len(infos) != 2)
-		send_error("Error in sphere options -- should be [center(x y z)] | [radius].\n");
-	tmp = ft_strsub(infos[0], find_open_p(infos[0], 0), (find_close_p(infos[0], 0) - find_open_p(infos[0], 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("3Vectors are supposed to be numbers (x, y, z).\n");
-	vector = ft_strsplit(tmp, ' ');
-	if (ft_array_len(vector) != 3)
-		send_error("Syntax error in camera position.\n");
-	xyz[0] = (double)ft_atoi(vector[0]);
-	xyz[1] = (double)ft_atoi(vector[1]);
-	xyz[2] = (double)ft_atoi(vector[2]);
-	free(tmp);
-	tmp = ft_strsub(infos[1], find_open_p(infos[1], 0), (find_close_p(infos[1], 0) - find_open_p(infos[1], 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Radius of sphere should be a valid number.\n");
-	sphere_add(&SPHERE, xyz, (double)ft_atoi(tmp));
+	if (ft_array_len(infos) != 3)
+		send_error("Error in sphere options -- should be [center(x y z)] | [radius] | [color(r g b)].\n");
+	store_vector(infos[0], center);
+	store_radius(infos[1], &radius);
+	store_vector(infos[2], rgb);
+	sphere_add(&SPHERE, center, radius, rgb);
 	ft_free_db_tab(infos);
-	ft_free_db_tab(vector);
-	free(tmp);
 }

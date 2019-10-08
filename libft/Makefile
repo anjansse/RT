@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 09:51:04 by anjansse          #+#    #+#              #
-#    Updated: 2019/10/01 17:19:53 by anjansse         ###   ########.fr        #
+#    Updated: 2019/10/05 11:46:11 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ PRINTF		= ft_printf.c check.c handle.c keys.c main_check.c manage.c\
 
 VECTOR		= vec_add.c vec_new.c vec_rotx.c vec_roty.c vec_rotz.c vec_sub.c\
 			  vec_scale.c vec_rotxyz.c vec_set.c vec_normalize.c\
-			  vec_cross_product.c
+			  vec_cross_product.c vec_dot_product.c vec_magnitude.c\
 
 FUNCTIONS	= $(IS) $(STRUCT) $(MEMORY) $(NUMBER) $(PRINT) $(STRING) $(CHAR)\
 			  $(READ_FILE)
