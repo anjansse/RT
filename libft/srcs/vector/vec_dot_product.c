@@ -6,13 +6,16 @@
 /*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 11:33:20 by anjansse          #+#    #+#             */
-/*   Updated: 2019/10/05 11:33:46 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:18:02 by ghdesfos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec.h"
 
-double          vec_dot_product(t_vec *v1, t_vec *v2)
+double          vec_dot_product(t_vec v1, t_vec v2)
 {
-    return ((v1->x * v2->x) + (v1->y * v2->y) + (v1->z * v2->z));
+	double result;
+
+    result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+	return (result);
 }

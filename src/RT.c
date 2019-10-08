@@ -11,10 +11,10 @@ static void		init_camera(t_rt *rt)
 	tmp = vec_normalize(tmp);
 	vec_set(&(CAM_DIR), tmp.x, tmp.y, tmp.z);
 	vec_set(&tmp, 0, 1, 0);
-	tmp = vec_cross_product(&tmp, &(CAM_DIR));
+	tmp = vec_cross_product(tmp, CAM_DIR);
 	tmp = vec_normalize(tmp);
 	vec_set(&(CAM_RIGHT), tmp.x, tmp.y, tmp.z);
-	tmp = vec_cross_product(&(CAM_RIGHT), &(CAM_DIR));
+	tmp = vec_cross_product(CAM_RIGHT, CAM_DIR);
 	vec_set(&(CAM_DOWN), tmp.x, tmp.y, tmp.z);
 }
 
