@@ -78,6 +78,7 @@ typedef struct          s_light
 typedef struct			s_camera
 {
 	t_vec				pos;
+	t_vec				look_at;
 	t_vec				down;
 	t_vec				right;
 	t_vec				dir;
@@ -126,5 +127,8 @@ typedef struct          s_dis {
 void            rt_store_cam(t_rt *rt, char *infos);
 void            rt_store_light(t_rt *rt, char *infos);
 void            rt_store_sphere(t_rt *rt, char *infos);
+
+void			store_vector(char *info, double *xyz);
+void			store_radius(char *info, double	*radius);
 
 #endif
