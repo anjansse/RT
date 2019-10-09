@@ -38,8 +38,6 @@
 
 # define ERROR_USAGE	"usage: ./RTv1 <filename>\n"
 
-typedef struct s_objects	t_objects;
-
 /*
 ** ----------------------------------------------------------------------------
 ** Window structure, contains all infos for opened SDL window.
@@ -100,6 +98,7 @@ typedef struct 			s_ray
 ** Main RT's structure, contains all the important other structures.
 **
 ** @element {t_window} win - Link to the window's structure.
+** @element {t_camera} cam - Information on the camera object.
 ** @element {t_objects} obj - Link to the objects's structure.
 ** @element {t_ray} ray - Link to the ray's structure.
 ** @element {t_thread}  - Link to the thread's structure.
@@ -109,7 +108,8 @@ typedef struct 			s_ray
 typedef struct			s_rt
 {
 	t_window			win;
-	t_objects			obj;
+	t_camera			cam;
+	t_object			*obj;
 	t_ray				ray;
 	t_thread			thread[4];
 }						t_rt;

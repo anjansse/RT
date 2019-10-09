@@ -12,17 +12,24 @@
 # define TRUE		1
 # define FALSE		0
 
+# define LIGHT_NB	0
+# define SPHERE_NB	1
+# define PLANE_NB	2
+
 # define RAY_O      rt->ray.ray_o
 # define RAY_D      rt->ray.ray_d
 
-# define CAM_POS    rt->obj.cam.pos
-# define CAM_LOOK   rt->obj.cam.look_at
-# define CAM_DIR    rt->obj.cam.dir
-# define CAM_RIGHT  rt->obj.cam.right
-# define CAM_DOWN   rt->obj.cam.down
+# define CAM_POS    rt->cam.pos
+# define CAM_LOOK   rt->cam.look_at
+# define CAM_DIR    rt->cam.dir
+# define CAM_RIGHT  rt->cam.right
+# define CAM_DOWN   rt->cam.down
 
-# define SPHERE     rt->obj.sphere
-# define LIGHT      rt->obj.light
+# define OBJ		rt->obj
+
+// the 2 lines below are to be deleted
+//# define SPHERE     rt->obj.sphere
+//# define LIGHT      rt->obj.light
 
 # define FRAMEBUFF  rt->win.framebuff
 # define RENDERER   rt->win.rend

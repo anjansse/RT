@@ -85,6 +85,8 @@ bool			check_closest_object(double *dist, double *sols)
 // et d'utiliser un tableau de pointeur de fonction pour chercher l'objet le
 // plus proche, ca evitera la duplication de code
 
+
+/*
 bool			intersection_sphere(t_rt *rt, t_sphere *closestSphere, double *dist)
 {
 	t_sphere	*sphere;
@@ -108,47 +110,29 @@ bool			intersection_sphere(t_rt *rt, t_sphere *closestSphere, double *dist)
 		return (TRUE);
 	return (FALSE);
 }
-
-/*
-static void    intersection_sphere(t_rt *rt, int pix)
-{
-   double   a;
-   double   b;
-   double   c;
-   double   disc;
-   t_sphere *head;
-
-   head = rt->obj.sphere;
-   while (head)
-   {
-      a = 1;
-      b = (2 * (RAY_O.x - head->center.x) * RAY_D.x) +\
-      (2 * (RAY_O.y - head->center.y) * RAY_D.y) +\
-      (2 * (RAY_O.z - head->center.z) * RAY_D.z);
-      c = pow(RAY_O.x - head->center.x, 2) +\
-      pow(RAY_O.y - head->center.y, 2) +\
-      pow(RAY_O.z - head->center.z, 2) - (head->radius * head->radius);
-      disc = b * b - 4 * a * c;
-      if (disc > 0)
-            FRAMEBUFF[pix] = head->color;
-      head = head->next;
-   }
-}
 */
+
 
 // In this function, when calling the intersection functions, we could also pass
 // to the functions the distance to the closest object ...
 
+
+
 static void    rt_find_intersection(t_rt *rt, int pix)
 {
-	t_sphere	*closestSphere;
+	(void)rt;
+	(void)pix;
+
+/*	t_sphere	*closestSphere;
 	double		distSphere;
 
 	closestSphere = NULL;
 	distSphere = -1.0;
 	if (TRUE == intersection_sphere(rt, closestSphere, &distSphere))
 		FRAMEBUFF[pix] = closestSphere->color;
-}
+*/}
+
+
 
 /*
 ** ----------------------------------------------------------------------------
@@ -174,7 +158,7 @@ static void    ray_get_info(t_rt *rt, int pix)
    y = (pix - x) / WIDTH;
    xa = ((x + 0.5) / WIDTH) * ratio - (((WIDTH - HEIGHT) / (double)HEIGHT) / 2);
    ya = ((HEIGHT - y) + 0.5) / HEIGHT;
-   RAY_O = rt->obj.cam.pos;
+   RAY_O = rt->cam.pos;
    // RAY_D = RAY_O;
    // vec_set(&product1, CAM_RIGHT.x, CAM_RIGHT.y, CAM_RIGHT.z);
    // product1 = vec_scale(product1, (xa - 0.5));

@@ -30,7 +30,7 @@
 # define MIN_LINE_SIZE  11
 # define NUMBER			" 0123456789"
 
-typedef struct s_rt     t_rt;
+typedef struct s_rt		t_rt;
 
 /*
 ** ----------------------------------------------------------------------------
@@ -46,7 +46,6 @@ typedef struct			s_sphere
 	t_vec				center;
 	uint32_t			color;
 	uint32_t			radius;
-	struct s_sphere		*next;
 }						t_sphere;
 
 /*
@@ -61,7 +60,6 @@ typedef struct          s_light
 {
     t_vec               pos;
 	t_vec				dir;
-    struct s_light      *next;
 }                       t_light;
 
 /*
@@ -88,18 +86,20 @@ typedef struct			s_camera
 ** ----------------------------------------------------------------------------
 ** Main object's structure. Contains all elements used for RT.
 **
-** @element {t_vec} cam - Camera's location stored in a vector (x y z).
+** @element {int} type - Contains the type of object that this node contains --> only the pointer of this type will be non-NULL
 ** @element {t_light} light - Pointer to light's structure (see above).
-** @element {t_sphere} sphere - Pointer to sphere's structure (see above).
+** @element {t_sphere} sphere - Pointer to sphere's structure (see above).d
+** @element {t_object} next - Pointer to the next object in the sphere
 ** ----------------------------------------------------------------------------
 */
 
-typedef struct			s_objects
+typedef struct			s_object
 {
-	t_camera			cam;
+	int					type;
 	t_light				*light;
 	t_sphere			*sphere;
-}						t_objects;
+	struct s_object		*next;
+}						t_object;
 
 /*
 ** ----------------------------------------------------------------------------

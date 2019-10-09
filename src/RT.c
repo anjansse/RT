@@ -66,8 +66,7 @@ static void	rt_quit_game(t_rt *rt)
 
 static void		rt_init_env(t_rt *rt)
 {
-	SPHERE = NULL;
-	LIGHT = NULL;
+	OBJ = NULL;
 }
 
 /*
