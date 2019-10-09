@@ -25,11 +25,7 @@
 # define CAM_RIGHT  rt->cam.right
 # define CAM_DOWN   rt->cam.down
 
-# define OBJ		rt->obj
-
-// the 2 lines below are to be deleted
-//# define SPHERE     rt->obj.sphere
-//# define LIGHT      rt->obj.light
+# define SPHERE     obj->sphere
 
 # define FRAMEBUFF  rt->win.framebuff
 # define RENDERER   rt->win.rend

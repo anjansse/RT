@@ -112,17 +112,42 @@ typedef struct			s_object
 ** @function {t_store_dis *} function - Function to send info to if type
 **										comparaison matchs.
 **
-** @param1 {t_rt*} -  Main structure for RT.
+** @param1 {t_rt*} - Main structure for RT.
 ** @param2 {char*} - Send's remaining informations to be extracted in `function`.
 ** ----------------------------------------------------------------------------
 */
 
-typedef void            (t_store_disp)(t_rt*, char*);
+typedef void		(t_store_disp)(t_rt*, char*);
 
-typedef struct          s_dis {
-        char            *type;
-        t_store_disp    *function;
-}                       t_dis;
+typedef struct		s_dis_parser
+{
+	char			*type;
+	t_store_disp    *function;
+}					t_dis_parser;
+
+
+/*
+** ----------------------------------------------------------------------------
+** Dispatch table structure, uses objet type to dispatch.
+**
+** @comparison {int} objType - compares gainst the object type of the object at hand.
+**
+** @function {t_store_dis *} function - Function to send info to if type
+**										comparaison matchs.
+**
+** @param1 {t_rt*} - Main structure for RT.
+** @param2 {char*} - Send's remaining informations to be extracted in `function`.
+** ----------------------------------------------------------------------------
+*/
+
+typedef void			(t_quad_equ_disp)(t_rt*, t_object*, double*);
+
+typedef struct			s_dis_quad
+{
+	int					objType;
+	t_quad_equ_disp		*function;
+}						t_dis_quad;
+
 
 void            rt_store_cam(t_rt *rt, char *infos);
 void            rt_store_light(t_rt *rt, char *infos);
@@ -130,5 +155,7 @@ void            rt_store_sphere(t_rt *rt, char *infos);
 
 void			store_vector(char *info, double *xyz);
 void			store_radius(char *info, double	*radius);
+
+void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs);
 
 #endif

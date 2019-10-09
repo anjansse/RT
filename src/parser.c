@@ -6,7 +6,7 @@
 ** ----------------------------------------------------------------------------
 */
 
-static t_dis                            g_dis_table[ELEM] = {
+static t_dis_parser		g_dis_parser_table[ELEM] = {
         {"C:", &rt_store_cam},
         {"L:", &rt_store_light},
         {"S:", &rt_store_sphere},
@@ -34,9 +34,9 @@ static void		rt_parse_line(t_rt *rt, char *line)
 	type = ft_strsub(line, 0, 2);
 	while (++i < ELEM)
 	{
-		if (ft_strequ(type, g_dis_table[i].type))
+		if (ft_strequ(type, g_dis_parser_table[i].type))
 		{
-				g_dis_table[i].function(rt, &line[2]);
+				g_dis_parser_table[i].function(rt, &line[2]);
 				return ;
 		}
 	}

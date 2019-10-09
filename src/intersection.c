@@ -2,6 +2,32 @@
 
 /*
 ** ----------------------------------------------------------------------------
+** Dispatch table containing ELEM nunber of possible elements, and their corresponding quadratic function.
+**	We don't consider here the camera and the light elements, hence the ELEM - 2
+** ----------------------------------------------------------------------------
+*/
+
+static t_dis_quad	g_dis_quad_table[ELEM - 2] = {
+	{SPHERE_NB, &find_quad_equ_coefs_sphere},
+};
+
+/*
+** ----------------------------------------------------------------------------
+** The functions below allow to determine the coefs of the quadratic equation to solve in order to find the intersection points between the object and the ray at hand.
+** ----------------------------------------------------------------------------
+*/
+
+void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs)
+{
+		coefs[0] = vec_dot_product(RAY_D, RAY_D);
+		coefs[1] = 2 * vec_dot_product(RAY_D, vec_sub(RAY_O, SPHERE->center));
+		coefs[2] = vec_dot_product(vec_sub(RAY_O, SPHERE->center), \
+									vec_sub(RAY_O, SPHERE->center))\
+					- SPHERE->radius * SPHERE->radius;
+}
+
+/*
+** ----------------------------------------------------------------------------
 ** Solves a quadratic expression, i.e. a*x*x + b*x + c == 0.
 ** The function will return 1 is the equation has one or 2 solutions, \
 ** and 0 otherwise.
@@ -63,7 +89,7 @@ bool			solve_quadratic(double a, double  b, double c, double *sols)
 // this function, otherwise we probably express the length the proportionnaly to 
 // the vector length and not to the unit value
 
-bool			check_closest_object(double *dist, double *sols)
+bool			check_is_closest_object(double *dist, double *sols)
 {
 	bool val;
 
@@ -81,10 +107,29 @@ bool			check_closest_object(double *dist, double *sols)
 	return (val);
 }
 
-// bien de faire une fonction generique avec une structure stsnadard objet
-// et d'utiliser un tableau de pointeur de fonction pour chercher l'objet le
-// plus proche, ca evitera la duplication de code
+bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
+{
+	t_object	*object;
+	double		coefs[3];
+	double		sols[2];
+	int			i;
 
+	object = rt->obj;
+	while (object)
+	{
+		i = -1;
+		while (++i < ELEM - 2)
+			if (object->type == g_dis_quad_table[i].objType)
+				g_dis_quad_table[i].function(rt, object, coefs);
+		if (TRUE == solve_quadratic(coefs[0], coefs[1], coefs[2], sols))
+			if (check_is_closest_object(dist, sols))
+				*closestObject = object;
+		object = object->next;
+	}
+	if (*dist > 0.0)
+		return (TRUE);
+	return (FALSE);
+}
 
 /*
 bool			intersection_sphere(t_rt *rt, t_sphere *closestSphere, double *dist)
@@ -117,22 +162,16 @@ bool			intersection_sphere(t_rt *rt, t_sphere *closestSphere, double *dist)
 // to the functions the distance to the closest object ...
 
 
-
 static void    rt_find_intersection(t_rt *rt, int pix)
 {
-	(void)rt;
-	(void)pix;
+	t_object	*closestObject;
+	double		distObject;
 
-/*	t_sphere	*closestSphere;
-	double		distSphere;
-
-	closestSphere = NULL;
-	distSphere = -1.0;
-	if (TRUE == intersection_sphere(rt, closestSphere, &distSphere))
-		FRAMEBUFF[pix] = closestSphere->color;
-*/}
-
-
+	closestObject = NULL;
+	distObject = -1.0;
+	if (TRUE == intersection_object(rt, &closestObject, &distObject))
+		FRAMEBUFF[pix] = 0xFFF0FFF0;
+}
 
 /*
 ** ----------------------------------------------------------------------------

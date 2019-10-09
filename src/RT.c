@@ -66,7 +66,7 @@ static void	rt_quit_game(t_rt *rt)
 
 static void		rt_init_env(t_rt *rt)
 {
-	OBJ = NULL;
+	rt->obj = NULL;
 }
 
 /*
