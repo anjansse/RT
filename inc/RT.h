@@ -9,6 +9,9 @@
 
 # define VEC(x,y,z) ((t_vec){x,y,z})
 
+# define TRUE		1
+# define FALSE		0
+
 # define RAY_O      rt->ray.ray_o
 # define RAY_D      rt->ray.ray_d
 
@@ -38,6 +41,7 @@
 #include <math.h>
 #include <SDL.h>
 #include <SDL_thread.h>
+#include <stdbool.h>
 // #define NK_IMPLEMENTATION
 #include "../libft/includes/libft.h"
 
