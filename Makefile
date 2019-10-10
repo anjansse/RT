@@ -12,7 +12,7 @@
 
 NAME		= 	RT
 
-GENERAL		= 	RT.c game.c parser.c store_elements.c print.c intersection.c extra.c
+GENERAL		= 	RT.c game.c parser.c store_elements.c print.c intersection.c extra.c vector.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 

@@ -186,30 +186,20 @@ static void    ray_get_info(t_rt *rt, int pix)
 {
    double      x;
    double      y;
-   double      xa;
-   double      ya;
    double      ratio;
-   // t_vec       product1;
-   // t_vec       product2;
+   double		xamnt;
+   double		yamnt;
 
    ratio = (double)WIDTH / (double)HEIGHT;
-   x = pix % WIDTH;
-   y = (pix - x) / WIDTH;
-   xa = ((x + 0.5) / WIDTH) * ratio - (((WIDTH - HEIGHT) / (double)HEIGHT) / 2);
-   ya = ((HEIGHT - y) + 0.5) / HEIGHT;
-   RAY_O = rt->cam.pos;
-   // RAY_D = RAY_O;
-   // vec_set(&product1, CAM_RIGHT.x, CAM_RIGHT.y, CAM_RIGHT.z);
-   // product1 = vec_scale(product1, (xa - 0.5));
-   // vec_set(&product2, CAM_DOWN.x, CAM_DOWN.y, CAM_DOWN.z);
-   // product2 = vec_scale(product2, (ya - 0.5));
-   // product1 = vec_add(product1, product2);
-   // RAY_D = vec_add(RAY_D, product1);
-   // RAY_D = vec_normalize(RAY_D);
-   RAY_D = VEC((2 * (xa + 0.5) / (double)WIDTH - 1) * tan(60 * 0.5 * (M_PI / 180)),
-			(1 - 2 * (y + 0.5) / (double)HEIGHT) * tan(60 * 0.5 * (M_PI / 180)), -1);
-   // printf("pix: %d\tx: %f\ty: %f\txa: %f\tya: %f\n", pix, x, y, xa, ya);
-   // printf("rd (%f %f %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
+   x = (double)(pix % WIDTH);
+   y = ((double)pix - x) / (double)WIDTH;
+   xamnt = (2 * (x + 0.5) / (double)WIDTH - 1) * ratio;
+   yamnt = (1 - 2 * (y + 0.5) / (double)HEIGHT);
+   RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
+   RAY_D = vec_new(xamnt * SCALE, yamnt * SCALE, 1);
+   RAY_D = vec_normalize(dir_x_mat(RAY_D, CAM_MAT));
+   printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
+	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
 }
 
 /*

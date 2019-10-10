@@ -1,21 +1,35 @@
 #include "RT.h"
 
+void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
+{
+	printf("%f\n", CAM_MAT[0][0] = right.x);
+	printf("%f\n", CAM_MAT[0][1] = right.y);
+	printf("%f\n", CAM_MAT[0][2] = right.z);
+	printf("%f\n", CAM_MAT[0][3] = 0);
+	printf("%f\n", CAM_MAT[1][0] = up.x);
+	printf("%f\n", CAM_MAT[1][1] = up.y);
+	printf("%f\n", CAM_MAT[1][2] = up.z);
+	printf("%f\n", CAM_MAT[1][3] = 0);
+	printf("%f\n", CAM_MAT[2][0] = forward.x);
+	printf("%f\n", CAM_MAT[2][1] = forward.y);
+	printf("%f\n", CAM_MAT[2][2] = forward.z);
+	printf("%f\n", CAM_MAT[2][3] = 0);
+	printf("%f\n", CAM_MAT[3][0] = CAM_POS.x);
+	printf("%f\n", CAM_MAT[3][1] = CAM_POS.y);
+	printf("%f\n", CAM_MAT[3][2] = CAM_POS.z);
+	printf("%f\n", CAM_MAT[3][3] = 1);
+}
+
 static void		init_camera(t_rt *rt)
 {
-	t_vec	tmp;
-	t_vec	look_at;
+	t_vec	forward;
+	t_vec	right;
+	t_vec	up;
 	
-	vec_set(&look_at, 0, 5000, 0);
-	vec_set(&tmp, CAM_POS.x - look_at.x, CAM_POS.y - look_at.y, CAM_POS.z - look_at.z);
-	tmp = vec_scale(tmp, -1.0);
-	tmp = vec_normalize(tmp);
-	vec_set(&(CAM_DIR), tmp.x, tmp.y, tmp.z);
-	vec_set(&tmp, 0, 1, 0);
-	tmp = vec_cross_product(tmp, CAM_DIR);
-	tmp = vec_normalize(tmp);
-	vec_set(&(CAM_RIGHT), tmp.x, tmp.y, tmp.z);
-	tmp = vec_cross_product(CAM_RIGHT, CAM_DIR);
-	vec_set(&(CAM_DOWN), tmp.x, tmp.y, tmp.z);
+	forward = vec_normalize(vec_sub(CAM_POS, CAM_DIR));
+	right = vec_cross_product(vec_new(0.0, 1.0, 0.0), forward);
+	up = vec_cross_product(forward, right);
+	make_cam_matrix(rt, forward, right, up);
 }
 
 /*

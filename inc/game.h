@@ -110,6 +110,7 @@ typedef struct			s_rt
 	t_window			win;
 	t_camera			cam;
 	t_object			*obj;
+	double				camMatrix[4][4];
 	t_ray				ray;
 	t_thread			thread[4];
 }						t_rt;
@@ -123,5 +124,8 @@ int         		rt_cast_ray(t_rt *rt, int pix);
 
 int      			find_open_p(char *str, int pos);
 int      			find_close_p(char *str, int pos);
+
+t_vec       		vec_x_mat(t_vec v, double m[4][4]);
+t_vec       		dir_x_mat(t_vec v, double m[4][4]);
 
 #endif
