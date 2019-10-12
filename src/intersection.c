@@ -19,6 +19,8 @@ static t_dis_quad	g_dis_quad_table[ELEM - 2] = {
 
 void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs)
 {
+
+//		printf("test FIND QUAD SPHERE\n");
 		coefs[0] = vec_dot_product(RAY_D, RAY_D);
 		coefs[1] = 2 * vec_dot_product(RAY_D, vec_sub(RAY_O, SPHERE->center));
 		coefs[2] = vec_dot_product(vec_sub(RAY_O, SPHERE->center), \
@@ -41,11 +43,12 @@ void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs)
 
 bool			solve_quadratic(double a, double  b, double c, double *sols)
 {
-	float disc;
-	float q;
-	float tmp;
+	double	disc;
+	double	q;
+	double	tmp;
 
 	disc = b * b - 4 * a * c;
+
 	if (disc < 0)
 		return (FALSE);
 	else if (disc == 0)
@@ -65,6 +68,8 @@ bool			solve_quadratic(double a, double  b, double c, double *sols)
 			sols[1] = tmp;
 		}
 	}
+
+	printf("QUAD TEST DISC %lf, sol1 %lf sol2 %lf\n", disc, sols[0], sols[1]);
 	return (TRUE);
 }
 
@@ -117,6 +122,8 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 	object = rt->obj;
 	while (object)
 	{
+
+//		printf("test INTERSECTION OBJECT %d\n", object->type);
 		i = -1;
 		while (++i < ELEM - 2)
 			if (object->type == g_dis_quad_table[i].objType)
@@ -126,7 +133,9 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 				*closestObject = object;
 		object = object->next;
 	}
-	if (*dist > 0.0)
+
+	printf("TEST DIST CLOSEST %lf\n", *dist);
+	if (*dist > 0.0 && *dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
 }
@@ -168,9 +177,13 @@ static void    rt_find_intersection(t_rt *rt, int pix)
 	double		distObject;
 
 	closestObject = NULL;
-	distObject = -1.0;
+	distObject = INFINITY;
 	if (TRUE == intersection_object(rt, &closestObject, &distObject))
+	{
+
+//		printf("TEST INTERSECTION EXISTS\n");
 		FRAMEBUFF[pix] = 0xFFF0FFF0;
+	}
 }
 
 /*
@@ -182,6 +195,29 @@ static void    rt_find_intersection(t_rt *rt, int pix)
 ** ----------------------------------------------------------------------------
 */
 
+static void    ray_get_info(t_rt *rt, int pix)
+{
+   double	x;
+   double	y;
+   double	ratio;
+   double	xamnt;
+   double	yamnt;
+
+   ratio = (double)WIDTH / (double)HEIGHT;
+   x = (double)(pix % WIDTH);
+   y = (double)(pix / WIDTH);
+   xamnt = (2 * (x + 0.5) / (double)WIDTH - 1) * ratio;
+   yamnt = (1 - 2 * (y + 0.5) / (double)HEIGHT);
+//	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
+	RAY_O = CAM_POS;
+	RAY_D = vec_new(xamnt, yamnt, 1);
+	RAY_D = vec_new(xamnt * SCALE, yamnt * SCALE, 1);
+	RAY_D = vec_normalize(dir_x_mat(RAY_D, CAM_MAT));
+	printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
+	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
+}
+
+/*
 static void    ray_get_info(t_rt *rt, int pix)
 {
    double      x;
@@ -201,6 +237,7 @@ static void    ray_get_info(t_rt *rt, int pix)
    printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
 	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
 }
+*/
 
 /*
 ** ----------------------------------------------------------------------------

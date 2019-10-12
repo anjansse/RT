@@ -1,4 +1,4 @@
-C: position: (10 10 10) | direction: (10 10 15)
+C: position: (1 1 1) | direction: (10 10 10)
 L: position: (10 10 10) | direction: (10 12 5)
-S: center-pos: (10 10 15) | radius: (2) | color: (255 0 25)
+S: center-pos: (3 5 10) | radius: (4) | color: (255 0 25)
 L: position: (11 10 10) | direction: (87 51 0)
