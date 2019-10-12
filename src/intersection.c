@@ -69,7 +69,7 @@ bool			solve_quadratic(double a, double  b, double c, double *sols)
 		}
 	}
 
-	printf("QUAD TEST DISC %lf, sol1 %lf sol2 %lf\n", disc, sols[0], sols[1]);
+//	printf("QUAD TEST DISC %lf, sol1 %lf sol2 %lf\n", disc, sols[0], sols[1]);
 	return (TRUE);
 }
 
@@ -134,7 +134,7 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 		object = object->next;
 	}
 
-	printf("TEST DIST CLOSEST %lf\n", *dist);
+//	printf("TEST DIST CLOSEST %lf\n", *dist);
 	if (*dist > 0.0 && *dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
@@ -208,13 +208,13 @@ static void    ray_get_info(t_rt *rt, int pix)
    y = (double)(pix / WIDTH);
    xamnt = (2 * (x + 0.5) / (double)WIDTH - 1) * ratio;
    yamnt = (1 - 2 * (y + 0.5) / (double)HEIGHT);
-//	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
-	RAY_O = CAM_POS;
+	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
+//	RAY_O = CAM_POS;
 	RAY_D = vec_new(xamnt, yamnt, 1);
 	RAY_D = vec_new(xamnt * SCALE, yamnt * SCALE, 1);
 	RAY_D = vec_normalize(dir_x_mat(RAY_D, CAM_MAT));
-	printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
-	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
+//	printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
+//	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
 }
 
 /*
