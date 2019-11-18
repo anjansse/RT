@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:00:34 by anjansse          #+#    #+#             */
-/*   Updated: 2019/09/10 20:00:36 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/11/17 12:15:21 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 void		send_error(char *error)
 {
 	ft_putstr(error);
+	free(error);
 	exit(1);
 }

@@ -14,7 +14,7 @@ int      find_open_p(char *str, int pos)
 	while (pos < (int)ft_strlen(str) && str[pos] != '(')
 		++pos;
 	if (str[pos] != '(')
-		send_error("Syntax error -> (missing bracket error).\n");
+		send_error(ft_strdup("Syntax error -> (missing bracket error).\n"));
 	return (pos + 1);
 }
 
@@ -32,35 +32,41 @@ int      find_close_p(char *str, int pos)
 	while (pos < (int)ft_strlen(str) && str[pos] != ')')
 		++pos;
 	if (str[pos] != ')')
-		send_error("Syntax error -> (missing bracket error).\n");
+		send_error(ft_strdup("Syntax error -> (missing bracket error).\n"));
 	return (pos);
 }
 
 void		store_vector(char *info, double *xyz)
 {
-	char		*tmp;
+	char		*content;
 	char		**vector;
 
-	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Vectors are supposed to be numbers (x, y, z).\n");
-	vector = ft_strsplit(tmp, ' ');
+	content = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
+	if (!ft_verifstr(content, NUMBER))
+		send_error(ft_strdup("Vectors are supposed to be numbers (x y z).\n"));
+	vector = ft_strsplit(content, ' ');
 	if (ft_array_len(vector) != 3)
-		send_error("Incorrect number of elements in vector (x y z).\n");
-	xyz[0] = (double)ft_atoi(vector[0]);
-	xyz[1] = (double)ft_atoi(vector[1]);
-	xyz[2] = (double)ft_atoi(vector[2]);
-	free(tmp);
+		send_error(ft_strdup("Incorrect number of elements in vector (x y z).\n"));
+	xyz[0] = (double)ft_stoi(vector[0]);
+	xyz[1] = (double)ft_stoi(vector[1]);
+	xyz[2] = (double)ft_stoi(vector[2]);
+	free(content);
 	ft_free_db_tab(vector);
 }
 
 void		store_radius(char *info, double	*radius)
 {
-	char	*tmp;
+    int		open_paranthese;
+	int		close_paranthese;
+	char	*content;
 
-	tmp = ft_strsub(info, find_open_p(info, 0), (find_close_p(info, 0) - find_open_p(info, 0)));
-	if (!ft_verifstr(tmp, NUMBER))
-		send_error("Radius of sphere should be a valid number.\n");
-	*radius = (double)ft_atoi(tmp);
-	free(tmp);
+	open_paranthese = find_open_p(info, 0);
+	close_paranthese = find_close_p(info, 0);
+	if (open_paranthese > close_paranthese)
+		send_error(ft_strjoin(info, " is invalid.\n"));
+	content = ft_strsub(info, open_paranthese, (close_paranthese - open_paranthese));
+	if (!ft_verifstr(content, NUMBER))
+		send_error(ft_strdup("Radius of sphere should be a valid number.\n"));
+	*radius = (double)ft_stoi(content);
+	free(content);
 }

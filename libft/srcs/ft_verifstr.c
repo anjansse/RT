@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strisnumber.c                                   :+:      :+:    :+:   */
+/*   ft_verifstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 22:17:03 by anjansse          #+#    #+#             */
-/*   Updated: 2019/09/24 22:48:19 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/11/17 13:50:18 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/*
+** ----------------------------------------------------------------------------
+** Takes a string and verifies each character to see if doesn't contain invalid
+** ones.
+**
+** @param {char *} str - String to verify.
+** @param {char *} allowed - Allowed characters in string.
+** ----------------------------------------------------------------------------
+*/
 
 int			ft_verifstr(char *str, char *allowed)
 {
