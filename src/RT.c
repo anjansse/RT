@@ -97,7 +97,7 @@ int         	main(int ac, char *av[])
 	t_rt	rt;
 
     if (ac != 2)
-        send_error(ERROR_USAGE);
+        send_error(ft_strdup(ERROR_USAGE));
 	rt_init_env(&rt);	
 	rt_parser(av[1], &rt);
 	rt_init_game(&rt);
