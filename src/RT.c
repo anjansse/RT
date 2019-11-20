@@ -26,7 +26,7 @@ static void		init_camera(t_rt *rt)
 	t_vec	right;
 	t_vec	up;
 	
-	forward = vec_normalize(vec_sub(CAM_POS, CAM_DIR));
+	forward = vec_normalize(vec_sub(CAM_POS, CAM_LOOK));
 	right = vec_cross_product(vec_new(0.0, 1.0, 0.0), forward);
 	up = vec_cross_product(forward, right);
 	make_cam_matrix(rt, forward, right, up);
@@ -98,7 +98,7 @@ int         	main(int ac, char *av[])
 
     if (ac != 2)
         send_error(ft_strdup(ERROR_USAGE));
-	rt_init_env(&rt);	
+	rt_init_env(&rt);
 	rt_parser(av[1], &rt);
 	rt_init_game(&rt);
 	rt_game_loop(&rt);

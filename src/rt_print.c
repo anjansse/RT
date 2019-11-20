@@ -74,7 +74,8 @@ void            rt_print_scene(t_rt *rt)
 {
 	int		i;
 
-	i = -1;
-	while (++i < (HEIGHT * WIDTH))
+	i = 800000;
+	// while (++i < (HEIGHT * WIDTH))
+	while (++i < 800002)
 		rt_cast_ray(rt, i);
 }

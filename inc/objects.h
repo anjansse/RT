@@ -26,8 +26,8 @@
 ** ----------------------------------------------------------------------------
 */
 
-# define ELEM           3
-# define MIN_LINE_SIZE  11
+# define ELEM			3
+# define MIN_LINE_SIZE	11
 # define NUMBER			" 0123456789"
 
 typedef struct s_rt		t_rt;
