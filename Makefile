@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/18 10:13:58 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/20 15:36:43 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PROFILER	=	-g -pg
 
 NUKLEAR		=	-I nuklear/
 
-CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG) $(NUKLEAR)
+CFLAGS		=	-Wall -Wextra -Werror $(SDL)
 
 LLIB		=	libft.a
 
