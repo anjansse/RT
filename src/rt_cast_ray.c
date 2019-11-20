@@ -197,11 +197,14 @@ static void rt_get_ray_info(t_rt *rt, int pix)
 //    printf("((1 - 2 * (pix_screen_y + 0.5)): %f\t(float)HEIGHT) * SCALE: %f\n", (1 - 2 * (pix_screen_y + 0.5)), (double)HEIGHT) * SCALE);
 //    printf("pix %d\twidth: %d\n", pix, WIDTH);
    RAY_O = vec_x_mat(origin, CAM_MAT);
+	// RAY_O = CAM_FROM;
    RAY_D = vec_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
    RAY_D = vec_normalize(RAY_D);
-//    printf("Pix_camera_x: %f\tPix_camera_y: %f\n", pix_camera_x, pix_camera_y);
-//    printf("RAY_O: %f, %f, %f\n", RAY_O.x, RAY_O.y, RAY_O.z);
-// 	printf("RAY_D: %f, %f, %f\n", RAY_D.x, RAY_D.y, RAY_D.z);
+   if ((pix == (HEIGHT * WIDTH) / 2) || (pix == 0) || ((pix == (HEIGHT * WIDTH) - 1))) {
+   		printf("Pix_camera_x: %f\tPix_camera_y: %f\n", pix_camera_x, pix_camera_y);
+   		printf("RAY_O: %f, %f, %f\n", RAY_O.x, RAY_O.y, RAY_O.z);
+		printf("RAY_D: %f, %f, %f\n", RAY_D.x, RAY_D.y, RAY_D.z);
+   }
 }
 
 int         rt_cast_ray(t_rt *rt, int pix)

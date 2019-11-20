@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:15:05 by anjansse          #+#    #+#             */
-/*   Updated: 2019/11/20 09:56:20 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/11/20 11:00:09 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_vec
 	double		x;
 	double		y;
 	double		z;
+	double		w;
 }				t_vec;
 
 t_vec			vec_new(double x, double y, double z);
