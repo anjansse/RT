@@ -14,9 +14,9 @@ void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
 	printf("%f\n", CAM_MAT[2][1] = forward.y);
 	printf("%f\n", CAM_MAT[2][2] = forward.z);
 	printf("%f\n", CAM_MAT[2][3] = 0);
-	printf("%f\n", CAM_MAT[3][0] = CAM_POS.x);
-	printf("%f\n", CAM_MAT[3][1] = CAM_POS.y);
-	printf("%f\n", CAM_MAT[3][2] = CAM_POS.z);
+	printf("%f\n", CAM_MAT[3][0] = CAM_FROM.x);
+	printf("%f\n", CAM_MAT[3][1] = CAM_FROM.y);
+	printf("%f\n", CAM_MAT[3][2] = CAM_FROM.z);
 	printf("%f\n", CAM_MAT[3][3] = 1);
 }
 
@@ -26,9 +26,12 @@ static void		init_camera(t_rt *rt)
 	t_vec	right;
 	t_vec	up;
 	
-	forward = vec_normalize(vec_sub(CAM_POS, CAM_LOOK));
+	forward = vec_normalize(vec_sub(CAM_FROM, CAM_TO));
 	right = vec_cross_product(vec_new(0.0, 1.0, 0.0), forward);
 	up = vec_cross_product(forward, right);
+	printf("CAM_FROM: (%f %f %f)\t CAM_to: (%f %f %f)\n", CAM_FROM.x, CAM_FROM.y, CAM_FROM.z, CAM_TO.x, CAM_TO.y, CAM_TO.z);
+	printf("forward: (%f %f %f)\tright: (%f %f %f)\tup: (%f %f %f)\n", forward.x,\
+	forward.y, forward.z, right.x, right.y, right.z, up.x, up.y, up.z);
 	make_cam_matrix(rt, forward, right, up);
 }
 

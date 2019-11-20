@@ -19,9 +19,9 @@
 # define RAY_O      rt->ray.ray_o
 # define RAY_D      rt->ray.ray_d
 
-# define CAM_POS    rt->cam.pos
+# define CAM_FROM    rt->cam.pos
 # define CAM_MAT    rt->camMatrix
-# define CAM_LOOK   rt->cam.look_at
+# define CAM_TO   rt->cam.look_at
 # define CAM_DIR    rt->cam.dir
 # define CAM_RIGHT  rt->cam.right
 # define CAM_DOWN   rt->cam.down
@@ -34,7 +34,7 @@
 # define EVENT      rt->win.event
 # define IMG_POINT  rt->win.img_pointer
 
-# define FOV        90
+# define FOV        60
 # define SCALE      tan(FOV * 0.5 * (M_PI / 180))
 
 #ifndef GAME_H

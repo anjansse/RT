@@ -57,9 +57,9 @@ void            rt_store_cam(t_rt *rt, char *info)
 		send_error(ft_strjoin(info, " is invalid: Error in camera options \
 -- should be [position(x y z)] | [look_at(xyz)].\n"));
 	store_vector(infos[0], xyz);
-	vec_set(&(CAM_POS), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(CAM_FROM), xyz[0], xyz[1], xyz[2]);
 	store_vector(infos[1], xyz);
-	vec_set(&(CAM_LOOK), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(CAM_TO), xyz[0], xyz[1], xyz[2]);
 	ft_free_db_tab(infos);
 }
 

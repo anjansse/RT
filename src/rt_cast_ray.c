@@ -127,6 +127,12 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 //		printf("test INTERSECTION OBJECT %d\n", object->type);
 		i = -1;
 		// @Ghislain --> changed ELEM - 2 into something more specific
+		//put comment on these values (get a negative discriminant as the default case)
+		// READ THE COMMENTS
+		coefs[0] = 1;
+		coefs[1] = 0;
+		coefs[2] = 1;
+		
 		while (++i < ELEM - 2)
 			if (object->type == g_dis_quad_table[i].objType)
 				g_dis_quad_table[i].function(rt, object, coefs);
@@ -141,32 +147,6 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 		return (TRUE);
 	return (FALSE);
 }
-
-/*
-bool			intersection_sphere(t_rt *rt, t_sphere *closestSphere, double *dist)
-{
-	t_sphere	*sphere;
-	double		coef[3];
-	double		sols[2];
-
-	sphere = rt->obj.sphere;
-	while (sphere)
-	{
-		coef[0] = vec_dot_product(RAY_D, RAY_D);
-		coef[1] = 2 * vec_dot_product(RAY_D, vec_sub(RAY_O, sphere->center));
-		coef[2] = vec_dot_product(vec_sub(RAY_O, sphere->center), \
-									vec_sub(RAY_O, sphere->center))\
-					- sphere->radius * sphere->radius;
-		if (TRUE == solve_quadratic(coef[0], coef[1], coef[2], sols))
-			if (check_closest_object(dist, sols))
-				closestSphere = sphere;
-		sphere = sphere->next;
-	}
-	if (*dist > 0.0)
-		return (TRUE);
-	return (FALSE);
-}
-*/
 
 
 // In this function, when calling the intersection functions, we could also pass
@@ -190,56 +170,6 @@ static void    rt_find_intersection(t_rt *rt, int pix)
 
 /*
 ** ----------------------------------------------------------------------------
-** Gets ray direction and origin. Those will be needed for all further calculs.
-**
-** @param {t_rt *} rt - Main structure for RT.
-** @param {int} pix - Current pixel through which we will cast a ray.
-** ----------------------------------------------------------------------------
-*/
-
-// static void    ray_get_info(t_rt *rt, int pix)
-// {
-//    double	x;
-//    double	y;
-//    double	ratio;
-//    double	xamnt;
-//    double	yamnt;
-
-//    ratio = (double)((double)WIDTH / (double)HEIGHT);
-//    x = (double)(pix % WIDTH);
-//    y = (double)(pix / WIDTH);
-//    xamnt = (2 * ((x + 0.5) / (double)WIDTH) - 1) * ratio;
-//    yamnt = (1 - 2 * ((y + 0.5) / (double)HEIGHT));
-// 	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
-// //	RAY_O = CAM_POS;
-// 	RAY_D = vec_new(xamnt * SCALE, yamnt * SCALE, 1);
-// 	RAY_D = vec_normalize(dir_x_mat(RAY_D, CAM_MAT));
-// //	printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
-// //	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
-// }
-
-// static void    ray_get_info(t_rt *rt, int pix)
-// {
-//    double      x;
-//    double      y;
-//    double      ratio;
-//    double		xamnt;
-//    double		yamnt;
-
-//    ratio = (double)WIDTH / (double)HEIGHT;
-//    x = (double)(pix % WIDTH);
-//    y = ((double)pix - x) / (double)WIDTH;
-//    xamnt = (2 * (x + 0.5) / (double)WIDTH - 1) * ratio;
-//    yamnt = (1 - 2 * (y + 0.5) / (double)HEIGHT);
-//    RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
-//    RAY_D = vec_new(xamnt * SCALE, yamnt * SCALE, 1);
-//    RAY_D = vec_normalize(dir_x_mat(RAY_D, CAM_MAT));
-// //    printf("Ray origin: (%f, %f, %f)\n", RAY_O.x, RAY_O.y, RAY_O.z);
-// // 	printf("Ray direction: (%f, %f, %f)\n", RAY_D.x, RAY_D.y, RAY_D.z);
-// }
-
-/*
-** ----------------------------------------------------------------------------
 ** Function used to cast the primary ray thorugh the pixel `pix` and check for any
 ** intersections and potential second, refraction, reflection, rays.
 **
@@ -248,13 +178,6 @@ static void    rt_find_intersection(t_rt *rt, int pix)
 ** ----------------------------------------------------------------------------
 */
 
-// int         rt_cast_ray(t_rt *rt, int pix)
-// {
-//    ray_get_info(rt, pix);
-//    rt_find_intersection(rt, pix);
-//    return (0);
-// }
-
 static void rt_get_ray_info(t_rt *rt, int pix)
 {
    int      pix_screen_x;
@@ -262,17 +185,22 @@ static void rt_get_ray_info(t_rt *rt, int pix)
    double   pix_camera_x;
    double   pix_camera_y;
    double   image_ratio;
+   t_vec	origin;
    
-   pix_screen_x = (pix % WIDTH);
-   pix_screen_y = (pix / WIDTH);
+   origin = vec_new(0, 0, 0);
+   pix_screen_x = (pix % (int)WIDTH);
+   pix_screen_y = (pix / (int)WIDTH);
    image_ratio = (double)(WIDTH / HEIGHT);
-   pix_camera_x = (2 * (pix_screen_x + 0.5) / (float)WIDTH - 1) * image_ratio * SCALE;
-   pix_camera_y = (1 - 2 * (pix_screen_y + 0.5) / (float)HEIGHT) * SCALE;
-   RAY_O = CAM_POS;
-   RAY_D = dir_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
+   pix_camera_x = (2.0 * (pix_screen_x + 0.5) / (double)WIDTH - 1) * image_ratio * SCALE;
+   pix_camera_y = (1.0 - 2.0 * (pix_screen_y + 0.5) / (double)HEIGHT) * SCALE;
+//    printf("((1 - 2 * (pix_screen_y + 0.5)): %f\t(float)HEIGHT) * SCALE: %f\n", (1 - 2 * (pix_screen_y + 0.5)), (double)HEIGHT) * SCALE);
+//    printf("pix %d\twidth: %d\n", pix, WIDTH);
+   RAY_O = vec_x_mat(origin, CAM_MAT);
+   RAY_D = vec_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
    RAY_D = vec_normalize(RAY_D);
-   printf("RAY_O: %f, %f, %f\n", RAY_O.x, RAY_O.y, RAY_O.z);
-	printf("RAY_D: %f, %f, %f\n", RAY_D.x, RAY_D.y, RAY_D.z);
+//    printf("Pix_camera_x: %f\tPix_camera_y: %f\n", pix_camera_x, pix_camera_y);
+//    printf("RAY_O: %f, %f, %f\n", RAY_O.x, RAY_O.y, RAY_O.z);
+// 	printf("RAY_D: %f, %f, %f\n", RAY_D.x, RAY_D.y, RAY_D.z);
 }
 
 int         rt_cast_ray(t_rt *rt, int pix)
