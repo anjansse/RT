@@ -164,7 +164,8 @@ static void    rt_find_intersection(t_rt *rt, int pix)
 	{
 
 //		printf("TEST INTERSECTION EXISTS\n");
-		FRAMEBUFF[pix] = 0xFFF0FFF0;
+		// FRAMEBUFF[pix] = 0xFFF0FFF0;
+		FRAMEBUFF[pix] = closest_object->sphere->color;
 	}
 }
 
@@ -188,8 +189,8 @@ static void rt_get_ray_info(t_rt *rt, int pix)
    t_vec	origin;
    
    origin = vec_new(0, 0, 0);
-   pix_screen_x = (pix % (int)WIDTH);
-   pix_screen_y = (pix / (int)WIDTH);
+   pix_screen_x = (pix % WIDTH);
+   pix_screen_y = (pix / WIDTH);
    image_ratio = (double)(WIDTH / HEIGHT);
    pix_camera_x = (2.0 * (pix_screen_x + 0.5) / (double)WIDTH - 1) * image_ratio * SCALE;
    pix_camera_y = (1.0 - 2.0 * (pix_screen_y + 0.5) / (double)HEIGHT) * SCALE;
