@@ -28,9 +28,10 @@
 
 # define ELEM			3
 # define MIN_LINE_SIZE	11
-# define NUMBER			" 0123456789"
+# define NUMBER			"- 0123456789"
 
 typedef struct s_rt		t_rt;
+typedef struct s_ray	t_ray;
 
 /*
 ** ----------------------------------------------------------------------------
@@ -140,15 +141,6 @@ typedef struct		s_dis_parser
 ** ----------------------------------------------------------------------------
 */
 
-typedef void			(t_quad_equ_disp)(t_rt*, t_object*, double*);
-
-typedef struct			s_dis_quad
-{
-	int					objType;
-	t_quad_equ_disp		*function;
-}						t_dis_quad;
-
-
 void            rt_store_cam(t_rt *rt, char *infos);
 void            rt_store_light(t_rt *rt, char *infos);
 void            rt_store_sphere(t_rt *rt, char *infos);
@@ -156,6 +148,6 @@ void            rt_store_sphere(t_rt *rt, char *infos);
 void			store_vector(char *info, double *xyz);
 void			store_radius(char *info, double	*radius);
 
-void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs);
+void			find_quad_equ_coefs_sphere(t_ray *ray, t_object *obj, double *coefs);
 
 #endif

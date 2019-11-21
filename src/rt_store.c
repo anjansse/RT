@@ -31,9 +31,9 @@ static void		object_add(t_rt *rt, int objType, void *objNode)
 	object->next = rt->obj;
 	rt->obj = object;
 	object->type = objType;
-	if (objType == LIGHT_NB)
+	if (objType == NB_LIGHT)
 		object->light = (t_light*)objNode;
-	if (objType == SPHERE_NB)
+	if (objType == NB_SPHERE)
 		object->sphere = (t_sphere*)objNode;
 }
 
@@ -97,7 +97,7 @@ void            rt_store_light(t_rt *rt, char *info)
 	store_vector(infos[0], pos);
 	store_vector(infos[1], dir);
 	light_add(&light, pos, dir);
-	object_add(rt, LIGHT_NB, (void*)light);
+	object_add(rt, NB_LIGHT, (void*)light);
 	ft_free_db_tab(infos);
 }
 
@@ -138,6 +138,6 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	store_radius(infos[1], &radius);
 	store_vector(infos[2], rgb);
 	sphere_add(&sphere, center, radius, rgb);
-	object_add(rt, SPHERE_NB, (void*)sphere);
+	object_add(rt, NB_SPHERE, (void*)sphere);
 	ft_free_db_tab(infos);
 }

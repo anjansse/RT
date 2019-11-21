@@ -3,22 +3,42 @@
 void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
 {
 	printf("%f\n", CAM_MAT[0][0] = right.x);
-	printf("%f\n", CAM_MAT[0][1] = right.y);
-	printf("%f\n", CAM_MAT[0][2] = right.z);
-	printf("%f\n", CAM_MAT[0][3] = 0);
-	printf("%f\n", CAM_MAT[1][0] = up.x);
+	printf("%f\n", CAM_MAT[1][0] = right.y);
+	printf("%f\n", CAM_MAT[2][0] = right.z);
+	printf("%f\n", CAM_MAT[3][0] = 0);
+	printf("%f\n", CAM_MAT[0][1] = up.x);
 	printf("%f\n", CAM_MAT[1][1] = up.y);
-	printf("%f\n", CAM_MAT[1][2] = up.z);
-	printf("%f\n", CAM_MAT[1][3] = 0);
-	printf("%f\n", CAM_MAT[2][0] = forward.x);
-	printf("%f\n", CAM_MAT[2][1] = forward.y);
+	printf("%f\n", CAM_MAT[2][1] = up.z);
+	printf("%f\n", CAM_MAT[3][1] = 0);
+	printf("%f\n", CAM_MAT[0][2] = forward.x);
+	printf("%f\n", CAM_MAT[1][2] = forward.y);
 	printf("%f\n", CAM_MAT[2][2] = forward.z);
-	printf("%f\n", CAM_MAT[2][3] = 0);
-	printf("%f\n", CAM_MAT[3][0] = CAM_FROM.x);
-	printf("%f\n", CAM_MAT[3][1] = CAM_FROM.y);
-	printf("%f\n", CAM_MAT[3][2] = CAM_FROM.z);
+	printf("%f\n", CAM_MAT[3][2] = 0);
+	printf("%f\n", CAM_MAT[0][3] = CAM_FROM.x);
+	printf("%f\n", CAM_MAT[1][3] = CAM_FROM.y);
+	printf("%f\n", CAM_MAT[2][3] = CAM_FROM.z);
 	printf("%f\n", CAM_MAT[3][3] = 1);
 }
+
+// void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
+// {
+// 	printf("%f\n", CAM_MAT[0][0] = right.x);
+// 	printf("%f\n", CAM_MAT[0][1] = right.y);
+// 	printf("%f\n", CAM_MAT[0][2] = right.z);
+// 	printf("%f\n", CAM_MAT[0][3] = 0);
+// 	printf("%f\n", CAM_MAT[1][0] = up.x);
+// 	printf("%f\n", CAM_MAT[1][1] = up.y);
+// 	printf("%f\n", CAM_MAT[1][2] = up.z);
+// 	printf("%f\n", CAM_MAT[1][3] = 0);
+// 	printf("%f\n", CAM_MAT[2][0] = forward.x);
+// 	printf("%f\n", CAM_MAT[2][1] = forward.y);
+// 	printf("%f\n", CAM_MAT[2][2] = forward.z);
+// 	printf("%f\n", CAM_MAT[2][3] = 0);
+// 	printf("%f\n", CAM_MAT[3][0] = CAM_FROM.x);
+// 	printf("%f\n", CAM_MAT[3][1] = CAM_FROM.y);
+// 	printf("%f\n", CAM_MAT[3][2] = CAM_FROM.z);
+// 	printf("%f\n", CAM_MAT[3][3] = 1);
+// }
 
 static void		init_camera(t_rt *rt)
 {

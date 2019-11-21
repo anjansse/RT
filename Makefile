@@ -6,14 +6,15 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/18 10:13:58 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/21 10:32:20 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RT
 
-GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_print.c\
-				rt_cast_ray.c extra.c vector.c
+GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_cast_rays.c\
+				rt_extra.c rt_matrix.c rt_ray_info.c rt_ray_trace.c\
+				rt_threads.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -33,7 +34,7 @@ PROFILER	=	-g -pg
 
 NUKLEAR		=	-I nuklear/
 
-CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG) $(NUKLEAR)
+CFLAGS		=	-Wall -Wextra -Werror $(SDL) -g
 
 LLIB		=	libft.a
 
@@ -79,6 +80,7 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LLIB)
+	@rm -rf RT.dSYM
 	@echo "\t\n\x1b[96mRT \x1b[91mlibrary has been cleaned!\x1b[0m\n"
 
 totfclean: fclean

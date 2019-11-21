@@ -7,8 +7,8 @@
 ** ----------------------------------------------------------------------------
 */
 
-static t_dis_quad	g_dis_quad_table[ELEM - 2] = {
-	{SPHERE_NB, &find_quad_equ_coefs_sphere},
+t_dis_intersection		g_dis_quad_table[ELEM - 2] = {
+	{NB_SPHERE, &find_quad_equ_coefs_sphere},
 };
 
 /*
@@ -19,10 +19,9 @@ static t_dis_quad	g_dis_quad_table[ELEM - 2] = {
 ** ----------------------------------------------------------------------------
 */
 
-void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs)
+void			find_quad_equ_coefs_sphere(t_ray *ray, t_object *obj, double *coefs)
 {
 
-//		printf("test FIND QUAD SPHERE\n");
 		coefs[0] = vec_dot_product(RAY_D, RAY_D);
 		coefs[1] = 2 * vec_dot_product(RAY_D, vec_sub(RAY_O, SPHERE->center));
 		coefs[2] = vec_dot_product(vec_sub(RAY_O, SPHERE->center), \
@@ -70,7 +69,6 @@ bool			solve_quadratic(double a, double  b, double c, double *sols)
 			sols[1] = tmp;
 		}
 	}
-//	printf("QUAD TEST DISC %lf, sol1 %lf sol2 %lf\n", disc, sols[0], sols[1]);
 	return (TRUE);
 }
 
@@ -113,7 +111,7 @@ bool			check_is_closest_object(double *dist, double *sols)
 	return (val);
 }
 
-bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
+bool			intersection_object(t_rt *rt, t_ray *ray, t_object **closestObject, double *dist)
 {
 	t_object	*object;
 	double		coefs[3];
@@ -123,89 +121,46 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 	object = rt->obj;
 	while (object)
 	{
-
-//		printf("test INTERSECTION OBJECT %d\n", object->type);
 		i = -1;
-		// @Ghislain --> changed ELEM - 2 into something more specific
-		//put comment on these values (get a negative discriminant as the default case)
-		// READ THE COMMENTS
 		coefs[0] = 1;
 		coefs[1] = 0;
 		coefs[2] = 1;
 		
 		while (++i < ELEM - 2)
 			if (object->type == g_dis_quad_table[i].objType)
-				g_dis_quad_table[i].function(rt, object, coefs);
+				g_dis_quad_table[i].function(ray, object, coefs);
 		if (TRUE == solve_quadratic(coefs[0], coefs[1], coefs[2], sols))
 			if (check_is_closest_object(dist, sols))
 				*closestObject = object;
 		object = object->next;
 	}
 
-//	printf("TEST DIST CLOSEST %lf\n", *dist);
 	if (*dist > 0.0 && *dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
 }
 
-
 // In this function, when calling the intersection functions, we could also pass
 // to the functions the distance to the closest object ...
 
-
-static void    rt_find_intersection(t_rt *rt, int pix)
+void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 {
 	t_object	*closest_object;
 	double		dist_closest_object;
 
 	closest_object = NULL;
 	dist_closest_object = INFINITY;
-	if (TRUE == intersection_object(rt, &closest_object, &dist_closest_object))
+	if (TRUE == intersection_object(rt, ray, &closest_object, &dist_closest_object))
 	{
-
-//		printf("TEST INTERSECTION EXISTS\n");
-		FRAMEBUFF[pix] = 0xFFF0FFF0;
+		if (closest_object->type == NB_SPHERE)
+		{
+			ray->pix_color = closest_object->sphere->color;
+			ray->ray_type = END;
+		}
 	}
-}
-
-/*
-** ----------------------------------------------------------------------------
-** Function used to cast the primary ray thorugh the pixel `pix` and check for any
-** intersections and potential second, refraction, reflection, rays.
-**
-** @param {t_rt *} rt - Main structure for RT.
-** @param {int} pix - Current pixel through which we will cast a ray.
-** ----------------------------------------------------------------------------
-*/
-
-static void rt_get_ray_info(t_rt *rt, int pix)
-{
-   int      pix_screen_x;
-   int      pix_screen_y;
-   double   pix_camera_x;
-   double   pix_camera_y;
-   double   image_ratio;
-   t_vec	origin;
-   
-   origin = vec_new(0, 0, 0);
-   pix_screen_x = (pix % (int)WIDTH);
-   pix_screen_y = (pix / (int)WIDTH);
-   image_ratio = (double)(WIDTH / HEIGHT);
-   pix_camera_x = (2.0 * (pix_screen_x + 0.5) / (double)WIDTH - 1) * image_ratio * SCALE;
-   pix_camera_y = (1.0 - 2.0 * (pix_screen_y + 0.5) / (double)HEIGHT) * SCALE;
-//    printf("((1 - 2 * (pix_screen_y + 0.5)): %f\t(float)HEIGHT) * SCALE: %f\n", (1 - 2 * (pix_screen_y + 0.5)), (double)HEIGHT) * SCALE);
-//    printf("pix %d\twidth: %d\n", pix, WIDTH);
-   RAY_O = vec_x_mat(origin, CAM_MAT);
-   RAY_D = vec_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
-   RAY_D = vec_normalize(RAY_D);
-//    printf("Pix_camera_x: %f\tPix_camera_y: %f\n", pix_camera_x, pix_camera_y);
-//    printf("RAY_O: %f, %f, %f\n", RAY_O.x, RAY_O.y, RAY_O.z);
-// 	printf("RAY_D: %f, %f, %f\n", RAY_D.x, RAY_D.y, RAY_D.z);
-}
-
-int         rt_cast_ray(t_rt *rt, int pix)
-{
-	rt_get_ray_info(rt, pix);
-	rt_find_intersection(rt, pix);
-	return (0);
+	else
+	{
+		ray->ray_type = END;
+	}
+	
 }
