@@ -25,11 +25,6 @@
 ** ----------------------------------------------------------------------------
 */
 
-# define WIDTH			1600
-# define HEIGHT			800
-// # define WIDTH			1
-// # define HEIGHT			1
-
 /*
 ** ----------------------------------------------------------------------------
 ** Errors to send.
@@ -61,6 +56,7 @@ typedef struct			s_window
 	SDL_Event			event;
 	const uint8_t		*keys;
 	uint32_t			*framebuff;
+	uint32_t			d_background[HEIGHT * WIDTH];
 }						t_window;
 
 /*
@@ -93,6 +89,8 @@ typedef struct 			s_ray
 {
 	t_vec				ray_o;
 	t_vec				ray_d;
+	char				ray_type;
+	uint32_t			pix_color;
 }						t_ray;
 
 /*
@@ -113,11 +111,11 @@ typedef struct			s_rt
 	t_camera			cam;
 	t_object			*obj;
 	double				camMatrix[4][4];
-	t_ray				ray;
+	int					pix;
 	t_thread			thread[4];
 }						t_rt;
 
-typedef void			(t_quad_equ_disp)(t_rt*, t_object*, double*);
+typedef void			(t_quad_equ_disp)(t_ray*, t_object*, double*);
 
 typedef struct			s_dis_intersection
 {
@@ -129,9 +127,13 @@ void				rt_game_loop(t_rt *rt);
 void				rt_print_scene(t_rt *rt);
 void				rt_parser(char *filename, t_rt *rt);
 
+void    			rt_trace_object_intersection(t_rt *rt, t_ray *ray);
+void				rt_cast_rays(t_rt *rt);
 
-int         		rt_cast_ray(t_rt *rt, int pix);
-void				rt_intersection(t_rt *rt, int pix);
+void				rt_info_primary_ray(t_rt *rt, t_ray *ray);
+void				rt_info_light_ray(t_rt *rt, t_ray *ray);
+void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
+void				rt_info_reflection_ray(t_rt *rt, t_ray *ray);
 
 int      			find_open_p(char *str, int pos);
 int      			find_close_p(char *str, int pos);

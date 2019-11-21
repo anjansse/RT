@@ -9,7 +9,7 @@
 ** ----------------------------------------------------------------------------
 */
 
-static void			rt_print_background(t_rt *rt)
+static void			rt_store_background(t_rt *rt)
 {
 	double Origin_RGB[3] = {95.0, 21.0, 252.0};
 	// double Final_RGB[3] = {244, 240, 255};
@@ -23,7 +23,7 @@ static void			rt_print_background(t_rt *rt)
 		x = y * WIDTH;
 		while (x < (y + 1) * WIDTH)
 		{
-			FRAMEBUFF[x] = ft_rgb(Origin_RGB[0], Origin_RGB[1], Origin_RGB[2]);
+			DEFAULT_BACKGROUND[x] = ft_rgb(Origin_RGB[0], Origin_RGB[1], Origin_RGB[2]);
 			++x;
 		}
 		if (y < HEIGHT / 2)
@@ -53,8 +53,8 @@ static void			rt_print_background(t_rt *rt)
 
 static void			rt_print(t_rt *rt)
 {
-	rt_print_background(rt);
-	rt_print_scene(rt);
+	rt_store_background(rt);
+	rt_cast_rays(rt);
 	SDL_UpdateTexture(IMG_POINT, NULL, FRAMEBUFF, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(RENDERER);
 	SDL_RenderCopy(RENDERER, IMG_POINT, NULL, NULL);

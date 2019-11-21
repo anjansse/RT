@@ -19,7 +19,7 @@ t_dis_intersection		g_dis_quad_table[ELEM - 2] = {
 ** ----------------------------------------------------------------------------
 */
 
-void			find_quad_equ_coefs_sphere(t_rt *rt, t_object *obj, double *coefs)
+void			find_quad_equ_coefs_sphere(t_ray *ray, t_object *obj, double *coefs)
 {
 
 		coefs[0] = vec_dot_product(RAY_D, RAY_D);
@@ -111,7 +111,7 @@ bool			check_is_closest_object(double *dist, double *sols)
 	return (val);
 }
 
-bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
+bool			intersection_object(t_rt *rt, t_ray *ray, t_object **closestObject, double *dist)
 {
 	t_object	*object;
 	double		coefs[3];
@@ -121,26 +121,20 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 	object = rt->obj;
 	while (object)
 	{
-
-//		printf("test INTERSECTION OBJECT %d\n", object->type);
 		i = -1;
-		// @Ghislain --> changed ELEM - 2 into something more specific
-		//put comment on these values (get a negative discriminant as the default case)
-		// READ THE COMMENTS
 		coefs[0] = 1;
 		coefs[1] = 0;
 		coefs[2] = 1;
 		
 		while (++i < ELEM - 2)
 			if (object->type == g_dis_quad_table[i].objType)
-				g_dis_quad_table[i].function(rt, object, coefs);
+				g_dis_quad_table[i].function(ray, object, coefs);
 		if (TRUE == solve_quadratic(coefs[0], coefs[1], coefs[2], sols))
 			if (check_is_closest_object(dist, sols))
 				*closestObject = object;
 		object = object->next;
 	}
 
-//	printf("TEST DIST CLOSEST %lf\n", *dist);
 	if (*dist > 0.0 && *dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
@@ -149,16 +143,24 @@ bool			intersection_object(t_rt *rt, t_object **closestObject, double *dist)
 // In this function, when calling the intersection functions, we could also pass
 // to the functions the distance to the closest object ...
 
-void    	rt_intersection(t_rt *rt, int pix)
+void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 {
 	t_object	*closest_object;
 	double		dist_closest_object;
 
 	closest_object = NULL;
 	dist_closest_object = INFINITY;
-	if (TRUE == intersection_object(rt, &closest_object, &dist_closest_object))
+	if (TRUE == intersection_object(rt, ray, &closest_object, &dist_closest_object))
 	{
 		if (closest_object->type == NB_SPHERE)
-			FRAMEBUFF[pix] = closest_object->sphere->color;
+		{
+			ray->pix_color = closest_object->sphere->color;
+			ray->ray_type = END;
+		}
 	}
+	else
+	{
+		ray->ray_type = END;
+	}
+	
 }
