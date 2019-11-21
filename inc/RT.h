@@ -12,9 +12,9 @@
 # define TRUE		1
 # define FALSE		0
 
-# define LIGHT_NB	0
-# define SPHERE_NB	1
-# define PLANE_NB	2
+# define NB_LIGHT	0
+# define NB_SPHERE	1
+# define NB_PLANE	2
 
 # define RAY_O      rt->ray.ray_o
 # define RAY_D      rt->ray.ray_d
@@ -35,8 +35,8 @@
 # define IMG_POINT  rt->win.img_pointer
 
 # define FOV        60
-// # define SCALE      tan(FOV * 0.5 * (M_PI / 180))
-# define SCALE      1
+# define SCALE      tan(FOV * 0.5 * (M_PI / 180))
+// # define SCALE      1
 
 #ifndef GAME_H
 # include <game.h>

@@ -1,3 +1,2 @@
-C: position: (45 45 45) | direction: (0 0 0)
-S: center-pos: (0 0 0) | radius: (10) | color: (255 0 25)
-S: center-pos: (150 150 150) | radius: (5) | color: (120 10 25)
+C: position: (0 0 0) | direction: (0 0 200)
+S: center-pos: (0 0 200) | radius: (60) | color: (255 0 25)

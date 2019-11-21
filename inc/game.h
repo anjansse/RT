@@ -117,12 +117,21 @@ typedef struct			s_rt
 	t_thread			thread[4];
 }						t_rt;
 
+typedef void			(t_quad_equ_disp)(t_rt*, t_object*, double*);
+
+typedef struct			s_dis_intersection
+{
+	int					objType;
+	t_quad_equ_disp		*function;
+}						t_dis_intersection;
+
 void				rt_game_loop(t_rt *rt);
 void				rt_print_scene(t_rt *rt);
 void				rt_parser(char *filename, t_rt *rt);
 
 
 int         		rt_cast_ray(t_rt *rt, int pix);
+void				rt_intersection(t_rt *rt, int pix);
 
 int      			find_open_p(char *str, int pos);
 int      			find_close_p(char *str, int pos);

@@ -6,14 +6,14 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/20 15:36:43 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/20 17:47:57 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RT
 
 GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_print.c\
-				rt_cast_ray.c extra.c vector.c
+				rt_cast_ray.c extra.c vector.c rt_intersection.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -79,6 +79,7 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LLIB)
+	@rm -rf RT.dSYM
 	@echo "\t\n\x1b[96mRT \x1b[91mlibrary has been cleaned!\x1b[0m\n"
 
 totfclean: fclean
