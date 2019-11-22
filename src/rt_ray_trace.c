@@ -170,6 +170,7 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 	t_object	*closest_object;
 	double		dist_closest_object;
 	t_vec		normal;
+	double		facingRatio;
 
 	closest_object = NULL;
 	dist_closest_object = INFINITY;
@@ -182,13 +183,15 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 		}
 		else
 		{
-			ray->ray_type = LIGHT;
-			ray->pix_color = closest_object->sphere->color;
 			RAY_D = vec_scale(RAY_D, dist_closest_object);
 			RAY_D = vec_add(RAY_O, RAY_D);
 			normal = vec_sub(RAY_D, closest_object->sphere->center);
-			RAY_O = vec_add(RAY_D, vec_scale(normal, 0.0001));
+			facingRatio = vec_dot_product(normal, vec_scale(RAY_D, -1));	// Calculating the facing ratio for the color but
+			RAY_O = vec_add(RAY_D, vec_scale(normal, 0.0001));				// we need to store colors as RGB for it to work
 			RAY_D = vec_sub(vec_new(0, 100, 0), RAY_O); // vec_new(0,100,0) is a defined position for the light here
+			ray->ray_type = LIGHT;
+			ray->pix_color = closest_object->sphere->color;
+			// ray->pix_color = closest_object->sphere->color * facingRatio; // Try to uncomment it, it actually looks pretty cool 
 		}
 	}
 	else
