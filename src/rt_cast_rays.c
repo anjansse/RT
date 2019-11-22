@@ -23,7 +23,6 @@ static void				rt_cast_specific_ray(t_rt *rt)
 	int	iteration_nb;
 	t_ray	current_ray;
 
-	// printf("went through: %d\n", rt->pix);
 	iteration_nb = 0;
 	current_ray.ray_type = PRIMARY;
 	current_ray.pix_color = DEFAULT_BACKGROUND[rt->pix];

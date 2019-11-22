@@ -96,7 +96,7 @@ bool			solve_quadratic(double a, double  b, double c, double *sols)
 bool			check_is_closest_object(double *dist, double *sols)
 {
 	bool val;
-
+	
 	val = FALSE;
 	if (sols[0] > 0 && sols[0] < *dist)
 	{
@@ -143,24 +143,55 @@ bool			intersection_object(t_rt *rt, t_ray *ray, t_object **closestObject, doubl
 // In this function, when calling the intersection functions, we could also pass
 // to the functions the distance to the closest object ...
 
+// void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
+// {
+// 	t_object	*closest_object;
+// 	double		dist_closest_object;
+
+// 	closest_object = NULL;
+// 	dist_closest_object = INFINITY;
+// 	if (TRUE == intersection_object(rt, ray, &closest_object, &dist_closest_object))
+// 	{
+// 		if (closest_object->type == NB_SPHERE)
+// 		{
+// 			ray->pix_color = closest_object->sphere->color;
+// 			ray->ray_type = END;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		ray->ray_type = END;
+// 	}
+	
+// }
+
 void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 {
 	t_object	*closest_object;
 	double		dist_closest_object;
+	t_vec		normal;
 
 	closest_object = NULL;
 	dist_closest_object = INFINITY;
 	if (TRUE == intersection_object(rt, ray, &closest_object, &dist_closest_object))
 	{
-		if (closest_object->type == NB_SPHERE)
+		if (ray->ray_type == LIGHT)
 		{
-			ray->pix_color = closest_object->sphere->color;
 			ray->ray_type = END;
+			ray->pix_color = 0x000000;
+		}
+		else
+		{
+			ray->ray_type = LIGHT;
+			ray->pix_color = closest_object->sphere->color;
+			RAY_D = vec_scale(RAY_D, dist_closest_object);
+			RAY_D = vec_add(RAY_O, RAY_D);
+			normal = vec_sub(RAY_D, closest_object->sphere->center);
+			RAY_O = vec_add(RAY_D, vec_scale(normal, 0.0001));
+			RAY_D = vec_sub(vec_new(0, 100, 0), RAY_O); // vec_new(0,100,0) is a defined position for the light here
 		}
 	}
 	else
-	{
 		ray->ray_type = END;
-	}
 	
 }
