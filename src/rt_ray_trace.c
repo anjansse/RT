@@ -165,6 +165,17 @@ bool			intersection_object(t_rt *rt, t_ray *ray, t_object **closestObject, doubl
 	
 // }
 
+uint32_t		ft_luminosity(uint32_t color, double scale)
+{
+	double		r;
+	double		g;
+	double		b;
+	r = (((color & 16711680) >> 16) * scale);
+	g = (((color & 65280) >> 8) * scale);
+	b = ((color & 255) * scale);
+	return (ft_rgb((uint8_t)r, (uint8_t)g, (uint8_t)b));
+}
+
 void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 {
 	t_object	*closest_object;
@@ -185,13 +196,13 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 		{
 			RAY_D = vec_scale(RAY_D, dist_closest_object);
 			RAY_D = vec_add(RAY_O, RAY_D);
-			normal = vec_sub(RAY_D, closest_object->sphere->center);
-			facingRatio = vec_dot_product(normal, vec_scale(RAY_D, -1));	// Calculating the facing ratio for the color but
-			RAY_O = vec_add(RAY_D, vec_scale(normal, 0.0001));				// we need to store colors as RGB for it to work
-			RAY_D = vec_sub(vec_new(0, 100, 0), RAY_O); // vec_new(0,100,0) is a defined position for the light here
+			normal = vec_normalize(vec_sub(RAY_D, closest_object->sphere->center));
+			
+			if ((facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, -1))) < 0)
+				facingRatio = 0;
 			ray->ray_type = LIGHT;
-			ray->pix_color = closest_object->sphere->color;
-			// ray->pix_color = closest_object->sphere->color * facingRatio; // Try to uncomment it, it actually looks pretty cool 
+			ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
+			// ray->pix_color = closest_object->sphere->color; 		// Try to uncomment it, it actually looks pretty cool 
 		}
 	}
 	else
