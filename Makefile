@@ -6,15 +6,15 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/21 10:32:20 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/23 12:11:54 by ghdesfos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RT
 
 GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_cast_rays.c\
-				rt_extra.c rt_matrix.c rt_ray_info.c rt_ray_trace.c\
-				rt_threads.c
+				rt_extra.c rt_matrix.c rt_ray_info.c rt_intersections.c\
+				rt_threads.c rt_intersection_plane.c rt_intersection_sphere.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 

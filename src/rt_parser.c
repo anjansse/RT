@@ -7,9 +7,12 @@
 */
 
 static t_dis_parser		g_dis_parser_table[ELEM] = {
-        {"C:", &rt_store_cam},
-        {"L:", &rt_store_light},
-        {"S:", &rt_store_sphere},
+	{"C:", &rt_store_cam},
+	{"L:", &rt_store_light},
+	{"S:", &rt_store_sphere},
+	{"P:", &rt_store_plane},
+//	{"Y:", &rt_store_cylinder},
+//	{"O:", &rt_store_cone},
 };
 
 /*

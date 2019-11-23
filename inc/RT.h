@@ -26,6 +26,8 @@
 # define NB_LIGHT				0
 # define NB_SPHERE				1
 # define NB_PLANE				2
+# define NB_CYLINDER			3
+# define NB_CONE				4
 
 # define RAY_O					ray->ray_o
 # define RAY_D					ray->ray_d
@@ -47,6 +49,9 @@
 # define CAM_DOWN				rt->cam.down
 
 # define SPHERE					obj->sphere
+# define PLANE					obj->plane
+# define CYLINDER				obj->cylinder
+# define CONE					obj->cone
 
 # define FRAMEBUFF				rt->win.framebuff
 # define RENDERER				rt->win.rend
@@ -56,22 +61,30 @@
 
 
 # define FOV					60
-# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
+//# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
+# define SCALE					1
 # define WIDTH					1600
 # define HEIGHT					800
 
+//	Ghislain: make EPSILON smaller?
+
+# define EPSILON				0.0001
+
 #ifndef GAME_H
-# include <game.h>
+# include "game.h"
 #endif
 
 #ifndef OBJECTS_H
-# include <objects.h>
+# include "objects.h"
+#endif
+
+#ifndef FUCNTIONS_H
+# include "functions.h"
 #endif
 
 #include <math.h>
 #include <SDL.h>
 #include <SDL_thread.h>
-#include <stdbool.h>
 // #define NK_IMPLEMENTATION
 #include "../libft/includes/libft.h"
 
