@@ -202,7 +202,6 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 				facingRatio = 0;
 			ray->ray_type = LIGHT;
 			ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
-			// ray->pix_color = closest_object->sphere->color; 		// Try to uncomment it, it actually looks pretty cool 
 		}
 	}
 	else
