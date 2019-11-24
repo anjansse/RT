@@ -6,15 +6,27 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/21 10:32:20 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/23 18:34:43 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	RT
 
-GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_cast_rays.c\
-				rt_extra.c rt_matrix.c rt_ray_info.c rt_ray_trace.c\
-				rt_threads.c
+MAIN		=	RT.c main_loop.c
+
+STORE		=	store_objects.c store_cam.c store_light.c store_sphere.c\
+				store_plane.c store_cone.c store_cyclinder.c
+
+PARSER		=	parser.c
+
+INTERSEC	=	intersection_plane.c intersection_sphere.c
+
+RAY_CAST	=	cast_rays.c ray_info.c ray_trace.c
+
+EXTRA_FUNC	=	extra.c matrix.c color.c threads.c
+
+GENERAL		=	$(addprefix store/, $(STORE)) $(addprefix intersections/, $(INTERSEC))\
+				$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 
@@ -34,7 +46,7 @@ PROFILER	=	-g -pg
 
 NUKLEAR		=	-I nuklear/
 
-CFLAGS		=	-Wall -Wextra -Werror $(SDL) -g
+CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG)
 
 LLIB		=	libft.a
 

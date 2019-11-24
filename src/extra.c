@@ -54,7 +54,7 @@ void		store_vector(char *info, double *xyz)
 	ft_free_db_tab(vector);
 }
 
-void		store_radius(char *info, double	*radius)
+void		store_number(char *info, double *number)
 {
     int		open_paranthese;
 	int		close_paranthese;
@@ -66,7 +66,7 @@ void		store_radius(char *info, double	*radius)
 		send_error(ft_strjoin(info, " is invalid.\n"));
 	content = ft_strsub(info, open_paranthese, (close_paranthese - open_paranthese));
 	if (!ft_verifstr(content, NUMBER))
-		send_error(ft_strdup("Radius of sphere should be a valid number.\n"));
-	*radius = (double)ft_stoi(content);
+		send_error(ft_strdup("This is not a valid number.\n"));
+	*number = (double)ft_stoi(content);
 	free(content);
 }

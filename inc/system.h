@@ -13,17 +13,8 @@
 #include "../libft/includes/libft.h"
 
 #ifndef OBJECTS_H
-# include <objects.h>
+# include "objects.h"
 #endif
-
-/*
-** ----------------------------------------------------------------------------
-** 	Window size.
-**
-** @macro {WIDTH} - Width of opened window.
-** @macro {HEIGHT} - Height of opened window.
-** ----------------------------------------------------------------------------
-*/
 
 /*
 ** ----------------------------------------------------------------------------
@@ -91,6 +82,8 @@ typedef struct 			s_ray
 	t_vec				ray_d;
 	char				ray_type;
 	uint32_t			pix_color;
+	int					pix_nb;
+	int					depth;
 }						t_ray;
 
 /*
@@ -114,31 +107,5 @@ typedef struct			s_rt
 	int					pix;
 	t_thread			thread[4];
 }						t_rt;
-
-typedef void			(t_quad_equ_disp)(t_ray*, t_object*, double*);
-
-typedef struct			s_dis_intersection
-{
-	int					objType;
-	t_quad_equ_disp		*function;
-}						t_dis_intersection;
-
-void				rt_game_loop(t_rt *rt);
-void				rt_print_scene(t_rt *rt);
-void				rt_parser(char *filename, t_rt *rt);
-
-void    			rt_trace_object_intersection(t_rt *rt, t_ray *ray);
-void				rt_cast_rays(t_rt *rt);
-
-void				rt_info_primary_ray(t_rt *rt, t_ray *ray);
-void				rt_info_light_ray(t_rt *rt, t_ray *ray);
-void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
-void				rt_info_reflection_ray(t_rt *rt, t_ray *ray);
-
-int      			find_open_p(char *str, int pos);
-int      			find_close_p(char *str, int pos);
-
-t_vec       		vec_x_mat(t_vec v, double m[4][4]);
-t_vec       		dir_x_mat(t_vec v, double m[4][4]);
 
 #endif

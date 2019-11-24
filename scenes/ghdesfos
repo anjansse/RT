@@ -1,0 +1,4 @@
+C: position: (75 0 0) | direction: (0 0 0)
+S: center-pos: (0 0 0) | radius: (10) | color: (255 0 25)
+P: distance-origin: (9) | normal: (0 -1 0) | color: (200 54 80)
+L: pos: (0 100 0) | direction: (0 -1 0)
