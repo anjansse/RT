@@ -35,13 +35,13 @@
 
 # define RAY_O					ray->ray_o
 # define RAY_D					ray->ray_d
-# define RAY_TYPE				ray->type
+# define RAY_TYPE				ray->ray_type
 
-# define PRIMARY				1
-# define LIGHT					2
-# define REFRACTION				3
-# define REFLECTION				4
-# define END					5
+# define PRIMARY_RAY			1
+# define SHADOW_RAY				2
+# define REFRACTION_RAY			3
+# define REFLECTION_RAY			4
+# define END_RAY				5
 
 # define MAX_DEPTH  			5
 
