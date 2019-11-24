@@ -66,6 +66,5 @@ void            rt_parser(char *filename, t_rt *rt)
 		send_error(ft_strjoin(filename, "\x1b[91m couldn't be opened.\x1b[0m\n"));
 	while (get_next_line(fd, &content) > 0)
 		rt_parse_line(rt, content);
-	printf("camera origin: (%f, %f, %f)\tcamera direction: (%f %f %f)\n", CAM_FROM.x, CAM_FROM.y, CAM_FROM.z, CAM_TO.x, CAM_TO.y, CAM_TO.z);
 	close(fd);
 }

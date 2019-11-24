@@ -12,9 +12,9 @@
 
 NAME		= 	RT
 
-GENERAL		= 	RT.c rt_game_loop.c rt_parser.c rt_store.c rt_cast_rays.c\
-				rt_extra.c rt_matrix.c rt_ray_info.c rt_intersections.c\
-				rt_threads.c rt_intersection_plane.c rt_intersection_sphere.c
+GENERAL		= 	RT.c main_loop.c parser.c store.c cast_rays.c\
+				extra.c matrix.c ray_info.c intersections.c\
+				threads.c intersection_plane.c intersection_sphere.c
 
 SRCS		=	$(addprefix src/, $(GENERAL))
 

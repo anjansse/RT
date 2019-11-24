@@ -70,7 +70,7 @@ static void			rt_print(t_rt *rt)
 ** ----------------------------------------------------------------------------
 */
 
-void				rt_game_loop(t_rt *rt)
+void				rt_main_loop(t_rt *rt)
 {
 	rt_print(rt);
 	while (1)

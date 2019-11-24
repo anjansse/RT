@@ -85,10 +85,10 @@ void				store_vector(char *info, double *xyz);
 void				store_number(char *info, double *number);
 
 /*
-**	GAME LOOP FUNCTIONS.
+**	MAIN LOOP FUNCTIONS.
 */
 
-void				rt_game_loop(t_rt *rt);
+void				rt_main_loop(t_rt *rt);
 void				rt_print_scene(t_rt *rt);
 
 /*

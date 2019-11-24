@@ -44,9 +44,6 @@
 # define CAM_FROM				rt->cam.pos
 # define CAM_TO					rt->cam.look_at
 # define CAM_MAT				rt->camMatrix
-# define CAM_DIR				rt->cam.dir
-# define CAM_RIGHT				rt->cam.right
-# define CAM_DOWN				rt->cam.down
 
 # define SPHERE					obj->sphere
 # define PLANE					obj->plane
@@ -61,8 +58,8 @@
 
 
 # define FOV					60
-//# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
-# define SCALE					1
+# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
+// # define SCALE					1
 # define WIDTH					1600
 # define HEIGHT					800
 
@@ -70,8 +67,8 @@
 
 # define EPSILON				0.0001
 
-#ifndef GAME_H
-# include "game.h"
+#ifndef SYSTEM_H
+# include "system.h"
 #endif
 
 #ifndef OBJECTS_H

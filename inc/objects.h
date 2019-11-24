@@ -11,8 +11,8 @@
 #include <SDL.h>
 #include "../libft/includes/libft.h"
 
-#ifndef GAME_H
-# include "game.h"
+#ifndef SYSTEM_H
+# include "system.h"
 #endif
 
 /*
