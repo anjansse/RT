@@ -13,6 +13,10 @@
 **
 ** @macro {WIDTH} - Width of opened window.
 ** @macro {HEIGHT} - Height of opened window.
+** @macro {ELEM} - Number of element for scene available (dispatch table)
+** @macro {MIN_LINE_SIZE} - Minimum size a line should have (at least name
+**							of element and a coordonate in plan).
+** @macro {NUMBER} - Available characters for parsing coordonare (x y z).
 ** ----------------------------------------------------------------------------
 */
 
@@ -26,6 +30,8 @@
 # define NB_LIGHT				0
 # define NB_SPHERE				1
 # define NB_PLANE				2
+# define NB_CYLINDER			3
+# define NB_CONE				4
 
 # define RAY_O					ray->ray_o
 # define RAY_D					ray->ray_d
@@ -37,16 +43,20 @@
 # define REFLECTION				4
 # define END					5
 
-# define MAX_ITERATION			5
+# define MAX_DEPTH  			5
 
 # define CAM_FROM				rt->cam.pos
 # define CAM_TO					rt->cam.look_at
 # define CAM_MAT				rt->camMatrix
-# define CAM_DIR				rt->cam.dir
-# define CAM_RIGHT				rt->cam.right
-# define CAM_DOWN				rt->cam.down
+
+# define LIGHT_FROM				rt->obj->light->pos
+# define LIGHT_TO				rt->obj->light->dir
+# define LIGHT_MAT				rt->obj->light->matrix
 
 # define SPHERE					obj->sphere
+# define PLANE					obj->plane
+# define CYLINDER				obj->cylinder
+# define CONE					obj->cone
 
 # define FRAMEBUFF				rt->win.framebuff
 # define RENDERER				rt->win.rend
@@ -54,25 +64,33 @@
 # define EVENT					rt->win.event
 # define IMG_POINT				rt->win.img_pointer
 
+# define ELEM					6
+# define NB_OBJECTS				4
+# define MIN_LINE_SIZE			11
+# define NUMBER					"- 0123456789"
 
 # define FOV					60
 # define SCALE					tan(FOV * 0.5 * (M_PI / 180))
 # define WIDTH					1600
 # define HEIGHT					800
 
-#ifndef GAME_H
-# include <game.h>
+# define EPSILON				0.0001
+
+#ifndef SYSTEM_H
+# include "system.h"
 #endif
 
 #ifndef OBJECTS_H
-# include <objects.h>
+# include "objects.h"
+#endif
+
+#ifndef FUCNTIONS_H
+# include "functions.h"
 #endif
 
 #include <math.h>
 #include <SDL.h>
 #include <SDL_thread.h>
-#include <stdbool.h>
-// #define NK_IMPLEMENTATION
 #include "../libft/includes/libft.h"
 
 #endif

@@ -8,8 +8,8 @@ void			rt_info_primary_ray(t_rt *rt, t_ray *ray)
 	double   pix_camera_y;
 	double   image_ratio;
 	
-	pix_screen_x = (rt->pix % WIDTH);
-	pix_screen_y = (rt->pix / WIDTH);
+	pix_screen_x = (ray->pix_nb % WIDTH);
+	pix_screen_y = (ray->pix_nb / WIDTH);
 	image_ratio = (double)(WIDTH / HEIGHT);
 	pix_camera_x = (2.0 * (pix_screen_x + 0.5) / (double)WIDTH - 1) * image_ratio * SCALE;
 	pix_camera_y = (1.0 - 2.0 * (pix_screen_y + 0.5) / (double)HEIGHT) * SCALE;

@@ -2,43 +2,23 @@
 
 void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
 {
-	printf("%f\n", CAM_MAT[0][0] = right.x);
-	printf("%f\n", CAM_MAT[1][0] = right.y);
-	printf("%f\n", CAM_MAT[2][0] = right.z);
-	printf("%f\n", CAM_MAT[3][0] = 0);
-	printf("%f\n", CAM_MAT[0][1] = up.x);
-	printf("%f\n", CAM_MAT[1][1] = up.y);
-	printf("%f\n", CAM_MAT[2][1] = up.z);
-	printf("%f\n", CAM_MAT[3][1] = 0);
-	printf("%f\n", CAM_MAT[0][2] = forward.x);
-	printf("%f\n", CAM_MAT[1][2] = forward.y);
-	printf("%f\n", CAM_MAT[2][2] = forward.z);
-	printf("%f\n", CAM_MAT[3][2] = 0);
-	printf("%f\n", CAM_MAT[0][3] = CAM_FROM.x);
-	printf("%f\n", CAM_MAT[1][3] = CAM_FROM.y);
-	printf("%f\n", CAM_MAT[2][3] = CAM_FROM.z);
-	printf("%f\n", CAM_MAT[3][3] = 1);
+	CAM_MAT[0][0] = right.x;
+	CAM_MAT[1][0] = right.y;
+	CAM_MAT[2][0] = right.z;
+	CAM_MAT[3][0] = 0;
+	CAM_MAT[0][1] = up.x;
+	CAM_MAT[1][1] = up.y;
+	CAM_MAT[2][1] = up.z;
+	CAM_MAT[3][1] = 0;
+	CAM_MAT[0][2] = forward.x;
+	CAM_MAT[1][2] = forward.y;
+	CAM_MAT[2][2] = forward.z;
+	CAM_MAT[3][2] = 0;
+	CAM_MAT[0][3] = CAM_FROM.x;
+	CAM_MAT[1][3] = CAM_FROM.y;
+	CAM_MAT[2][3] = CAM_FROM.z;
+	CAM_MAT[3][3] = 1;
 }
-
-// void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
-// {
-// 	printf("%f\n", CAM_MAT[0][0] = right.x);
-// 	printf("%f\n", CAM_MAT[0][1] = right.y);
-// 	printf("%f\n", CAM_MAT[0][2] = right.z);
-// 	printf("%f\n", CAM_MAT[0][3] = 0);
-// 	printf("%f\n", CAM_MAT[1][0] = up.x);
-// 	printf("%f\n", CAM_MAT[1][1] = up.y);
-// 	printf("%f\n", CAM_MAT[1][2] = up.z);
-// 	printf("%f\n", CAM_MAT[1][3] = 0);
-// 	printf("%f\n", CAM_MAT[2][0] = forward.x);
-// 	printf("%f\n", CAM_MAT[2][1] = forward.y);
-// 	printf("%f\n", CAM_MAT[2][2] = forward.z);
-// 	printf("%f\n", CAM_MAT[2][3] = 0);
-// 	printf("%f\n", CAM_MAT[3][0] = CAM_FROM.x);
-// 	printf("%f\n", CAM_MAT[3][1] = CAM_FROM.y);
-// 	printf("%f\n", CAM_MAT[3][2] = CAM_FROM.z);
-// 	printf("%f\n", CAM_MAT[3][3] = 1);
-// }
 
 static void		init_camera(t_rt *rt)
 {
@@ -49,9 +29,6 @@ static void		init_camera(t_rt *rt)
 	forward = vec_normalize(vec_sub(CAM_FROM, CAM_TO));
 	right = vec_cross_product(vec_new(0.0, 1.0, 0.0), forward);
 	up = vec_cross_product(forward, right);
-	printf("CAM_FROM: (%f %f %f)\t CAM_to: (%f %f %f)\n", CAM_FROM.x, CAM_FROM.y, CAM_FROM.z, CAM_TO.x, CAM_TO.y, CAM_TO.z);
-	printf("forward: (%f %f %f)\tright: (%f %f %f)\tup: (%f %f %f)\n", forward.x,\
-	forward.y, forward.z, right.x, right.y, right.z, up.x, up.y, up.z);
 	make_cam_matrix(rt, forward, right, up);
 }
 
@@ -65,7 +42,7 @@ static void		init_camera(t_rt *rt)
 ** ----------------------------------------------------------------------------
 */
 
-static void	rt_init_game(t_rt *rt)
+static void	rt_init_window(t_rt *rt)
 {
 	rt->win.win = SDL_CreateWindow("SDL_test", SDL_WINDOWPOS_UNDEFINED,\
 	SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
@@ -85,7 +62,7 @@ static void	rt_init_game(t_rt *rt)
 ** ----------------------------------------------------------------------------
 */
 
-static void	rt_quit_game(t_rt *rt)
+static void	rt_quit(t_rt *rt)
 {
 	SDL_DestroyRenderer(RENDERER);
 	SDL_DestroyWindow(rt->win.win);
@@ -123,8 +100,8 @@ int         	main(int ac, char *av[])
         send_error(ft_strdup(ERROR_USAGE));
 	rt_init_env(&rt);
 	rt_parser(av[1], &rt);
-	rt_init_game(&rt);
-	rt_game_loop(&rt);
-	rt_quit_game(&rt);
+	rt_init_window(&rt);
+	rt_main_loop(&rt);
+	rt_quit(&rt);
     return (0);
 }
