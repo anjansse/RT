@@ -66,7 +66,7 @@
 # define NUMBER					"- 0123456789"
 
 # define FOV					60
-# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
+# define SCALE					tan(FOV * 0.5 * (M_PI / 180))	
 # define WIDTH					1600
 # define HEIGHT					800
 

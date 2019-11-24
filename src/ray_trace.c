@@ -126,38 +126,8 @@ bool			find_closest_intersected_object(t_rt *rt, t_ray *ray, \
 	return (FALSE);
 }
 
-// In this function, when calling the intersection functions, we could also pass
-// to the functions the distance to the closest object ...
-
-// void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
-// {
-// 	double		closest_object_dist;
-// 	t_object	*closest_object;
-
-// 	closest_object_dist = INFINITY;
-// 	closest_object = NULL;
-// 	if (TRUE == find_closest_intersected_object(rt, ray, &closest_object, \
-// 													&closest_object_dist))
-// 	{
-// 		if (closest_object->type == NB_SPHERE)
-// 		{
-// 			ray->pix_color = closest_object->sphere->color;
-// 			ray->ray_type = END;
-// 		}
-// 		else if (closest_object->type == NB_PLANE)
-// 		{
-// 			ray->pix_color = closest_object->plane->color;
-// 			ray->ray_type = END;
-// 		}
-// 	}
-// 	else
-// 		ray->ray_type = END;
-// }
-
 void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 {
-	t_vec		normal;
-	double		facingRatio;
 	double		closest_object_dist;
 	t_object	*closest_object;
 
@@ -168,26 +138,24 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 	{
 		if (ray->ray_type == LIGHT)
 		{
+			// printf("%d\n", closest_object->type);
 			ray->ray_type = END;
 			ray->pix_color = 0x000000;
 		}
-		else
+		else if (ray->ray_type == PRIMARY)
 		{
 			if (closest_object->type == NB_SPHERE)
 			{
-				RAY_D = vec_scale(RAY_D, closest_object_dist);
-				RAY_D = vec_add(RAY_O, RAY_D);
-				normal = vec_normalize(vec_sub(RAY_D, closest_object->sphere->center));
-				if ((facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, -1))) < 0)
-					facingRatio = 0;
-				ray->ray_type = LIGHT;
-				ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
-				// ray->ray_type = END;
+				rt_info_light_ray(rt, ray, closest_object, closest_object_dist);
+				rt_cast_ray(rt, ray);
 			}
 			else if (closest_object->type == NB_PLANE)
 			{
-				ray->pix_color = closest_object->plane->color;
-				ray->ray_type = END;
+				rt_info_light_ray(rt, ray, closest_object, closest_object_dist);
+				// ray->pix_color = closest_object->plane->color;
+				// ray->ray_type = END;
+				// ray->ray_type = LIGHT;
+				rt_cast_ray(rt, ray);
 			}
 		}
 	}

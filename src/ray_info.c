@@ -18,10 +18,59 @@ void			rt_info_primary_ray(t_rt *rt, t_ray *ray)
 	RAY_D = vec_normalize(RAY_D);
 }
 
-void				rt_info_light_ray(t_rt *rt, t_ray *ray)
+void				rt_info_light_ray(t_rt *rt, t_ray *ray,
+					t_object *closest_object, double closest_object_distance)
 {
-	(void)rt;
-	(void)ray;
+	t_vec		normal;
+	double		facingRatio;
+	t_vec		hitpoint;
+
+	// hitpoint = vec_add(vec_scale(RAY_D, closes_object_distance), RAY_O);
+
+	// if (closest_object->type == NB_SPHERE)
+	// 	normal = vec_normalize(vec_sub(hitpoint, closest_object->sphere->center));
+	// else
+	// 	normal = closest_object->plane->normal;
+
+	// if (closest_object->type == NB_SPHERE && (facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, 1))) < 0)
+	// 	facingRatio = 0;
+	// if (closest_object->type == NB_PLANE && (facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, 1))) < 0)
+	// 	facingRatio = -facingRatio;
+	// if (closest_object->type == NB_SPHERE)
+	// 	ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
+	// else
+	// 	ray->pix_color = ft_luminosity(closest_object->plane->color, facingRatio);
+	
+
+	// RAY_O = hitpoint;
+	// RAY_D = vec_scale(rt->obj->light->dir, -1);
+	// ray->ray_type = LIGHT;
+
+
+	if (closest_object->type == NB_SPHERE)
+	{
+		hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+		normal = vec_normalize(vec_sub(hitpoint, closest_object->sphere->center));
+		if ((facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, -1))) < 0)
+			facingRatio = 0;
+		ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
+		ray->ray_type = LIGHT;
+		RAY_O = hitpoint;
+		RAY_D = vec_sub(rt->obj->light->pos, hitpoint);
+	}
+	else if (closest_object->type == NB_PLANE)
+	{
+		hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+		normal = closest_object->plane->normal;
+		if ((facingRatio = vec_dot_product(vec_scale(normal, -1), vec_scale(rt->obj->light->dir, -1))) < 0) {
+			facingRatio = 0;
+		}
+		ray->pix_color = ft_luminosity(closest_object->plane->color, facingRatio);
+		ray->ray_type = LIGHT;
+		RAY_O = vec_sub(hitpoint, vec_scale(normal, 0.0001));
+		RAY_D = vec_sub(rt->obj->light->pos, hitpoint);
+	}
+
 }
 
 void				rt_info_refraction_ray(t_rt *rt, t_ray *ray)

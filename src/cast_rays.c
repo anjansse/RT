@@ -13,17 +13,17 @@
 ** ----------------------------------------------------------------------------
 */
 
-static void 		rt_ray_info(t_rt *rt, t_ray *ray)
-{
-	if (ray->ray_type == PRIMARY)
-		rt_info_primary_ray(rt, ray);
-	else if (ray->ray_type == LIGHT)
-		rt_info_light_ray(rt, ray);
-	else if (ray->ray_type == REFRACTION)
-		rt_info_refraction_ray(rt, ray);
-	else if (ray->ray_type == REFLECTION)
-		rt_info_reflection_ray(rt, ray);
-}
+// static void 		rt_ray_info(t_rt *rt, t_ray *ray)
+// {
+// 	if (ray->ray_type == PRIMARY)
+// 		rt_info_primary_ray(rt, ray);
+// 	else if (ray->ray_type == LIGHT)
+// 		rt_info_light_ray(rt, ray);
+// 	else if (ray->ray_type == REFRACTION)
+// 		rt_info_refraction_ray(rt, ray);
+// 	else if (ray->ray_type == REFLECTION)
+// 		rt_info_reflection_ray(rt, ray);
+// }
 
 /*
 ** ----------------------------------------------------------------------------
@@ -38,11 +38,11 @@ static void 		rt_ray_info(t_rt *rt, t_ray *ray)
 ** ----------------------------------------------------------------------------
 */
 
-static void			rt_ray_trace(t_rt *rt, t_ray *ray)
-{
-	if (ray->ray_type == PRIMARY || ray->ray_type == LIGHT)
-		rt_trace_object_intersection(rt, ray);
-}
+// static void			rt_ray_trace(t_rt *rt, t_ray *ray)
+// {
+// 	if (ray->ray_type == PRIMARY || ray->ray_type == LIGHT)
+// 		rt_trace_object_intersection(rt, ray);
+// }
 
 /*
 ** ----------------------------------------------------------------------------
@@ -60,8 +60,9 @@ static void			rt_ray_trace(t_rt *rt, t_ray *ray)
 uint32_t			rt_cast_ray(t_rt *rt, t_ray *ray)
 {
 	++ray->depth;
-	rt_ray_info(rt, ray);
-	rt_ray_trace(rt, ray);
+	if (ray->ray_type == PRIMARY)
+		rt_info_primary_ray(rt, ray);
+	rt_trace_object_intersection(rt, ray);
 	if (ray->ray_type == END || ray->depth >= MAX_DEPTH)
 		return (ray->pix_color);
 	return (rt_cast_ray(rt, ray));
