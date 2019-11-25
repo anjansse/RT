@@ -2,8 +2,9 @@
 
 /*
 ** ----------------------------------------------------------------------------
-** Dispatch table containing ELEM nunber of possible elements, and their corresponding quadratic function.
-**	We don't consider here the camera and the light elements, hence the ELEM - 2
+** Dispatch table containing ELEM nunber of possible elements, and their 
+** corresponding quadratic function. We don't consider here the camera and 
+** the light elements, hence the ELEM - 2
 ** ----------------------------------------------------------------------------
 */
 
@@ -17,11 +18,11 @@ t_disp_intersection		g_disp_intersection[NB_OBJECTS - 2] = {
 /*
 ** ----------------------------------------------------------------------------
 ** Solves a quadratic expression, i.e. a*x*x + b*x + c == 0.
-** The function will return 1 is the equation has one or 2 solutions, \
+** The function will return 1 is the equation has one or 2 solutions,
 ** and 0 otherwise.
 **
 ** @param {double*} sols will contain the solutions of the equation if they exist,
-** this pointer should point to a memory area that can contain 2 floats, \
+** this pointer should point to a memory area that can contain 2 floats,
 ** corresponding to the 2 possible solutions.
 ** If there is just one solution, then the 2 memory slots will have the same value.
 ** ----------------------------------------------------------------------------
@@ -102,9 +103,8 @@ bool			check_is_closest_object(double closest_object_dist, \
 ** ----------------------------------------------------------------------------
 */
 
-bool			find_closest_intersected_object(t_rt *rt, t_ray *ray, \
-													t_object **closest_object, \
-													double *closest_object_dist)
+bool			find_closest_intersected_object(t_rt *rt, t_ray *ray,
+				t_object **closest_object, double *closest_object_dist)
 {
 	t_object	*object;
 	double		object_dist;
@@ -112,7 +112,7 @@ bool			find_closest_intersected_object(t_rt *rt, t_ray *ray, \
 	object = rt->obj;
 	while (object)
 	{
-		if (TRUE == check_intersection_with_specific_object(ray, object, \
+		if (TRUE == check_intersection_with_specific_object(ray, object,
 																&object_dist))
 			if (check_is_closest_object(*closest_object_dist, object_dist))
 			{
@@ -124,6 +124,7 @@ bool			find_closest_intersected_object(t_rt *rt, t_ray *ray, \
 	if (*closest_object_dist > EPSILON && *closest_object_dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
+<<<<<<< HEAD:src/ray_trace.c
 }
 
 // In this function, when calling the intersection functions, we could also pass
@@ -203,4 +204,6 @@ void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
 	}
 	else
 		ray->ray_type = END;
+=======
+>>>>>>> bed65ecd15d2eeb95116e624837356168fb8182f:src/ray_intersections/intersection_dispatch.c
 }

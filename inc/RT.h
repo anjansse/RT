@@ -35,13 +35,13 @@
 
 # define RAY_O					ray->ray_o
 # define RAY_D					ray->ray_d
-# define RAY_TYPE				ray->type
+# define RAY_TYPE				ray->ray_type
 
-# define PRIMARY				1
-# define LIGHT					2
-# define REFRACTION				3
-# define REFLECTION				4
-# define END					5
+# define PRIMARY_RAY			1
+# define SHADOW_RAY				2
+# define REFRACTION_RAY			3
+# define REFLECTION_RAY			4
+# define END_RAY				5
 
 # define MAX_DEPTH  			5
 
@@ -70,11 +70,12 @@
 # define NUMBER					"- 0123456789"
 
 # define FOV					60
-# define SCALE					tan(FOV * 0.5 * (M_PI / 180))
+// # define SCALE					tan(FOV * 0.5 * (M_PI / 180))	
+# define SCALE                  1
 # define WIDTH					1600
 # define HEIGHT					800
 
-# define EPSILON				0.0001
+# define EPSILON				0.001
 
 #ifndef SYSTEM_H
 # include "system.h"

@@ -6,49 +6,52 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/23 18:34:43 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/24 15:03:58 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 	RT
+NAME			= 	RT
 
-MAIN		=	RT.c main_loop.c
+MAIN			=	RT.c main_loop.c
 
-STORE		=	store_objects.c store_cam.c store_light.c store_sphere.c\
-				store_plane.c store_cone.c store_cyclinder.c
+STORE			=	store_objects.c store_cam.c store_light.c store_sphere.c\
+					store_plane.c store_cone.c store_cyclinder.c
 
-PARSER		=	parser.c
+PARSER			=	parser.c
 
-INTERSEC	=	intersection_plane.c intersection_sphere.c
+RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c
 
-RAY_CAST	=	cast_rays.c ray_info.c ray_trace.c
+RAY_INFO		=	ray_info_light.c ray_info_primary.c ray_info_refraction.c\
+					ray_info_reflection.c
 
-EXTRA_FUNC	=	extra.c matrix.c color.c threads.c
+RAY_CAST		=	cast_rays.c dispatch_rays.c
 
-GENERAL		=	$(addprefix store/, $(STORE)) $(addprefix intersections/, $(INTERSEC))\
-				$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
+EXTRA_FUNC		=	extra.c matrix.c color.c threads.c
 
-SRCS		=	$(addprefix src/, $(GENERAL))
+GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
+					$(addprefix ray_info/, $(RAY_INFO)) $(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
 
-INCLUDES	=	-I inc/
+SRCS			=	$(addprefix src/, $(GENERAL))
 
-CC			=	gcc
+INCLUDES		=	-I inc/
 
-MINILIBX	=	-L Minilibx/minilibx_macos -lmlx -framework OpenGL -framework AppKit
+CC				=	gcc
 
-SDL			=	-I SDL2/include/ -L SDL2/lib -l SDL2-2.0.0
+MINILIBX		=	-L Minilibx/minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
-DEBUG		=	-g -fsanitize=undefined -fsanitize=address
+SDL				=	-I SDL2/include/ -L SDL2/lib -l SDL2-2.0.0
 
-OPTI		=	-O2
+DEBUG			=	-g -fsanitize=undefined -fsanitize=address
 
-PROFILER	=	-g -pg
+OPTI			=	-O2
 
-NUKLEAR		=	-I nuklear/
+PROFILER		=	-g -pg
 
-CFLAGS		=	-Wall -Wextra -Werror $(SDL) $(DEBUG)
+NUKLEAR			=	-I nuklear/
 
-LLIB		=	libft.a
+CFLAGS			=	-Wall -Wextra -Werror $(SDL) $(DEBUG)
+
+LLIB			=	libft.a
 
 reprog: fclean all
 

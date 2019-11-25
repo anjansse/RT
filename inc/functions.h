@@ -84,14 +84,15 @@ void				rt_print_scene(t_rt *rt);
 **	INTERSECTION FUNCTIONS.
 */
 
-bool				find_intersection_sphere(t_ray *ray, t_object *object, \
-											double *object_dist);
-bool				find_intersection_plane(t_ray *ray, t_object *object, \
-											double *object_dist);
-
-bool				solve_quadratic_equa(double a, double  b, double c, \
-											double *sols);
-void    			rt_trace_object_intersection(t_rt *rt, t_ray *ray);
+bool				find_intersection_sphere(t_ray *ray, t_object *object,\
+					double *object_dist);
+bool				find_intersection_plane(t_ray *ray, t_object *object,\
+					double *object_dist);
+bool				find_closest_intersected_object(t_rt *rt, t_ray *ray,\
+					t_object **closest_object, double *closest_object_dist);
+bool				solve_quadratic_equa(double a, double  b, double c,\
+					double *sols);
+void    			rt_ray_dispatching(t_rt *rt, t_ray *ray);
 
 /*
 **	RAY FUNCTIONS.
@@ -100,8 +101,9 @@ void    			rt_trace_object_intersection(t_rt *rt, t_ray *ray);
 uint32_t			rt_cast_ray(t_rt *rt, t_ray *ray);
 void				rt_render(t_rt *rt);
 
-void				rt_info_primary_ray(t_rt *rt, t_ray *ray);
-void				rt_info_light_ray(t_rt *rt, t_ray *ray);
+void				get_primary_ray_info(t_rt *rt, t_ray *ray);
+void				get_shadow_ray_info(t_rt *rt, t_ray *ray,\
+					t_object *closest_object, double closes_object_distance);
 void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
 void				rt_info_reflection_ray(t_rt *rt, t_ray *ray);
 
