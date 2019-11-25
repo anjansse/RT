@@ -66,11 +66,12 @@
 # define NUMBER					"- 0123456789"
 
 # define FOV					60
-# define SCALE					tan(FOV * 0.5 * (M_PI / 180))	
+// # define SCALE					tan(FOV * 0.5 * (M_PI / 180))	
+# define SCALE                  1
 # define WIDTH					1600
 # define HEIGHT					800
 
-# define EPSILON				0.0001
+# define EPSILON				0.001
 
 #ifndef SYSTEM_H
 # include "system.h"
