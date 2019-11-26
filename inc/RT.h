@@ -58,6 +58,7 @@
 # define RENDERER				rt->win.rend
 # define KEYS					rt->win.keys
 # define EVENT					rt->win.event
+# define LIVE_MODE              rt->gui_live_mode
 # define IMG_POINT				rt->win.img_pointer
 
 # define ELEM					6

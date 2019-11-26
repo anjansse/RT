@@ -106,6 +106,7 @@ typedef struct			s_rt
 	double				camMatrix[4][4];
 	int					pix;
 	t_thread			thread[4];
+	char				gui_live_mode;
 }						t_rt;
 
 #endif

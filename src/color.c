@@ -10,8 +10,9 @@ uint32_t		ft_luminosity(uint32_t color, double scale)
 	double		r;
 	double		g;
 	double		b;
-	r = (((color & 16711680) >> 16) * scale);
-	g = (((color & 65280) >> 8) * scale);
-	b = ((color & 255) * scale);
+	
+	r = (((color & 0xff0000) >> 16) * scale);
+	g = (((color & 0x00ff00) >> 8) * scale);
+	b = ((color & 0x0000ff) * scale);
 	return (ft_rgb((uint8_t)r, (uint8_t)g, (uint8_t)b));
 }

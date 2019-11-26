@@ -118,6 +118,7 @@ static void			rt_store_background(t_rt *rt)
 ** ----------------------------------------------------------------------------
 */
 
+
 static void			rt_print(t_rt *rt)
 {
 	rt_store_background(rt);
@@ -137,6 +138,47 @@ static void			rt_print(t_rt *rt)
 ** ----------------------------------------------------------------------------
 */
 
+static void			loading_screen(t_rt *rt)
+{
+	int i;
+
+	i = -1;
+	while (++i < (HEIGHT * WIDTH))
+		FRAMEBUFF[i] = 0x000000;
+	SDL_UpdateTexture(IMG_POINT, NULL, FRAMEBUFF, WIDTH * sizeof (uint32_t));
+	SDL_RenderClear(RENDERER);
+	SDL_RenderCopy(RENDERER, IMG_POINT, NULL, NULL);
+	SDL_RenderPresent(RENDERER);
+}
+
+static void			handle_cmd(t_rt *rt)
+{
+	if (KEYS[SDL_SCANCODE_RIGHT])
+	{
+		CAM_MAT[0][3] += 25.0;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+	else if (KEYS[SDL_SCANCODE_LEFT])
+	{
+		CAM_MAT[0][3] -= 25.0;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+	else if (KEYS[SDL_SCANCODE_DOWN])
+	{
+		CAM_MAT[1][3] -= 25.0;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+	else if (KEYS[SDL_SCANCODE_UP])
+	{
+		CAM_MAT[1][3] += 25.0;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+}
+
 void				rt_main_loop(t_rt *rt)
 {
 	rt_print(rt);
@@ -149,12 +191,13 @@ void				rt_main_loop(t_rt *rt)
 				break ;
 			else if (SDL_KEYDOWN == EVENT.type)
 			{
-				printf("Key Pressed\n");
 				if (KEYS[SDL_SCANCODE_ESCAPE])
 					exit(0);
+				if (KEYS[SDL_SCANCODE_L])
+					LIVE_MODE = (LIVE_MODE == 1) ? 0 : 1;
+				if (LIVE_MODE == 1)
+					handle_cmd(rt);
 			}
-			else if (SDL_KEYUP == EVENT.type)
-				printf("Key Released\n");
 		}
 	}
 }

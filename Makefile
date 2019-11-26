@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/24 15:03:58 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/26 11:16:30 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ MINILIBX		=	-L Minilibx/minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
 SDL				=	-I SDL2/include/ -L SDL2/lib -l SDL2-2.0.0
 
+
 DEBUG			=	-g -fsanitize=undefined -fsanitize=address
 
 OPTI			=	-O2
@@ -71,10 +72,20 @@ lib:
 
 totall: lib all
 
-sdl:
+sdl_install:
 	@brew install sdl2
 	@brew switch sdl2 2.0.10
 	@clear
+	@echo -n 'Adapting SDL to your computer...'
+	@rm -rf SDL2/include/*
+	@rm -rf SDL2/lib/*
+	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+	@echo "\t\x1b[92mDone\x1b[0m\n"
+	@sleep 0.3
+	@clear
+
+sdl:
 	@echo -n 'Adapting SDL to your computer...'
 	@rm -rf SDL2/include/*
 	@rm -rf SDL2/lib/*
