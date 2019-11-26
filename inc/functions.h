@@ -88,6 +88,10 @@ bool				find_intersection_sphere(t_ray *ray, t_object *object,\
 					double *object_dist);
 bool				find_intersection_plane(t_ray *ray, t_object *object,\
 					double *object_dist);
+bool				find_intersection_cone(t_ray *ray, t_object *object,\
+					double *object_dist);
+bool				find_intersection_cylinder(t_ray *ray, t_object *object,\
+					double *object_dist);
 bool				find_closest_intersected_object(t_rt *rt, t_ray *ray,\
 					t_object **closest_object, double *closest_object_dist);
 bool				solve_quadratic_equa(double a, double  b, double c,\

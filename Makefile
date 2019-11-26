@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/26 11:16:30 by anjansse         ###   ########.fr        #
+#    Updated: 2019/11/26 12:41:18 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ STORE			=	store_objects.c store_cam.c store_light.c store_sphere.c\
 
 PARSER			=	parser.c
 
-RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c
+RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c\
+					intersection_cone.c intersection_cylinder.c
 
 RAY_INFO		=	ray_info_light.c ray_info_primary.c ray_info_refraction.c\
 					ray_info_reflection.c
