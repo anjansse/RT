@@ -91,8 +91,9 @@ typedef struct			s_plane
 
 typedef struct			s_cylinder
 {
-	double				dist_to_origin;
-	t_vec				normal;
+	t_vec				center;
+	double				height;
+	double				radius;
 	uint32_t			color;
 }						t_cylinder;
 

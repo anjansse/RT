@@ -48,6 +48,29 @@ t_object *closest_object, double closest_object_distance)
 	RAY_O = vec_sub(hitpoint, vec_scale(normal, 0.0001));
 }
 
+static void			cylinder_shadow_ray_info(t_rt *rt, t_ray *ray,
+t_object *closest_object, double closest_object_distance)
+{
+	t_vec		normal;
+	double		facingRatio;
+	t_vec		hitpoint;
+	
+	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+	normal = vec_normalize(vec_sub(hitpoint, vec_new(closest_object->cylinder->center.x, hitpoint.y, closest_object->cylinder->center.z)));	// I don't think it is the right way to get the normal
+
+	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
+	// RAY_D = vec_scale(rt->obj->light->dir, -1);
+
+	if (vec_dot_product(normal, RAY_D) < 0)
+		normal = vec_scale(normal, -1);
+
+	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
+		facingRatio = 0;
+	ray->pix_color = ft_luminosity(closest_object->cylinder->color, facingRatio);
+	ray->ray_type = SHADOW_RAY;
+	RAY_O = hitpoint;
+}
+
 /*
 **
 */
@@ -59,4 +82,6 @@ void				get_shadow_ray_info(t_rt *rt, t_ray *ray,
 		sphere_shadow_ray_info(rt, ray, closest_object, closest_object_distance);
 	else if (closest_object->type == NB_PLANE)
 		plane_shadow_ray_info(rt, ray, closest_object, closest_object_distance);
+	else if (closest_object->type == NB_CYLINDER)
+		cylinder_shadow_ray_info(rt, ray, closest_object, closest_object_distance);
 }
