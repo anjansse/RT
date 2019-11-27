@@ -38,4 +38,6 @@ void				object_add(t_rt *rt, int objType, void *objNode)
 		object->sphere = (t_sphere*)objNode;
 	else if (objType == NB_PLANE)
 		object->plane = (t_plane*)objNode;
+	else if (objType == NB_CONE)
+		object->cone = (t_cone*)objNode;
 }

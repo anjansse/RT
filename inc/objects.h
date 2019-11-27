@@ -105,8 +105,9 @@ typedef struct			s_cylinder
 
 typedef struct			s_cone
 {
-	double				dist_to_origin;
-	t_vec				normal;
+	double				half_angle;
+	t_vec				cone_tips;
+	t_vec				axis_vector;
 	uint32_t			color;
 }						t_cone;
 
