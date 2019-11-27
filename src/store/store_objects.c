@@ -41,4 +41,6 @@ void				object_add(t_rt *rt, int objType, void *objNode)
 		object->plane = (t_plane*)objNode;
 	else if (objType == NB_CYLINDER)
 		object->cylinder = (t_cylinder*)objNode;
+	else if (objType == NB_CONE)
+		object->cone = (t_cone*)objNode;
 }
