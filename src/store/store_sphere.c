@@ -19,6 +19,7 @@ static void		sphere_add(t_sphere **sphere, double xyz[3], double radius, double 
 	vec_set(&(newSphere->center), xyz[0], xyz[1], xyz[2]);
 	newSphere->radius = radius;
 	newSphere->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
+	newSphere->material = DIFFUSE;
 	*sphere = newSphere;
 }
 

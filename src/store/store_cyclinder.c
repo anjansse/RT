@@ -10,6 +10,7 @@ static void		cylinder_add(t_cylinder **cylinder, double center[3], double radius
 	newCyl->height = height;
 	newCyl->radius = radius;
 	newCyl->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
+	newCyl->material = DIFFUSE;
 	*cylinder = newCyl;
 }
 

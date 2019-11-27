@@ -9,6 +9,7 @@ static void		plane_add(t_plane **plane, double dist_to_origin, double xyz[3], do
 	new_plane->dist_to_origin = dist_to_origin;
 	vec_set(&(new_plane->normal), xyz[0], xyz[1], xyz[2]);
 	new_plane->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
+	new_plane->material = REFLECTION;
 	*plane = new_plane;
 }
 

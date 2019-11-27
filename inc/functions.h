@@ -109,7 +109,7 @@ void				get_primary_ray_info(t_rt *rt, t_ray *ray);
 void				get_shadow_ray_info(t_rt *rt, t_ray *ray,\
 					t_object *closest_object, double closes_object_distance);
 void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
-void				rt_info_reflection_ray(t_rt *rt, t_ray *ray);
+void				rt_info_reflection_ray(t_rt *rt, t_ray *ray, t_object *closest_object, double closest_object_distance);
 
 /*
 **	COLOR FUNCTIONS

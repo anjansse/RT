@@ -43,6 +43,10 @@
 # define REFLECTION_RAY			4
 # define END_RAY				5
 
+# define DIFFUSE                1
+# define REFLECTION             2
+# define REFRACTION             3
+
 # define MAX_DEPTH  			5
 
 # define CAM_FROM				rt->cam.pos
