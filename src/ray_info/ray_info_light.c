@@ -16,8 +16,8 @@ t_object *closest_object, double closest_object_distance)
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = vec_normalize(vec_sub(hitpoint, closest_object->sphere->center));
 
-	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
-	// RAY_D = vec_scale(rt->obj->light->dir, -1);
+	RAY_D = vec_normalize(vec_sub(rt->light->pos, hitpoint));
+	// RAY_D = vec_scale(rt->light->dir, -1);
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
@@ -42,8 +42,8 @@ t_object *closest_object, double closest_object_distance)
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = vec_scale(closest_object->plane->normal, -1); 						// selon le cas
 
-	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
-	// RAY_D = vec_scale(rt->obj->light->dir, -1);
+	RAY_D = vec_normalize(vec_sub(rt->light->pos, hitpoint));
+	// RAY_D = vec_scale(rt->light->dir, -1);
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
@@ -68,8 +68,8 @@ t_object *closest_object, double closest_object_distance)
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = vec_normalize(vec_sub(hitpoint, vec_new(closest_object->cylinder->base.x, hitpoint.y, closest_object->cylinder->base.z)));
 
-	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
-	// RAY_D = vec_scale(rt->obj->light->dir, -1);
+	RAY_D = vec_normalize(vec_sub(rt->light->pos, hitpoint));
+	// RAY_D = vec_scale(rt->light->dir, -1);
 
 	// if (vec_dot_product(normal, RAY_D) < 0)									// selon le cas
 	// 	normal = vec_scale(normal, -1);
@@ -95,7 +95,8 @@ static void			cone_shadow_ray_info(t_rt *rt, t_ray *ray, t_object *closest_objec
 
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = vec_normalize(vec_sub(hitpoint, vec_new(closest_object->cone->cone_tips.x, hitpoint.y, closest_object->cone->cone_tips.z)));	// I don't think it is the right way to get the normal
-	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
+	RAY_D = vec_normalize(vec_sub(rt->light->pos, hitpoint));
+	// RAY_D = vec_scale(rt->light->dir, -1);
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
 	ray->pix_color = ft_luminosity(closest_object->cone->color, facingRatio);

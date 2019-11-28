@@ -19,6 +19,7 @@ static void		light_add(t_light **light, double pos[3], double dir[3])
 	vec_set(&(newLight->pos), pos[0], pos[1], pos[2]);
 	vec_set(&(newLight->dir), dir[0], dir[1], dir[2]);
 	*light = newLight;
+	(*light)->next = NULL;
 }
 
 // static void		light_to_world_matrix(double mat[4][4], t_vec right, t_vec up,
@@ -64,6 +65,7 @@ void            rt_store_light(t_rt *rt, char *info)
 	double      pos[3];
 	double      dir[3];
 	t_light		*light;
+	t_light		*current;
 
 	infos = ft_strsplit(info, '|');
 	if (ft_array_len(infos) != 2)
@@ -72,7 +74,15 @@ should be [position(x y z)] | [direction(xyz)].\n"));
 	store_vector(infos[0], pos);
 	store_vector(infos[1], dir);
 	light_add(&light, pos, dir);
+	if (!rt->light)
+		rt->light = light;
+	else {
+		current = rt->light;
+		while (current) 
+			current = current->next;
+		current = light;
+	}
 	// light_to_world_effect(light);
-	object_add(rt, NB_LIGHT, (void*)light);
+	// object_add(rt, NB_LIGHT, (void*)light);
 	ft_free_db_tab(infos);
 }

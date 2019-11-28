@@ -81,6 +81,7 @@ static void	rt_quit(t_rt *rt)
 static void		rt_init_env(t_rt *rt)
 {
 	rt->obj = NULL;
+	rt->light = NULL;
 }
 
 /*

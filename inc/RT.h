@@ -27,7 +27,7 @@
 # define TRUE					1
 # define FALSE					0
 
-# define NB_LIGHT				0
+// # define NB_LIGHT				0
 # define NB_SPHERE				1
 # define NB_PLANE				2
 # define NB_CYLINDER			3
