@@ -67,6 +67,7 @@ typedef struct			s_sphere
 	t_vec				center;
 	uint32_t			radius;
 	uint32_t			color;
+	char				material;
 }						t_sphere;
 
 /*
@@ -82,6 +83,7 @@ typedef struct			s_plane
 	double				dist_to_origin;
 	t_vec				normal;
 	uint32_t			color;
+	char				material;
 }						t_plane;
 
 /*
@@ -92,9 +94,12 @@ typedef struct			s_plane
 
 typedef struct			s_cylinder
 {
-	double				dist_to_origin;
-	t_vec				normal;
+	t_vec				base;
+	t_vec				direction;
+	double				radius;
+	double				height;
 	uint32_t			color;
+	char				material;
 }						t_cylinder;
 
 /*
@@ -105,9 +110,11 @@ typedef struct			s_cylinder
 
 typedef struct			s_cone
 {
-	double				dist_to_origin;
-	t_vec				normal;
+	double				half_angle;
+	t_vec				cone_tips;
+	t_vec				axis_vector;
 	uint32_t			color;
+	char				material;
 }						t_cone;
 
 /*

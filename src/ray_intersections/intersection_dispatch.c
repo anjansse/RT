@@ -8,11 +8,11 @@
 ** ----------------------------------------------------------------------------
 */
 
-t_disp_intersection		g_disp_intersection[NB_OBJECTS - 2] = {
+t_disp_intersection		g_disp_intersection[NB_OBJECTS] = {
 	{NB_SPHERE,	&find_intersection_sphere},
 	{NB_PLANE, &find_intersection_plane},
-//	{NB_CYLINDER, &find_intersection_cylinder},
-//	{NB_CONE, &find_intersection_cone},
+	{NB_CYLINDER, &find_intersection_cylinder},
+	{NB_CONE, &find_intersection_cone},
 };
 
 /*
@@ -70,7 +70,7 @@ bool			check_intersection_with_specific_object(t_ray *ray, \
 	
 	flag_intersect = FALSE;
 	i = -1;
-	while (++i < NB_OBJECTS - 2)
+	while (++i < NB_OBJECTS)
 		if (object->type == g_disp_intersection[i].objType)
 			flag_intersect = g_disp_intersection[i].function(ray, object, \
 																object_dist);

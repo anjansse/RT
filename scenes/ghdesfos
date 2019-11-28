@@ -6,6 +6,12 @@ C: position: (150 50 0) | direction: (0 0 0)
 S: center-pos: (0 25 0) | radius: (10) | color: (255 0 25)
 S: center-pos: (0 25 50) | radius: (10) | color: (111 45 78)
 S: center-pos: (0 25 -50) | radius: (10) | color: (111 45 78)
+<<<<<<< HEAD
 >>>>>>> bed65ecd15d2eeb95116e624837356168fb8182f
 P: distance-origin: (9) | normal: (0 -1 0) | color: (200 54 80)
 L: pos: (75 100 -50) | direction: (0 0 0)
+=======
+Y: base-pos: (100 35 0) | direction: (0 1 0) | radius: (8) | height: (20) | color: (111 35 100)
+P: distance-origin: (9) | normal: (0 -1 0) | color: (200 54 80)
+L: pos: (150 100 0) | direction: (0 -1 0)
+>>>>>>> d4654a43b4b1e7a96f2b6ffeda41dbade1cbaca4

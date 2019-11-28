@@ -43,6 +43,10 @@
 # define REFLECTION_RAY			4
 # define END_RAY				5
 
+# define DIFFUSE                1
+# define REFLECTION             2
+# define REFRACTION             3
+
 # define MAX_DEPTH  			5
 
 # define CAM_FROM				rt->cam.pos
@@ -62,6 +66,7 @@
 # define RENDERER				rt->win.rend
 # define KEYS					rt->win.keys
 # define EVENT					rt->win.event
+# define LIVE_MODE              rt->gui_live_mode
 # define IMG_POINT				rt->win.img_pointer
 
 # define ELEM					6
