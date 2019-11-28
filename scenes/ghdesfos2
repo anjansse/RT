@@ -1,0 +1,7 @@
+C: position: (150 50 0) | direction: (0 0 0)
+S: center-pos: (0 25 0) | radius: (10) | color: (255 0 25)
+S: center-pos: (0 25 50) | radius: (10) | color: (111 45 78)
+P: distance-origin: (9) | normal: (0 -1 0) | color: (200 54 80)
+O: position: (0 25 -50) | rotation: (0 2 0) | radius: (9) | color: (12 169 42)
+Y: base-pos: (0 35 -50) | direction: (0 1 0) | radius: (8) | height: (20) | color: (111 35 100)
+L: pos: (200 100 0) | direction: (0 -1 0)

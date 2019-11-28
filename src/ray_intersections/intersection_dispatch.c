@@ -58,8 +58,6 @@ bool			solve_quadratic_equa(double a, double  b, double c, double *sols)
 ** ----------------------------------------------------------------------------
 */
 
-// change the value ELEM - 2 by something more explicit
-
 bool			check_intersection_with_specific_object(t_ray *ray, \
 															t_object *object, \
 															double *object_dist)

@@ -28,8 +28,6 @@ void    	rt_ray_dispatching(t_rt *rt, t_ray *ray)
 	closest_object = NULL;
 	if (INTERSECTION_OBJ)
 	{
-		// if (closest_object->type == NB_CONE)
-			// printf("ray_type: %c\n")
 		if (RAY_TYPE == PRIMARY_RAY)
 		{
 			get_shadow_ray_info(rt, ray, closest_object, closest_object_dist);

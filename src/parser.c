@@ -66,7 +66,5 @@ void            rt_parser(char *filename, t_rt *rt)
 		send_error(ft_strjoin(filename, "\x1b[91m couldn't be opened.\x1b[0m\n"));
 	while (get_next_line(fd, &content) > 0)
 		rt_parse_line(rt, content);
-	printf("angle: %f\n", rt->obj->next->cone->half_angle);
-	printf("obj dist: %f\n", INFINITY);
 	close(fd);
 }
