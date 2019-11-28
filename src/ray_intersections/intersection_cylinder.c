@@ -1,13 +1,68 @@
 #include "RT.h"
 
-# define                MAX_Y (CYLINDER->center.y + (CYLINDER->height / 2))
-# define                MIN_Y (CYLINDER->center.y - (CYLINDER->height / 2))
+# define                MIN_Y CYLINDER->base.y
+# define                MAX_Y (CYLINDER->base.y + CYLINDER->height)
 
-static void            find_quadratic_equa_coefs_cylinder(t_ray *ray, t_object *obj, double *coefs)
+static double           get_a(t_ray *ray, t_object *obj) {
+    t_vec               tmp;
+    double              dot;
+
+    dot = vec_dot_product(RAY_D, CYLINDER->direction);
+	tmp.x = dot * CYLINDER->direction.x;
+	tmp.y = dot * CYLINDER->direction.y;
+	tmp.z = dot * CYLINDER->direction.z;
+	tmp = vec_sub(RAY_D, tmp);
+    return (vec_dot_product(tmp, tmp));
+}
+
+static double           get_b(t_ray *ray, t_object *obj, t_vec diff) {
+
+    t_vec               tmp;
+    t_vec               tmp2;
+    double              dot;
+
+    dot = vec_dot_product(diff, CYLINDER->direction);
+	tmp.x = dot * CYLINDER->direction.x;
+	tmp.y = dot * CYLINDER->direction.y;
+	tmp.z = dot * CYLINDER->direction.z;
+	tmp = vec_sub(diff, tmp);
+	dot = vec_dot_product(RAY_D, CYLINDER->direction);
+	tmp2.x = dot * CYLINDER->direction.x;
+	tmp2.y = dot * CYLINDER->direction.y;
+	tmp2.z = dot * CYLINDER->direction.z;
+	tmp2 = vec_sub(RAY_D, tmp2);
+
+	return (2 * vec_dot_product(tmp2, tmp));
+
+}
+
+static double           get_c(t_object *obj, t_vec diff)
 {
-    coefs[0] = (RAY_D.x * RAY_D.x) + (RAY_D.z * RAY_D.z);
-    coefs[1] = 2 * (RAY_O.x * RAY_D.x + RAY_O.z * RAY_D.z);
-    coefs[2] = RAY_O.x * RAY_O.x + RAY_O.z * RAY_O.z - CYLINDER->radius * CYLINDER->radius;
+    t_vec               tmp;
+    double              dot;
+
+    dot = vec_dot_product(diff, CYLINDER->direction);
+	tmp.x = dot * CYLINDER->direction.x;
+	tmp.y = dot * CYLINDER->direction.y;
+	tmp.z = dot * CYLINDER->direction.z;
+	tmp = vec_sub(diff, tmp);
+
+	return (vec_dot_product(tmp, tmp) - CYLINDER->radius * CYLINDER->radius);
+}
+
+static void             find_quadratic_equa_coefs_cylinder(t_ray *ray, t_object *obj, double *coefs)
+{
+    t_vec               diff;
+
+/*
+    Might need a bit of change in this line because I get the
+    diff between origin and BASE of the cylinder
+*/
+    diff = vec_sub(RAY_O, CYLINDER->base);
+
+	coefs[0] = get_a(ray, obj);
+	coefs[1] = get_b(ray, obj, diff);
+	coefs[2] = get_c(obj, diff);
 }
 
 bool			find_intersection_cylinder(t_ray *ray, t_object *obj, double *object_dist)
