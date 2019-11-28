@@ -21,7 +21,7 @@ t_object *closest_object, double closest_object_distance)
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
-	ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
+	ray->pix_color = ft_luminosity(closest_object->sphere->color, rt->light->intensity * facingRatio);
 	ray->ray_type = SHADOW_RAY;
 	RAY_O = hitpoint;
 }
@@ -47,7 +47,7 @@ t_object *closest_object, double closest_object_distance)
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
-	ray->pix_color = ft_luminosity(closest_object->plane->color, facingRatio);
+	ray->pix_color = ft_luminosity(closest_object->plane->color, rt->light->intensity * facingRatio);
 	ray->ray_type = SHADOW_RAY;
 	RAY_O = vec_sub(hitpoint, vec_scale(normal, 0.0001));
 }
@@ -76,7 +76,7 @@ t_object *closest_object, double closest_object_distance)
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
-	ray->pix_color = ft_luminosity(closest_object->cylinder->color, facingRatio);
+	ray->pix_color = ft_luminosity(closest_object->cylinder->color, rt->light->intensity * facingRatio);
 	ray->ray_type = SHADOW_RAY;
 	RAY_O = hitpoint;
 }
@@ -99,7 +99,7 @@ static void			cone_shadow_ray_info(t_rt *rt, t_ray *ray, t_object *closest_objec
 	// RAY_D = vec_scale(rt->light->dir, -1);
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
-	ray->pix_color = ft_luminosity(closest_object->cone->color, facingRatio);
+	ray->pix_color = ft_luminosity(closest_object->cone->color, rt->light->intensity * facingRatio);
 	ray->ray_type = SHADOW_RAY;
 	RAY_O = hitpoint;
 }

@@ -50,6 +50,7 @@ typedef struct          s_light
 {
     t_vec               pos;
 	t_vec				dir;
+	double				intensity;
 	struct s_light		*next;
 }                       t_light;
 
