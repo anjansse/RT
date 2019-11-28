@@ -102,6 +102,7 @@ typedef struct			s_rt
 {
 	t_window			win;
 	t_camera			cam;
+	t_light				*light;
 	t_object			*obj;
 	double				camMatrix[4][4];
 	int					pix;

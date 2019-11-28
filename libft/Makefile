@@ -55,6 +55,7 @@ PRINTF		= ft_printf.c check.c handle.c keys.c main_check.c manage.c\
 VECTOR		= vec_add.c vec_new.c vec_rotx.c vec_roty.c vec_rotz.c vec_sub.c\
 			  vec_scale.c vec_rotxyz.c vec_set.c vec_normalize.c\
 			  vec_cross_product.c vec_dot_product.c vec_magnitude.c\
+			  vec_abs.c
 
 FUNCTIONS	= $(IS) $(STRUCT) $(MEMORY) $(NUMBER) $(PRINT) $(STRING) $(CHAR)\
 			  $(READ_FILE)

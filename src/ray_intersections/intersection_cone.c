@@ -10,6 +10,13 @@
 # define MIN_Y		obj->cone->axis_vector.y
 # define MAX_Y		obj->cone->cone_tips.y
 
+static void		find_quadratic_equa_coefs_cone(t_ray *ray, t_object *obj, double *coefs)
+{
+	coefs[0] = pow(dot_DV, 2.0) - COS2;
+	coefs[1] = 2 * ((vec_dot_product(RAY_D, AX_VEC) * vec_dot_product(CO, AX_VEC) - vec_dot_product(RAY_D, CO) * COS2));
+	coefs[2] = pow(vec_dot_product(CO, AX_VEC), 2.0) - vec_dot_product(CO, CO) * COS2;
+}
+
 bool			find_intersection_cone(t_ray *ray, t_object *obj, double *object_dist)
 {
 	double		coefs[3];
@@ -19,9 +26,7 @@ bool			find_intersection_cone(t_ray *ray, t_object *obj, double *object_dist)
 	double		min_y;
 
 	*object_dist = INFINITY;
-	coefs[0] = pow(dot_DV, 2.0) - COS2;
-	coefs[1] = 2 * ((vec_dot_product(RAY_D, AX_VEC) * vec_dot_product(CO, AX_VEC) - vec_dot_product(RAY_D, CO) * COS2));
-	coefs[2] = pow(vec_dot_product(CO, AX_VEC), 2.0) - vec_dot_product(CO, CO) * COS2;
+	find_quadratic_equa_coefs_cone(ray, obj, coefs);
 	if (TRUE == solve_quadratic_equa(coefs[0], coefs[1], coefs[2], sols))
 	{
 		y[0] = RAY_O.y + RAY_D.y * sols[0];

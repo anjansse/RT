@@ -50,7 +50,7 @@ typedef struct          s_light
 {
     t_vec               pos;
 	t_vec				dir;
-	double				matrix[4][4];
+	struct s_light		*next;
 }                       t_light;
 
 /*
@@ -131,7 +131,6 @@ typedef struct			s_cone
 typedef struct			s_object
 {
 	int					type;
-	t_light				*light;
 	t_sphere			*sphere;
 	t_plane				*plane;
 	t_cylinder			*cylinder;

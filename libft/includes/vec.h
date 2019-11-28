@@ -32,6 +32,7 @@ typedef struct	s_vec
 t_vec			vec_new(double x, double y, double z);
 t_vec			vec_add(t_vec v1, t_vec v2);
 t_vec			vec_sub(t_vec v1, t_vec v2);
+t_vec			vec_abs(t_vec v1);
 t_vec			vec_scale(t_vec vec, double n);
 void			vec_set(t_vec *v, double x, double y, double z);
 double			vec_dot_product(t_vec v1, t_vec v2);

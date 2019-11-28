@@ -6,13 +6,13 @@
 ** ----------------------------------------------------------------------------
 */
 
-static t_dis_parser		g_dis_parser_table[ELEM - 1] = {
+static t_dis_parser		g_dis_parser_table[ELEM] = {
         {"C:", &rt_store_cam},
         {"L:", &rt_store_light},
         {"S:", &rt_store_sphere},
 		{"P:", &rt_store_plane},
 		{"Y:", &rt_store_cylinder},
-		//	{"O:", &rt_store_cone},
+		{"O:", &rt_store_cone},
 };
 
 /*
@@ -35,7 +35,7 @@ static void		rt_parse_line(t_rt *rt, char *line)
 	if (ft_strlen(line) < MIN_LINE_SIZE)
 		send_error(ft_strjoin(line, "\x1b[91m is invalid.\x1b[0m\n"));
 	type = ft_strsub(line, 0, 2);
-	while (++i < ELEM - 1)
+	while (++i < ELEM)
 	{
 		if (ft_strequ(type, g_dis_parser_table[i].type))
 		{

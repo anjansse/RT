@@ -58,8 +58,6 @@ bool			solve_quadratic_equa(double a, double  b, double c, double *sols)
 ** ----------------------------------------------------------------------------
 */
 
-// change the value ELEM - 2 by something more explicit
-
 bool			check_intersection_with_specific_object(t_ray *ray, \
 															t_object *object, \
 															double *object_dist)
@@ -124,86 +122,4 @@ bool			find_closest_intersected_object(t_rt *rt, t_ray *ray,
 	if (*closest_object_dist > EPSILON && *closest_object_dist != INFINITY)
 		return (TRUE);
 	return (FALSE);
-<<<<<<< HEAD:src/ray_trace.c
-}
-
-// In this function, when calling the intersection functions, we could also pass
-// to the functions the distance to the closest object ...
-
-// void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
-// {
-// 	double		closest_object_dist;
-// 	t_object	*closest_object;
-
-// 	closest_object_dist = INFINITY;
-// 	closest_object = NULL;
-// 	if (TRUE == find_closest_intersected_object(rt, ray, &closest_object, \
-// 													&closest_object_dist))
-// 	{
-// 		if (closest_object->type == NB_SPHERE)
-// 		{
-// 			ray->pix_color = closest_object->sphere->color;
-// 			ray->ray_type = END;
-// 		}
-// 		else if (closest_object->type == NB_PLANE)
-// 		{
-// 			ray->pix_color = closest_object->plane->color;
-// 			ray->ray_type = END;
-// 		}
-// 	}
-// 	else
-// 		ray->ray_type = END;
-// }
-
-void    	rt_trace_object_intersection(t_rt *rt, t_ray *ray)
-{
-	t_vec		normal;
-	double		facingRatio;
-	double		closest_object_dist;
-	t_object	*closest_object;
-	t_vec hitpoint;
-
-	closest_object_dist = INFINITY;
-	closest_object = NULL;
-	if (TRUE == find_closest_intersected_object(rt, ray, &closest_object, \
-													&closest_object_dist))
-	{
-		if (ray->ray_type == LIGHT)
-		{
-			printf("Intersected object's type: %d\n", closest_object->type);
-			ray->ray_type = END;
-			ray->pix_color = 0x000000;
-		}
-		else
-		{
-			if (closest_object->type == NB_SPHERE)
-			{
-				hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_dist));
-				normal = vec_normalize(vec_sub(hitpoint, closest_object->sphere->center));
-				if ((facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, -1))) < 0)
-					facingRatio = 0;
-				ray->pix_color = ft_luminosity(closest_object->sphere->color, facingRatio);
-				ray->ray_type = LIGHT;
-				RAY_O = hitpoint;
-				RAY_D = vec_scale(rt->obj->light->dir, -1);
-			}
-			else if (closest_object->type == NB_PLANE)
-			{
-				hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_dist));
-				normal = closest_object->plane->normal;
-				if ((facingRatio = vec_dot_product(normal, vec_scale(rt->obj->light->dir, -1))) < 0) {
-					facingRatio = -facingRatio; // facingRatio seems to be the inverse of the expected result for some reason
-					// facingRatio = 0;
-				}
-				ray->pix_color = ft_luminosity(closest_object->plane->color, facingRatio);
-				ray->ray_type = LIGHT;
-				RAY_O = vec_sub(hitpoint, vec_scale(normal, 0.0001));
-				RAY_D = vec_scale(rt->obj->light->dir, -1);
-			}
-		}
-	}
-	else
-		ray->ray_type = END;
-=======
->>>>>>> bed65ecd15d2eeb95116e624837356168fb8182f:src/ray_intersections/intersection_dispatch.c
 }

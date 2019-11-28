@@ -17,7 +17,6 @@ static t_object			*create_object_elem(void)
 	if (!(object = (t_object*)malloc(sizeof(t_object))))
 		return (NULL);
 	object->type = -1;
-	object->light = NULL;
 	object->sphere = NULL;
 	object->plane = NULL;
 	object->cylinder = NULL;
@@ -33,9 +32,9 @@ void				object_add(t_rt *rt, int objType, void *objNode)
 	object->next = rt->obj;
 	rt->obj = object;
 	object->type = objType;
-	if (objType == NB_LIGHT)
-		object->light = (t_light*)objNode;
-	else if (objType == NB_SPHERE)
+	// if (objType == NB_LIGHT)
+	// 	object->light = (t_light*)objNode;
+	if (objType == NB_SPHERE)
 		object->sphere = (t_sphere*)objNode;
 	else if (objType == NB_PLANE)
 		object->plane = (t_plane*)objNode;
