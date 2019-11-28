@@ -56,13 +56,13 @@ t_object *closest_object, double closest_object_distance)
 	t_vec		hitpoint;
 	
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
-	normal = vec_normalize(vec_sub(hitpoint, vec_new(closest_object->cylinder->center.x, hitpoint.y, closest_object->cylinder->center.z)));	// I don't think it is the right way to get the normal
+	normal = vec_normalize(vec_sub(hitpoint, vec_new(closest_object->cylinder->base.x, hitpoint.y, closest_object->cylinder->base.z)));
 
 	RAY_D = vec_normalize(vec_sub(rt->obj->light->pos, hitpoint));
 	// RAY_D = vec_scale(rt->obj->light->dir, -1);
 
-	if (vec_dot_product(normal, RAY_D) < 0)
-		normal = vec_scale(normal, -1);
+	// if (vec_dot_product(normal, RAY_D) < 0)									// selon le cas
+	// 	normal = vec_scale(normal, -1);
 
 	if ((facingRatio = vec_dot_product(normal, RAY_D)) < 0)
 		facingRatio = 0;
