@@ -14,20 +14,21 @@ bool			find_intersection_cylinder(t_ray *ray, t_object *obj, double *object_dist
 {
     double      coefs[3];
     double      sols[2];
-    double      z[2];
+    double      y[2];
 
     *object_dist = INFINITY;
     find_quadratic_equa_coefs_cylinder(ray, obj, coefs);
     if (TRUE == solve_quadratic_equa(coefs[0], coefs[1], coefs[2], sols))
     {
-        z[0] = RAY_O.y + RAY_D.y * sols[0];
-        z[1] = RAY_O.y + RAY_D.y * sols[1];
+        y[0] = RAY_O.y + RAY_D.y * sols[0];
+        y[1] = RAY_O.y + RAY_D.y * sols[1];
 
-        if (z[0] > MIN_Y && z[0] < MAX_Y && sols[0] > EPSILON && sols[0] < *object_dist)
+        if (y[0] > MIN_Y && y[0] < MAX_Y && sols[0] > EPSILON && sols[0] < *object_dist)
 			*object_dist = sols[0];
-		if (z[1] > MIN_Y && z[1] < MAX_Y && sols[1] > EPSILON && sols[1] < *object_dist)
+		if (y[1] > MIN_Y && y[1] < MAX_Y && sols[1] > EPSILON && sols[1] < *object_dist)
 			*object_dist = sols[1];
         // Need to find a way to get the caps at the top and bottom
+        // ->   it's written on your website https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html#eqn:rectray
     }       
     if (*object_dist != INFINITY)
 		return (TRUE);

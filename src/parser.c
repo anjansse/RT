@@ -6,13 +6,13 @@
 ** ----------------------------------------------------------------------------
 */
 
-static t_dis_parser		g_dis_parser_table[ELEM - 2] = {
+static t_dis_parser		g_dis_parser_table[ELEM] = {
         {"C:", &rt_store_cam},
         {"L:", &rt_store_light},
         {"S:", &rt_store_sphere},
 		{"P:", &rt_store_plane},
-		//	{"Y:", &rt_store_cylinder},
-		//	{"O:", &rt_store_cone},
+		{"Y:", &rt_store_cylinder},
+		{"O:", &rt_store_cone},
 };
 
 /*
@@ -35,7 +35,7 @@ static void		rt_parse_line(t_rt *rt, char *line)
 	if (ft_strlen(line) < MIN_LINE_SIZE)
 		send_error(ft_strjoin(line, "\x1b[91m is invalid.\x1b[0m\n"));
 	type = ft_strsub(line, 0, 2);
-	while (++i < ELEM - 2)
+	while (++i < ELEM)
 	{
 		if (ft_strequ(type, g_dis_parser_table[i].type))
 		{
@@ -66,5 +66,7 @@ void            rt_parser(char *filename, t_rt *rt)
 		send_error(ft_strjoin(filename, "\x1b[91m couldn't be opened.\x1b[0m\n"));
 	while (get_next_line(fd, &content) > 0)
 		rt_parse_line(rt, content);
+	printf("angle: %f\n", rt->obj->next->cone->half_angle);
+	printf("obj dist: %f\n", INFINITY);
 	close(fd);
 }
