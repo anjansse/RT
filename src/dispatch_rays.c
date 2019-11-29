@@ -22,6 +22,7 @@ static void	apply_shadow(t_rt *rt, t_ray *ray)
 void    	rt_ray_dispatching(t_rt *rt, t_ray *ray)
 {
 	double		closest_object_dist;
+	t_light		*current_light;
 	t_object	*closest_object;
 
 	closest_object_dist = INFINITY;
@@ -30,8 +31,13 @@ void    	rt_ray_dispatching(t_rt *rt, t_ray *ray)
 	{
 		if (RAY_TYPE == PRIMARY_RAY)
 		{
-			get_shadow_ray_info(rt, ray, closest_object, closest_object_dist);
-			rt_cast_ray(rt, ray);
+			current_light = rt->light;
+			while (current_light) 
+			{
+				get_shadow_ray_info(ray, closest_object, closest_object_dist, current_light);
+				rt_cast_ray(rt, ray);
+				current_light = current_light->next;
+			}
 		}
 		else if (RAY_TYPE == SHADOW_RAY)
 			apply_shadow(rt, ray);

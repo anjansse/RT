@@ -76,15 +76,15 @@ should be [position(x y z)] | [direction(xyz)].\n"));
 	store_vector(infos[0], pos);
 	store_vector(infos[1], dir);
 	store_number(infos[2], &intensity);
-	intensity = (double)(intensity / 33.34);
+	intensity = (double)(intensity / 33.34);			// GHISLAIN -> T'en penses quoi ?
 	light_add(&light, pos, dir, intensity);
 	if (!rt->light)
 		rt->light = light;
 	else {
 		current = rt->light;
-		while (current) 
+		while (current->next) 
 			current = current->next;
-		current = light;
+		current->next = light;
 	}
 	ft_free_db_tab(infos);
 }
