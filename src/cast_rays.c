@@ -64,6 +64,7 @@ t_vec			get_normal_at_hitpoint(t_ray *ray, t_object *closest_object,
 {
 	t_vec normal;
 
+	normal = vec_new(0,0,0);
 	if (closest_object->type == NB_SPHERE)
 		normal = get_normal_intersection_sphere(ray, closest_object, hitpoint);
 	else if (closest_object->type == NB_PLANE)
@@ -72,10 +73,6 @@ t_vec			get_normal_at_hitpoint(t_ray *ray, t_object *closest_object,
 		normal = get_normal_intersection_cylinder(ray, closest_object, hitpoint);
 	else if (closest_object->type == NB_CONE)
 		normal = get_normal_intersection_cone(ray, closest_object, hitpoint);
-	else // added that to silence error [normal used initialized]
-	{
-		normal = vec_new(0,0,0);
-	}
 	
 	return (normal);
 }
@@ -89,17 +86,17 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 												t_object *closest_object,
 												double closest_object_distance)
 {
-	t_ray	shadow_ray;
-	t_vec	hitpoint;
-	t_vec	normal;
-	t_light	*current_light;
-	double	facing_ratio;
-	t_color	final_color;
+	t_ray		shadow_ray;
+	t_vec		hitpoint;
+	t_vec		normal;
+	t_light		*current_light;
+	double		facing_ratio;
+	t_color		final_color;
 
 	hitpoint = get_hitpoint(ray, closest_object_distance);
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
-
 	current_light = rt->light;
+
 	final_color.color = 0x000000;
 	final_color.color = 1;
 
@@ -113,13 +110,14 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 		t_object		*new_closest_object = NULL;
 		double			new_distance = INFINITY;
 
-		// If intersection then it's in shadow, else add color contribution
+		// If intersection then it's in shadow so we don't do anything, else add color contribution
 		if (!find_closest_intersected_object(rt, &shadow_ray, &new_closest_object, &new_distance))
 		{
 			// Getting the facing ratio (exposure to light source)
 			if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)
 				facing_ratio = 0;
 
+			// Adding the color contributions. I cap the color value to the intersected object's original color for now.
 			if (closest_object->type == NB_SPHERE)
 			{
 				if ((final_color.color += ft_luminosity(closest_object->sphere->color, current_light->intensity * facing_ratio)) > closest_object->sphere->color)
@@ -140,9 +138,7 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 				if ((final_color.color += ft_luminosity(closest_object->cone->color, current_light->intensity * facing_ratio)) > closest_object->cone->color)
 					final_color.color = closest_object->cone->color;
 			}
-
 		}
-
 		current_light = current_light->next;
 	}
 
@@ -172,17 +168,6 @@ t_color			combine_colors(t_color reflection_color,
 ** ----------------------------------------------------------------------------
 */
 
-// uint32_t			rt_cast_ray(t_rt *rt, t_ray *ray)
-// {
-// 	++ray->depth;
-// 	if (ray->ray_type == PRIMARY_RAY)
-// 		get_primary_ray_info(rt, ray);
-// 	rt_ray_dispatching(rt, ray);
-// 	if (ray->ray_type == END_RAY || ray->depth >= MAX_DEPTH)
-// 		return (ray->pix_color);
-// 	return (rt_cast_ray(rt, ray));
-// }
-
 t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 {
 	double		closest_object_distance;
@@ -190,6 +175,7 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 	t_color		reflection_color;
 	t_color		refraction_color;
 	t_color		scattering_color;
+
 
 	closest_object_distance = INFINITY;
 	closest_object = NULL;
@@ -201,22 +187,20 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 		// if (REFRACTION)
 		// 	refraction_color = define_and_cast_refracted_ray
 		// 						(ray, closest_object, closest_object_distance);
-		// if (SCATTERING)
+
 		scattering_color = define_and_cast_shadow_rays(rt, ray, closest_object, closest_object_distance);
+
+		// Needed to silence the error [XXX used uninitialized]
 		reflection_color.color = 0x000000;
 		refraction_color.color = 0x000000;
 		reflection_color.intensity = 1;
 		refraction_color.intensity = 1;
+
 		return (combine_colors(reflection_color, refraction_color,
 								scattering_color));
 	}
 	else
-	{
-		t_color		background;
-		background.color = DEFAULT_BACKGROUND[ray->pix_nb];
-		background.intensity = 1;
-		return (background);
-	}
+		return ((t_color){DEFAULT_BACKGROUND[ray->pix_nb], 1});
 }
 
 /*
@@ -239,7 +223,6 @@ void				rt_render(t_rt *rt)
 	while ((current_ray.pix_nb = ++i) < (HEIGHT * WIDTH))
 	{
 		get_primary_ray_info(rt, &current_ray);
-		// CHANGER dessous car rt_cast_ray retourne maintenant a t_color.
 		pixel_color = rt_cast_ray(rt, &current_ray);
 		FRAMEBUFF[i] = pixel_color.color;
 	}
