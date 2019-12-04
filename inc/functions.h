@@ -102,7 +102,7 @@ void    			rt_ray_dispatching(t_rt *rt, t_ray *ray);
 **	RAY FUNCTIONS.
 */
 
-uint32_t			rt_cast_ray(t_rt *rt, t_ray *ray);
+t_color				rt_cast_ray(t_rt *rt, t_ray *ray);
 void				rt_render(t_rt *rt);
 
 void				get_primary_ray_info(t_rt *rt, t_ray *ray);
