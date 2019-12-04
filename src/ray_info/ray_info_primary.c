@@ -16,4 +16,8 @@ void			get_primary_ray_info(t_rt *rt, t_ray *ray)
 	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
 	RAY_D = dir_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
 	RAY_D = vec_normalize(RAY_D);
+	ray.depth = -1;
+	ray.pix_nb = i;
+	ray.ray_type = PRIMARY_RAY;
+	ray.pix_color = DEFAULT_BACKGROUND[i];
 }

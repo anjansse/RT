@@ -1,5 +1,137 @@
 #include "RT.h"
 
+t_vec			get_hitpoint(t_ray *ray, double closest_object_distance)
+{
+	vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+}
+
+t_vec			get_normal_intersection_sphere(t_ray *ray,
+												t_object *closest_object,
+												t_vec hitpoint)
+{
+	t_vec normal;
+
+	normal = vec_normalize(vec_sub(hitpoint, closest_object->sphere->center));
+	return (normal);
+	(void)ray;
+}
+
+t_vec			get_normal_intersection_plane(t_ray *ray,
+												t_object *closest_object,
+												t_vec hitpoint)
+{
+	t_vec normal;
+
+	if (vec_dot_product(RAY_D, closest_object->plane->normal) > 0)
+		normal = closest_object->plane->normal;
+	else
+		normal = vec_scale(closest_object->plane->normal, -1);
+	return (normal);
+}
+
+t_vec			get_normal_intersection_cylinder(t_ray *ray,
+													t_object *closest_object,
+													t_vec hitpoint)
+{
+	t_vec normal;
+	t_vec new_vec;
+
+	new_vec = vec_new(closest_object->cylinder->base.x,
+						hitpoint.y, closest_object->cylinder->base.z);
+	normal = vec_normalize(vec_sub(hitpoint, new_vec);
+	return (normal);
+	(void)ray;
+}
+
+t_vec			get_normal_intersection_cone(t_ray * ray,
+												t_object *closest_object,
+												t_vec hitpoint)
+{
+	t_vec normal;
+	t_vec new_vec;
+
+	new_vec = vec_new(closest_object->cone->cone_tips.x,
+						hitpoint.y, closest_object->cone->cone_tips.z);
+	normal = vec_normalize(vec_sub(hitpoint, new_vec));
+	return (normal);
+	(void)ray;
+}
+
+t_vec			get_normal_at_hitpoint(t_ray *ray, t_object *closest_object,
+										t_vec hitpoint)
+{
+	t_vec normal;
+
+	if (closest_object->type = NB_SPHERE)
+		normal = get_normal_intersection_sphere(ray, closest_object, hitpoint);
+	else if (closest_object->type = NB_PLANE)
+		normal = get_normal_intersection_plane(ray, closest_object, hitpoint);
+	else if (closest_object->type = NB_CYLINDER)
+		normal = get_normal_intersection_cylinder(ray, closest_object, hitpoint);
+	else if (closest_object->type = NB_CONE)
+		normal = get_normal_intersection_cone(ray, closest_object, hitpoint);
+	return (normal);
+}
+
+void			define_reflected_ray(t_ray *reflected_ray, t_vec hitpoint,
+										t_vec normal)
+{}
+
+t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray, 
+												t_object *closest_object,
+												double closest_object_distance)
+{
+	t_ray	reflected_ray;
+	t_vec	hitpoint;
+	t_vec	normal;
+
+	hitpoint = get_hitpoint(ray, object_distance);
+	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
+	define_reflected_ray(&reflected_ray, hitpoint, normal);
+	return (cast_ray(rt, &reflected_ray));
+}
+
+void			define_refracted_ray(t_ray *refracted_ray, t_vec hitpoint,
+										t_vec normal)
+{}
+
+t_color			define_and_cast_refracted_ray(t_rt *rt, t_ray *ray
+												t_object *closest_object,
+												double closest_object_distance)
+{
+	t_ray	reflected_ray;
+	t_vec	hitpoint;
+	t_vec	normal;
+
+	hitpoint = get_hitpoint(ray, object_distance);
+	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
+	define_refracted_ray(&refracted_ray, hitpoint, normal);
+	return (cast_ray(rt, &refracted_ray));
+}
+
+// BELOW FUNCTION:
+// for each light, see if they are obstructed by an object
+// if not, then compute their contribution to the color
+// add all these contributions (or more complex mixing technic
+
+t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray
+												t_object *closest_object,
+												double closest_object_distance)
+{
+	t_ray	shadow_ray;
+	t_vec	hitpoint;
+	t_vec	normal;
+
+	hitpoint = get_hitpoint(ray, object_distance);
+	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
+	
+}
+
+t_color			combine_colors(t_color reflection_color,
+								t_color refraction_color,
+								t_color scattering_color)
+{}
+
 /*
 ** ----------------------------------------------------------------------------
 ** Recursive function which casts a ray through the scene. Type of ray will
@@ -13,15 +145,35 @@
 ** ----------------------------------------------------------------------------
 */
 
-uint32_t			rt_cast_ray(t_rt *rt, t_ray *ray)
+# define INTERSECTION_OBJ		(TRUE == find_closest_intersected_object(rt, ray,\
+								&closest_object, &closest_object_dist))
+
+t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 {
-	++ray->depth;
-	if (ray->ray_type == PRIMARY_RAY)
-		get_primary_ray_info(rt, ray);
-	rt_ray_dispatching(rt, ray);
-	if (ray->ray_type == END_RAY || ray->depth >= MAX_DEPTH)
-		return (ray->pix_color);
-	return (rt_cast_ray(rt, ray));
+	double		closest_object_dist;
+	t_object	*closest_object;
+	t_color		reflection_color;
+	t_color		refraction_color;
+	t_color		scattering_color;
+
+	closest_object_dist = INFINITY;
+	closest_object = NULL;
+	if (INTERSECTION_OBJ)
+	{
+		if (REFLECTION)
+			reflection_color = define_and_cast_reflected_ray
+								(ray, closest_object, closest_object_distance);
+		if (REFRACTION)
+			refraction_color = define_and_cast_refracted_ray
+								(ray, closest_object, closest_object_distance);
+		if (SCATTERING)
+			scattering_color = define_and_cast_shadow_rays
+								(ray, closest_object, closest_object_distance);
+		return (combine_colors(reflection_color, refraction_color,
+								scattering_color));
+	}
+	else
+		return (BACKGROUND_COLOR);
 }
 
 /*
@@ -42,10 +194,8 @@ void				rt_render(t_rt *rt)
 	i = -1;
 	while (++i < (HEIGHT * WIDTH))
 	{
-		current_ray.depth = -1;
-		current_ray.pix_nb = i;
-		current_ray.ray_type = PRIMARY_RAY;
-		current_ray.pix_color = DEFAULT_BACKGROUND[i];
+		get_primary_ray_info(rt, &current_ray);
+		// CHANGER dessous car rt_cast_ray retourne maintenant a t_color.
 		FRAMEBUFF[i] = rt_cast_ray(rt, &current_ray);
 	}
 }

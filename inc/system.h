@@ -110,4 +110,14 @@ typedef struct			s_rt
 	char				gui_live_mode;
 }						t_rt;
 
+/*
+** @Antoine: complete
+*/
+
+typedef struct			s_color
+{
+	uint32_t			color;
+	double				intensity;
+}						t_color;
+
 #endif
