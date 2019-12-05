@@ -226,15 +226,12 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 			}
 			
 		}
-		else
-		{
-			return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
-		}
 	}
 	else
 	{
 		return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
 	}
+	// Needed to shut down error
 	return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
 }
 
