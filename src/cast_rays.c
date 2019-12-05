@@ -167,8 +167,10 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 
 	hitpoint = get_hitpoint(ray, closest_object_distance);
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
+
 	reflection_ray.depth = ++ray->depth;
 	reflection_ray.pix_nb = ray->pix_nb;
+
 	reflection_ray.ray_o = hitpoint;
 	reflection_ray.ray_d = vec_sub(RAY_D, vec_scale(normal, 2 * vec_dot_product(RAY_D, normal))); 
 
@@ -177,62 +179,25 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 		if (closest_object->type == NB_SPHERE)
 		{
 			if (closest_object->sphere->material == REFLECTION)
-			{
-				return (rt_cast_ray(rt, &reflection_ray));
-				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
-			}
-			else
-			{
-				return ((t_color){0x000000, 1});
-			}
-			
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_PLANE)
 		{
 			if (closest_object->plane->material == REFLECTION)
-			{
-				return (rt_cast_ray(rt, &reflection_ray));
-				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
-			}
-			else
-			{
-				return ((t_color){0x000000, 1});
-			}
-			
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_CYLINDER)
 		{
 			if (closest_object->cylinder->material == REFLECTION)
-			{
-				return (rt_cast_ray(rt, &reflection_ray));
-				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
-			}
-			else
-			{
-				return ((t_color){0x000000, 1});
-			}
-			
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_CONE)
 		{
 			if (closest_object->cone->material == REFLECTION)
-			{
-				return (rt_cast_ray(rt, &reflection_ray));
-				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
-			}
-			else
-			{
-				return ((t_color){0x000000, 1});
-			}
-			
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
 		}
 	}
-	else
-	{
-		return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
-	}
-	// Needed to shut down error
-	return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
+	return ((t_color){0x000000, 1});
 }
 
 /*

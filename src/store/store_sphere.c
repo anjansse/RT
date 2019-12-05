@@ -10,7 +10,7 @@
 ** ----------------------------------------------------------------------------
 */
 
-static void		sphere_add(t_sphere **sphere, double xyz[3], double radius, double rgb[3])
+static void		sphere_add(t_sphere **sphere, double xyz[3], double radius, double rgb[3], double type)
 {
 	t_sphere	*newSphere;
 
@@ -19,7 +19,7 @@ static void		sphere_add(t_sphere **sphere, double xyz[3], double radius, double 
 	vec_set(&(newSphere->center), xyz[0], xyz[1], xyz[2]);
 	newSphere->radius = radius;
 	newSphere->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
-	newSphere->material = DIFFUSE;
+	newSphere->material = (char)type;
 	*sphere = newSphere;
 }
 
@@ -30,14 +30,16 @@ void            rt_store_sphere(t_rt *rt, char *info)
 	double      center[3];
 	double      rgb[3];
 	t_sphere	*sphere;
+	double		type;
 
 	infos = ft_strsplit(info, '|');
-	if (ft_array_len(infos) != 3)
-		send_error(ft_strdup("Error in sphere options -- should be [center(x y z)] | [radius] | [color(r g b)].\n"));
+	if (ft_array_len(infos) != 4)
+		send_error(ft_strdup("Error in sphere options -- should be [center(x y z)] | [radius] | [color(r g b)] | [type(type)].\n"));
 	store_vector(infos[0], center);
 	store_number(infos[1], &radius);
 	store_vector(infos[2], rgb);
-	sphere_add(&sphere, center, radius, rgb);
+	store_number(infos[3], &type);
+	sphere_add(&sphere, center, radius, rgb, type);
 	object_add(rt, NB_SPHERE, (void*)sphere);
 	ft_free_db_tab(infos);
 }
