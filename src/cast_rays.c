@@ -151,9 +151,91 @@ t_color			combine_colors(t_color reflection_color,
 								t_color refraction_color,
 								t_color scattering_color)
 {
-	(void)reflection_color;
 	(void)refraction_color;
+	if (reflection_color.color != 0x000000)
+		return (reflection_color);
 	return (scattering_color);
+}
+
+t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
+												t_object *closest_object,
+												double closest_object_distance)
+{
+	t_ray		reflection_ray;
+	t_vec		hitpoint;
+	t_vec		normal;
+
+	hitpoint = get_hitpoint(ray, closest_object_distance);
+	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
+	reflection_ray.depth = ++ray->depth;
+	reflection_ray.pix_nb = ray->pix_nb;
+	reflection_ray.ray_o = hitpoint;
+	reflection_ray.ray_d = vec_sub(RAY_D, vec_scale(normal, 2 * vec_dot_product(RAY_D, normal))); 
+
+	if (reflection_ray.depth < MAX_DEPTH)
+	{
+		if (closest_object->type == NB_SPHERE)
+		{
+			if (closest_object->sphere->material == REFLECTION)
+			{
+				return (rt_cast_ray(rt, &reflection_ray));
+				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
+			}
+			else
+			{
+				return ((t_color){0x000000, 1});
+			}
+			
+		}
+		else if (closest_object->type == NB_PLANE)
+		{
+			if (closest_object->plane->material == REFLECTION)
+			{
+				return (rt_cast_ray(rt, &reflection_ray));
+				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
+			}
+			else
+			{
+				return ((t_color){0x000000, 1});
+			}
+			
+		}
+		else if (closest_object->type == NB_CYLINDER)
+		{
+			if (closest_object->cylinder->material == REFLECTION)
+			{
+				return (rt_cast_ray(rt, &reflection_ray));
+				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
+			}
+			else
+			{
+				return ((t_color){0x000000, 1});
+			}
+			
+		}
+		else if (closest_object->type == NB_CONE)
+		{
+			if (closest_object->cone->material == REFLECTION)
+			{
+				return (rt_cast_ray(rt, &reflection_ray));
+				// return ((t_color){(rt_cast_ray(rt, &reflection_ray).color), 1});
+			}
+			else
+			{
+				return ((t_color){0x000000, 1});
+			}
+			
+		}
+		else
+		{
+			return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
+		}
+	}
+	else
+	{
+		return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
+	}
+	return ((t_color){0.8 * DEFAULT_BACKGROUND[ray->pix_nb], 1});
 }
 
 /*
@@ -182,9 +264,8 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 	closest_object = NULL;
 	if (INTERSECTION_OBJ)
 	{
-		// if (REFLECTION)
-		// 	reflection_color = define_and_cast_reflected_ray
-		// 						(ray, closest_object, closest_object_distance);
+		reflection_color = define_and_cast_reflected_ray(rt, ray, closest_object, closest_object_distance);
+
 		// if (REFRACTION)
 		// 	refraction_color = define_and_cast_refracted_ray
 		// 						(ray, closest_object, closest_object_distance);
@@ -192,9 +273,7 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 		scattering_color = define_and_cast_shadow_rays(rt, ray, closest_object, closest_object_distance);
 
 		// Needed to silence the error [XXX used uninitialized]
-		reflection_color.color = 0x000000;
 		refraction_color.color = 0x000000;
-		reflection_color.intensity = 1;
 		refraction_color.intensity = 1;
 
 		return (combine_colors(reflection_color, refraction_color,
@@ -214,17 +293,17 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 ** ----------------------------------------------------------------------------
 */
 
-void				rt_render(t_rt *rt)
-{
-	int		i;
-	t_ray	current_ray;
-	t_color	pixel_color;
+// void				rt_render(t_rt *rt)
+// {
+// 	int		i;
+// 	t_ray	current_ray;
+// 	t_color	pixel_color;
 
-	i = -1;
-	while ((current_ray.pix_nb = ++i) < (HEIGHT * WIDTH))
-	{
-		get_primary_ray_info(rt, &current_ray);
-		pixel_color = rt_cast_ray(rt, &current_ray);
-		FRAMEBUFF[i] = pixel_color.color;
-	}
-}
+// 	i = -1;
+// 	while ((current_ray.pix_nb = ++i) < (HEIGHT * WIDTH))
+// 	{
+// 		get_primary_ray_info(rt, &current_ray);
+// 		pixel_color = rt_cast_ray(rt, &current_ray);
+// 		FRAMEBUFF[i] = pixel_color.color;
+// 	}
+// }
