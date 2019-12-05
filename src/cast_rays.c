@@ -23,7 +23,6 @@ t_vec			get_normal_intersection_plane(t_ray *ray,
 												t_object *closest_object)
 {
 	t_vec normal;
-
 	if (vec_dot_product(RAY_D, closest_object->plane->normal) > 0)
 		normal = vec_scale(closest_object->plane->normal, -1);
 	else
@@ -111,7 +110,9 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 		double			new_distance = INFINITY;
 
 		// If intersection then it's in shadow so we don't do anything, else add color contribution
-		if (!find_closest_intersected_object(rt, &shadow_ray, &new_closest_object, &new_distance))
+		if (!find_closest_intersected_object(rt, &shadow_ray, &new_closest_object, &new_distance)
+		|| (find_closest_intersected_object(rt, &shadow_ray, &new_closest_object, &new_distance)
+		&& (new_distance > vec_magnitude(vec_sub(current_light->pos, hitpoint)))))
 		{
 			// Getting the facing ratio (exposure to light source)
 			if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)
