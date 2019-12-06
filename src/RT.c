@@ -82,6 +82,7 @@ static void		rt_init_env(t_rt *rt)
 {
 	rt->obj = NULL;
 	rt->light = NULL;
+	rt->LiveModeValue = 5;
 }
 
 /*

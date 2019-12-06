@@ -108,6 +108,7 @@ typedef struct			s_rt
 	int					pix;
 	t_thread			thread[4];
 	char				gui_live_mode;
+	short				LiveModeValue;
 }						t_rt;
 
 /*

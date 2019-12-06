@@ -154,6 +154,8 @@ t_color			combine_colors(t_color reflection_color,
 	(void)refraction_color;
 	if (reflection_color.color != 0x000000)
 		return (reflection_color);
+	if (refraction_color.color != 0x000000)
+		return (refraction_color);
 	return (scattering_color);
 }
 
@@ -201,6 +203,61 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 }
 
 /*
+** All formulas for refraction were found at:
+** https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.
+*/
+
+t_color			define_and_cast_refracted_ray(t_rt *rt, t_ray *ray, t_object *closest_object, double closest_object_distance)
+{
+	double c1;
+	double c2;
+	double nDelta;
+	t_vec I;
+	t_vec N;
+	t_ray refraction_ray;
+
+	refraction_ray.pix_nb = ray->pix_nb;
+	refraction_ray.depth = ++ray->depth;
+
+	refraction_ray.ray_o = get_hitpoint(ray, closest_object_distance);
+	I = RAY_D;
+	N = get_normal_at_hitpoint(ray, closest_object, refraction_ray.ray_o);
+	nDelta = 1 / 1.3;
+	c1 = vec_dot_product(N, I);
+	c2 = sqrt(1 - (nDelta * nDelta) * (1 - (c1 * c1)));
+	refraction_ray.ray_d = vec_sub(vec_scale((vec_add(I, vec_scale(N, c1))), nDelta), vec_scale(N, c2));
+	
+	if (refraction_ray.depth < MAX_DEPTH)
+	{
+		if (closest_object->type == NB_SPHERE)
+		{
+			if (closest_object->sphere->material == REFRACTION)
+				return rt_cast_ray(rt, &refraction_ray);
+				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+		}
+		else if (closest_object->type == NB_PLANE)
+		{
+			if (closest_object->plane->material == REFRACTION)
+				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+				return rt_cast_ray(rt, &refraction_ray);
+		}
+		else if (closest_object->type == NB_CYLINDER)
+		{
+			if (closest_object->cylinder->material == REFRACTION)
+				return rt_cast_ray(rt, &refraction_ray);
+				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+		}
+		else if (closest_object->type == NB_CONE)
+		{
+			if (closest_object->cone->material == REFRACTION)
+				return rt_cast_ray(rt, &refraction_ray);
+				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+		}
+	}
+	return ((t_color){0x000000, 1});	
+}
+
+/*
 ** ----------------------------------------------------------------------------
 ** Recursive function which casts a ray through the scene. Type of ray will
 ** influence what informations it will receive (ray_origin / ray_direction),
@@ -227,17 +284,8 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 	if (INTERSECTION_OBJ)
 	{
 		reflection_color = define_and_cast_reflected_ray(rt, ray, closest_object, closest_object_distance);
-
-		// if (REFRACTION)
-		// 	refraction_color = define_and_cast_refracted_ray
-		// 						(ray, closest_object, closest_object_distance);
-
+		refraction_color = define_and_cast_refracted_ray(rt,ray, closest_object, closest_object_distance);
 		scattering_color = define_and_cast_shadow_rays(rt, ray, closest_object, closest_object_distance);
-
-		// Needed to silence the error [XXX used uninitialized]
-		refraction_color.color = 0x000000;
-		refraction_color.intensity = 1;
-
 		return (combine_colors(reflection_color, refraction_color,
 								scattering_color));
 	}

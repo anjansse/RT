@@ -86,10 +86,34 @@
 ** ----------------------------------------------------------------------------
 */
 
+// static void			rt_store_background(t_rt *rt)
+// {
+// 	double Origin_RGB[3] = {85.0, 85.0, 85.0};
+// 	double Delta_RGB[3] = {0.2125, 0.2125, 0.2125};
+// 	int y;
+// 	int x;
+
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = y * WIDTH;
+// 		while (x < (y + 1) * WIDTH)
+// 		{
+// 			DEFAULT_BACKGROUND[x] = ft_rgb(Origin_RGB[0], Origin_RGB[1], Origin_RGB[2]);
+// 			++x;
+// 		}
+// 		Origin_RGB[0] += Delta_RGB[0];
+// 		Origin_RGB[1] += Delta_RGB[1];
+// 		Origin_RGB[2] += Delta_RGB[2];
+// 		++y;
+// 	}
+// }
+
 static void			rt_store_background(t_rt *rt)
 {
 	double Origin_RGB[3] = {85.0, 85.0, 85.0};
-	double Delta_RGB[3] = {0.2125, 0.2125, 0.2125};
+	// double Delta_RGB[3] = {0.2125, 0.2125, 0.2125};
+	double Delta_RGB[3] = {0.10625, 0.10625, 0.10625};
 	int y;
 	int x;
 
@@ -102,12 +126,13 @@ static void			rt_store_background(t_rt *rt)
 			DEFAULT_BACKGROUND[x] = ft_rgb(Origin_RGB[0], Origin_RGB[1], Origin_RGB[2]);
 			++x;
 		}
-		Origin_RGB[0] += Delta_RGB[0];
-		Origin_RGB[1] += Delta_RGB[1];
-		Origin_RGB[2] += Delta_RGB[2];
+		Origin_RGB[0] -= Delta_RGB[0];
+		Origin_RGB[1] -= Delta_RGB[1];
+		Origin_RGB[2] -= Delta_RGB[2];
 		++y;
 	}
 }
+
 
 /*
 ** ----------------------------------------------------------------------------
@@ -153,27 +178,31 @@ static void			loading_screen(t_rt *rt)
 
 static void			handle_cmd(t_rt *rt)
 {
+	if (KEYS[SDL_SCANCODE_KP_PLUS])
+		rt->LiveModeValue += 5;
+	if (KEYS[SDL_SCANCODE_KP_MINUS])
+		rt->LiveModeValue -= 5;
 	if (KEYS[SDL_SCANCODE_RIGHT])
 	{
-		CAM_MAT[0][3] += 25.0;
+		CAM_MAT[0][3] += rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
 	else if (KEYS[SDL_SCANCODE_LEFT])
 	{
-		CAM_MAT[0][3] -= 25.0;
+		CAM_MAT[0][3] -= rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
 	else if (KEYS[SDL_SCANCODE_DOWN])
 	{
-		CAM_MAT[1][3] -= 25.0;
+		CAM_MAT[1][3] -= rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
 	else if (KEYS[SDL_SCANCODE_UP])
 	{
-		CAM_MAT[1][3] += 25.0;
+		CAM_MAT[1][3] += rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
