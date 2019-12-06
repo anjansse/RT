@@ -152,9 +152,9 @@ t_color			combine_colors(t_color reflection_color,
 								t_color scattering_color)
 {
 	(void)refraction_color;
-	if (reflection_color.color != 0x000000)
+	if (reflection_color.intensity != 0)
 		return (reflection_color);
-	if (refraction_color.color != 0x000000)
+	if (refraction_color.intensity != 0)
 		return (refraction_color);
 	return (scattering_color);
 }
@@ -199,7 +199,7 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
 		}
 	}
-	return ((t_color){0x000000, 1});
+	return ((t_color){0x000000, 0});
 }
 
 /*
@@ -232,29 +232,29 @@ t_color			define_and_cast_refracted_ray(t_rt *rt, t_ray *ray, t_object *closest_
 		if (closest_object->type == NB_SPHERE)
 		{
 			if (closest_object->sphere->material == REFRACTION)
-				return rt_cast_ray(rt, &refraction_ray);
-				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+				// return rt_cast_ray(rt, &refraction_ray);
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_PLANE)
 		{
 			if (closest_object->plane->material == REFRACTION)
-				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
-				return rt_cast_ray(rt, &refraction_ray);
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+				// return rt_cast_ray(rt, &refraction_ray);
 		}
 		else if (closest_object->type == NB_CYLINDER)
 		{
 			if (closest_object->cylinder->material == REFRACTION)
-				return rt_cast_ray(rt, &refraction_ray);
-				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+				// return rt_cast_ray(rt, &refraction_ray);
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_CONE)
 		{
 			if (closest_object->cone->material == REFRACTION)
-				return rt_cast_ray(rt, &refraction_ray);
-				// return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
+				// return rt_cast_ray(rt, &refraction_ray);
+				return ((t_color){ft_luminosity((rt_cast_ray(rt, &refraction_ray).color), 0.8), 1});
 		}
 	}
-	return ((t_color){0x000000, 1});	
+	return ((t_color){0x000000, 0});
 }
 
 /*
