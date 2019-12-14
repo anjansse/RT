@@ -151,7 +151,6 @@ t_color			combine_colors(t_color reflection_color,
 								t_color refraction_color,
 								t_color scattering_color)
 {
-	(void)refraction_color;
 	if (reflection_color.intensity != 0)
 		return (reflection_color);
 	if (refraction_color.intensity != 0)
