@@ -72,7 +72,7 @@ void            rt_store_light(t_rt *rt, char *info)
 	infos = ft_strsplit(info, '|');
 	if (ft_array_len(infos) != 3)
 		send_error(ft_strdup("Error in light options -- \
-should be [position(x y z)] | [direction(xyz)].\n"));
+should be [position(x y z)] | [direction(xyz)] | (intensity).\n"));
 	store_vector(infos[0], pos);
 	store_vector(infos[1], dir);
 	store_number(infos[2], &intensity);

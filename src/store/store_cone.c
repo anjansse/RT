@@ -32,6 +32,7 @@ void            rt_store_cone(t_rt *rt, char *info)
 	store_vector(infos[0], cone_tips);
 	store_vector(infos[1], axis_vector);
 	store_number(infos[2], &half_angle);
+	half_angle *= (M_PI / 180);
 	store_vector(infos[3], rgb);
 	store_number(infos[4], &type);
 	cone_add(&cone, cone_tips, axis_vector, half_angle, rgb, type);

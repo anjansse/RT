@@ -21,22 +21,26 @@ bool			find_intersection_cone(t_ray *ray, t_object *obj, double *object_dist)
 {
 	double		coefs[3];
 	double		sols[2];
-	double		y[2];
-	double		max_y;
-	double		min_y;
+	// double		y[2];
+	// double		max_y;
+	// double		min_y;
 
 	*object_dist = INFINITY;
 	find_quadratic_equa_coefs_cone(ray, obj, coefs);
 	if (TRUE == solve_quadratic_equa(coefs[0], coefs[1], coefs[2], sols))
 	{
-		y[0] = RAY_O.y + RAY_D.y * sols[0];
-        y[1] = RAY_O.y + RAY_D.y * sols[1];
-		max_y = (CONE_TIPS.y >= AX_VEC.y) ? CONE_TIPS.y : AX_VEC.y;
-		min_y = (CONE_TIPS.y >= AX_VEC.y) ? AX_VEC.y : CONE_TIPS.y;
+		// y[0] = RAY_O.y + RAY_D.y * sols[0];
+        // y[1] = RAY_O.y + RAY_D.y * sols[1];
+		// max_y = (CONE_TIPS.y >= AX_VEC.y) ? CONE_TIPS.y : AX_VEC.y;
+		// min_y = (CONE_TIPS.y >= AX_VEC.y) ? AX_VEC.y : CONE_TIPS.y;
+		// if (y[0] <= max_y && y[0] >= min_y && sols[0] > EPSILON && sols[0] < *object_dist)
+		// 	*object_dist = sols[0];
+		// if (y[1] <= max_y && y[1] >= min_y && sols[1] > EPSILON && sols[1] < *object_dist)
+		// 	*object_dist = sols[1];
 
-		if (y[0] <= max_y && y[0] >= min_y && sols[0] > EPSILON && sols[0] < *object_dist)
+		if (sols[0] > EPSILON && sols[0] < *object_dist)
 			*object_dist = sols[0];
-		if (y[1] <= max_y && y[1] >= min_y && sols[1] > EPSILON && sols[1] < *object_dist)
+		if (sols[1] > EPSILON && sols[1] < *object_dist)
 			*object_dist = sols[1];
 	}
 	if (*object_dist != INFINITY)
