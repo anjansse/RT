@@ -8,6 +8,7 @@ static void		cylinder_add(t_cylinder **cylinder, double base[3], double radius, 
 		return ;
 	vec_set(&(newCyl->base), base[0], base[1], base[2]);
 	vec_set(&(newCyl->direction), direction[0], direction[1], direction[2]);
+	newCyl->direction = vec_normalize(newCyl->direction);
 	newCyl->radius = radius;
 	newCyl->height = height;
 	newCyl->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
@@ -28,7 +29,7 @@ void            rt_store_cylinder(t_rt *rt, char *info)
 
 	infos = ft_strsplit(info, '|');
 	if (ft_array_len(infos) != 6)
-		send_error(ft_strdup("Error in cylinder options -- should be [base(x y z)] | [radius] | [height] | [color(r g b)].\n"));
+		send_error(ft_strdup("Error in cylinder options -- should be [base(x y z)] | [radius] | [height] | [color(r g b)] | [material].\n"));
 	store_vector(infos[0], base);
 	store_vector(infos[1], direction);
 	store_number(infos[2], &radius);

@@ -170,11 +170,11 @@ static void			rt_print(t_rt *rt)
 
 static void			loading_screen(t_rt *rt)
 {
-	// int i;
+	int i;
 
-	// i = -1;
-	// while (++i < (HEIGHT * WIDTH))
-	// 	FRAMEBUFF[i] = 0x000000;
+	i = -1;
+	while (++i < (HEIGHT * WIDTH))
+		FRAMEBUFF[i] = 0x000000;
 	SDL_UpdateTexture(IMG_POINT, NULL, FRAMEBUFF, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(RENDERER);
 	SDL_RenderCopy(RENDERER, IMG_POINT, NULL, NULL);
