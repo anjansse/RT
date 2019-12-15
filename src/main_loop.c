@@ -170,11 +170,11 @@ static void			rt_print(t_rt *rt)
 
 static void			loading_screen(t_rt *rt)
 {
-	int i;
+	// int i;
 
-	i = -1;
-	while (++i < (HEIGHT * WIDTH))
-		FRAMEBUFF[i] = 0x000000;
+	// i = -1;
+	// while (++i < (HEIGHT * WIDTH))
+	// 	FRAMEBUFF[i] = 0x000000;
 	SDL_UpdateTexture(IMG_POINT, NULL, FRAMEBUFF, WIDTH * sizeof (uint32_t));
 	SDL_RenderClear(RENDERER);
 	SDL_RenderCopy(RENDERER, IMG_POINT, NULL, NULL);
@@ -187,30 +187,78 @@ static void			handle_cmd(t_rt *rt)
 		rt->LiveModeValue += 5;
 	if (KEYS[SDL_SCANCODE_KP_MINUS])
 		rt->LiveModeValue -= 5;
-	if (KEYS[SDL_SCANCODE_RIGHT])
+	if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_D])
 	{
 		CAM_MAT[0][3] += rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
-	else if (KEYS[SDL_SCANCODE_LEFT])
+	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_A])
 	{
 		CAM_MAT[0][3] -= rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
-	else if (KEYS[SDL_SCANCODE_DOWN])
+	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_W])
+	{
+		CAM_MAT[2][3] += rt->LiveModeValue;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_S])
+	{
+		CAM_MAT[2][3] -= rt->LiveModeValue;
+		loading_screen(rt);
+		rt_print(rt);
+	}
+	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_DOWN])
 	{
 		CAM_MAT[1][3] -= rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
-	else if (KEYS[SDL_SCANCODE_UP])
+	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_UP])
 	{
 		CAM_MAT[1][3] += rt->LiveModeValue;
 		loading_screen(rt);
 		rt_print(rt);
 	}
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_D])
+	// {
+	// 	CAM_TO.x += rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_A])
+	// {
+	// 	CAM_TO.x -= rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_UP])
+	// {
+	// 	CAM_TO.y += rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_DOWN])
+	// {
+	// 	CAM_TO.y -= rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_W])
+	// {
+	// 	CAM_TO.z += rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
+	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_S])
+	// {
+	// 	CAM_TO.z -= rt->LiveModeValue;
+	// 	loading_screen(rt);
+	// 	rt_print(rt);
+	// }
 }
 
 void				rt_main_loop(t_rt *rt)
@@ -229,8 +277,7 @@ void				rt_main_loop(t_rt *rt)
 					exit(0);
 				if (KEYS[SDL_SCANCODE_L])
 					LIVE_MODE = (LIVE_MODE == 1) ? 0 : 1;
-				if (LIVE_MODE == 1)
-					handle_cmd(rt);
+				handle_cmd(rt);
 			}
 		}
 	}
