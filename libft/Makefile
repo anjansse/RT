@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 09:51:04 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/17 13:44:43 by anjansse         ###   ########.fr        #
+#    Updated: 2019/12/14 17:11:07 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MEMORY		= ft_bzero.c ft_memalloc.c ft_memccpy.c ft_memcpy.c ft_memcmp.c\
 			  ft_memchr.c ft_memdel.c ft_memmove.c ft_memset.c \
 			  ft_memtransform.c ft_free_db_tab.c
 
-NUMBER		= ft_atoi.c ft_itoa.c ft_stoi.c
+NUMBER		= ft_atoi.c ft_itoa.c ft_stoi.c ft_stof.c
 
 PRINT		= ft_putchar_fd.c ft_putchar.c ft_putendl_fd.c ft_putendl.c\
 			  ft_putnbr_fd.c ft_putnbr.c ft_putstr_fd.c ft_putstr.c\

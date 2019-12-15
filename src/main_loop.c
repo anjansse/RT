@@ -131,6 +131,11 @@ static void			rt_store_background(t_rt *rt)
 		Origin_RGB[2] -= Delta_RGB[2];
 		++y;
 	}
+	// int x = -1;
+
+	// while (++x < HEIGHT *WIDTH) {
+	// 	DEFAULT_BACKGROUND[x] = 0x91EEFE;
+	// }
 }
 
 

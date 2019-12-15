@@ -9,6 +9,7 @@ static void		cone_add(t_cone **cone, double cone_tips[3],
 		return ;
 	vec_set(&(newcone->cone_tips), cone_tips[0], cone_tips[1], cone_tips[2]);
 	vec_set(&(newcone->axis_vector), axis_vector[0], axis_vector[1], axis_vector[2]);
+	newcone->axis_vector = vec_normalize(newcone->axis_vector);
 	newcone->half_angle = half_angle;
 	newcone->color = ft_rgb(rgb[0], rgb[1], rgb[2]);
 	newcone->material = type;

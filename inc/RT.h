@@ -72,7 +72,7 @@
 # define ELEM					6
 # define NB_OBJECTS				4
 # define MIN_LINE_SIZE			11
-# define NUMBER					"- 0123456789"
+# define NUMBER					"-. 0123456789"
 
 # define FOV					60
 // # define SCALE					tan(FOV * 0.5 * (M_PI / 180))	

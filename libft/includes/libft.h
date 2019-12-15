@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 22:16:13 by anjansse          #+#    #+#             */
-/*   Updated: 2019/11/17 13:44:27 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:10:43 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int					*ft_range(int start, int end);
 int					ft_strclen(char *str, char c);
 int					ft_atoi(const char *str);
 int					ft_stoi(char *n);
+float				ft_stof(const char *str);
 
 void				ft_bzero(void *s1, size_t n);
 int					ft_isws(char c);

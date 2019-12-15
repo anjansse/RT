@@ -47,9 +47,9 @@ void		store_vector(char *info, double *xyz)
 	vector = ft_strsplit(content, ' ');
 	if (ft_array_len(vector) != 3)
 		send_error(ft_strdup("Incorrect number of elements in vector (x y z).\n"));
-	xyz[0] = (double)ft_stoi(vector[0]);
-	xyz[1] = (double)ft_stoi(vector[1]);
-	xyz[2] = (double)ft_stoi(vector[2]);
+	xyz[0] = (double)ft_stof(vector[0]);
+	xyz[1] = (double)ft_stof(vector[1]);
+	xyz[2] = (double)ft_stof(vector[2]);
 	free(content);
 	ft_free_db_tab(vector);
 }
@@ -67,6 +67,6 @@ void		store_number(char *info, double *number)
 	content = ft_strsub(info, open_paranthese, (close_paranthese - open_paranthese));
 	if (!ft_verifstr(content, NUMBER))
 		send_error(ft_strdup("This is not a valid number.\n"));
-	*number = (double)ft_stoi(content);
+	*number = (double)ft_stof(content);
 	free(content);
 }
