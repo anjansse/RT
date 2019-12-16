@@ -150,6 +150,30 @@ static int			check_material(t_object *closest_object, int material)
 	return 0;
 }
 
+uint32_t		calculate_scalar(uint32_t color, double delta_intensity)
+{
+	double old_r;
+	double old_g;
+	double old_b;
+	double r;
+	double g;
+	double b;
+	double mult_intesity;
+
+	mult_intesity = 100000 - delta_intensity * 100000;
+	old_r = (color & 0xff0000) >> 16;
+	old_g = (color & 0x00ff00) >> 8;
+	old_b = (color & 0x0000ff);
+
+	r = (double)(255 - old_r) / 1500;
+	r = 255 - (r * mult_intesity);
+	g = (double)(255 - old_g) / 1500;
+	g = 255 - (g * mult_intesity);
+	b = (double)(255 - old_b) / 1500;
+	b = 255 - (b * mult_intesity);
+	return (ft_rgb((unsigned char)r, (unsigned char)g, (unsigned char)b));
+}
+
 t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 												t_object *closest_object,
 												double closest_object_distance)
@@ -200,6 +224,11 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 				final_color.color = closest_object->cylinder->color;
 			else if (closest_object->type == NB_CONE)
 				final_color.color = closest_object->cone->color;
+			if (closest_object->type != NB_PLANE && facing_ratio >= 0.98500 && facing_ratio <= 1)
+			{
+				final_color.color = calculate_scalar(final_color.color, facing_ratio);
+				final_color.intensity = 1;
+			}
 		}
 		current_light = current_light->next;
 	}
