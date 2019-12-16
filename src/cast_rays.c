@@ -30,19 +30,39 @@ t_vec			get_normal_intersection_plane(t_ray *ray,
 	return (normal);
 }
 
-t_vec			get_normal_intersection_cylinder(t_ray *ray,
-													t_object *closest_object,
-													t_vec hitpoint)
-{
-	t_vec normal;
-	t_vec new_vec;
+// t_vec			get_normal_intersection_cylinder(t_ray *ray,
+// 													t_object *closest_object,
+// 													t_vec hitpoint)
+// {
+// 	t_vec normal;
+// 	t_vec new_vec;
 
-	new_vec = vec_new(closest_object->cylinder->base.x,
-						hitpoint.y, closest_object->cylinder->base.z);
+// 	new_vec = vec_new(hitpoint.x,
+// 						closest_object->cylinder->base.y, closest_object->cylinder->base.z);
+// 	normal = vec_normalize(vec_sub(hitpoint, new_vec));
+// 	return (normal);
+// 	(void)ray;
+// }
+
+t_vec			get_normal_intersection_cylinder(t_ray *ray,
+										t_object *closest_object,
+										t_vec hitpoint)
+{
+	t_vec	normal;
+	t_vec	new_vec;
+	double	scale;
+	scale = vec_dot_product(hitpoint, closest_object->cylinder->direction);
+	scale -= vec_dot_product(closest_object->cylinder->base,
+								closest_object->cylinder->direction);
+	scale /= vec_dot_product(closest_object->cylinder->direction,
+								closest_object->cylinder->direction);
+	new_vec = vec_scale(closest_object->cylinder->direction, scale);
+	new_vec = vec_add(new_vec, closest_object->cylinder->base);
 	normal = vec_normalize(vec_sub(hitpoint, new_vec));
 	return (normal);
 	(void)ray;
 }
+
 
 t_vec			get_normal_intersection_cone(t_ray * ray,
 												t_object *closest_object,
@@ -81,6 +101,55 @@ t_vec			get_normal_at_hitpoint(t_ray *ray, t_object *closest_object,
 // if not, then compute their contribution to the color
 // add all these contributions (or more complex mixing technic
 
+uint32_t		ft_add(uint32_t color1, uint32_t color2, uint32_t max)
+{
+	double		r;
+	double		g;
+	double		b;
+	double		maxr;
+	double		maxg;
+	double		maxb;
+	
+	r = (((color1 & 0xff0000) >> 16) + ((color2 & 0xff0000) >> 16));
+	g = (((color1 & 0x00ff00) >> 8) + ((color2 & 0x00ff00) >> 8));
+	b = ((color1 & 0x0000ff) + (color2 & 0x0000ff));
+	maxr = (max & 0xff0000) >> 16;
+	maxg = (max & 0x00ff00) >> 8;
+	maxb = (max & 0x0000ff);
+	if (r > maxr)
+		r = maxr;
+	if (g > maxg)
+		g = maxg;
+	if (b > maxb)
+		b = maxb;
+	return (ft_rgb((uint8_t)r, (uint8_t)g, (uint8_t)b));
+}
+
+static int			check_material(t_object *closest_object, int material)
+{
+	if (closest_object->type == NB_CONE)
+	{
+		if (closest_object->cone->material == material)
+			return 1;
+	}
+	else if (closest_object->type == NB_CYLINDER)
+	{
+		if (closest_object->cylinder->material == material)
+			return 1;
+	}
+	else if (closest_object->type == NB_PLANE)
+	{
+		if (closest_object->plane->material == material)
+			return 1;
+	}
+	else if (closest_object->type == NB_SPHERE)
+	{
+		if (closest_object->sphere->material == material)
+			return 1;
+	}
+	return 0;
+}
+
 t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 												t_object *closest_object,
 												double closest_object_distance)
@@ -92,12 +161,15 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	double		facing_ratio;
 	t_color		final_color;
 
+	if (!check_material(closest_object, DIFFUSE))
+		return ((t_color){0x000000, 0});
+
 	hitpoint = get_hitpoint(ray, closest_object_distance);
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
 	current_light = rt->light;
 
 	final_color.color = 0x000000;
-	final_color.color = 1;
+	final_color.intensity = 0;
 
 	// Looping through all the lights and looking for intersections
 	while (current_light)
@@ -118,27 +190,16 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 			if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)
 				facing_ratio = 0;
 
+			final_color.intensity += current_light->intensity * facing_ratio;
 			// Adding the color contributions. I cap the color value to the intersected object's original color for now.
 			if (closest_object->type == NB_SPHERE)
-			{
-				if ((final_color.color += ft_luminosity(closest_object->sphere->color, current_light->intensity * facing_ratio)) > closest_object->sphere->color)
-					final_color.color = closest_object->sphere->color;
-			}
+				final_color.color = closest_object->sphere->color;
 			else if (closest_object->type == NB_PLANE)
-			{
-				if ((final_color.color += ft_luminosity(closest_object->plane->color, current_light->intensity * facing_ratio))> closest_object->plane->color)
-					final_color.color = closest_object->plane->color;
-			}
+				final_color.color = closest_object->plane->color;
 			else if (closest_object->type == NB_CYLINDER)
-			{
-				if ((final_color.color += ft_luminosity(closest_object->cylinder->color, current_light->intensity * facing_ratio)) > closest_object->cylinder->color)
-					final_color.color = closest_object->cylinder->color;
-			}
+				final_color.color = closest_object->cylinder->color;
 			else if (closest_object->type == NB_CONE)
-			{
-				if ((final_color.color += ft_luminosity(closest_object->cone->color, current_light->intensity * facing_ratio)) > closest_object->cone->color)
-					final_color.color = closest_object->cone->color;
-			}
+				final_color.color = closest_object->cone->color;
 		}
 		current_light = current_light->next;
 	}
@@ -147,15 +208,49 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	
 }
 
+static uint8_t	average_color(t_color reflect, t_color refract, t_color scatter, int shift)
+{
+	double tot_color_composant;
+	double tot_intensity;
+
+	tot_color_composant = (double)((reflect.color & (0x00ff << shift)) >> shift) * reflect.intensity;
+	tot_color_composant += (double)((refract.color & (0x00ff << shift)) >> shift) * refract.intensity; 
+	tot_color_composant += (double)((scatter.color & (0x00ff << shift)) >> shift) * scatter.intensity;
+	tot_intensity = reflect.intensity + refract.intensity + scatter.intensity;
+	return ((uint8_t)(tot_color_composant / tot_intensity));
+}
+
 t_color			combine_colors(t_color reflection_color,
 								t_color refraction_color,
 								t_color scattering_color)
 {
-	if (reflection_color.intensity != 0)
-		return (reflection_color);
-	if (refraction_color.intensity != 0)
-		return (refraction_color);
-	return (scattering_color);
+	// if (reflection_color.intensity != 0 || reflection_color.color != 0x000000)
+	// 	return (reflection_color);
+	// if (refraction_color.intensity != 0 || refraction_color.color != 0x000000)
+	// 	return (refraction_color);
+	// return (scattering_color);
+	t_color color;
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	// int total_weight;
+
+	// total_weight = 0;
+	// total_weight += (reflection_color.color & 0xff0000) >> 16 + (refraction_color.color & 0xff0000) >> 16 + (scattering_color.color & 0xff0000) >> 16;
+	// total_weight += (reflection_color.color & 0x00ff00) >> 8 + (refraction_color.color & 0x00ff00) >> 8 + (scattering_color.color & 0x00ff00) >> 8;
+	// total_weight += (reflection_color.color & 0x0000ff) + (refraction_color.color & 0x0000ff) + (scattering_color.color & 0x0000ff);
+	// total_weight 
+
+	color.intensity = reflection_color.intensity + refraction_color.intensity + scattering_color.intensity;
+	if (color.intensity == 0)
+		return ((t_color){0x000000, 0});
+	r = average_color(reflection_color, refraction_color, scattering_color, 16);
+	g = average_color(reflection_color, refraction_color, scattering_color, 8);
+	b = average_color(reflection_color, refraction_color, scattering_color, 0);
+	color.color = ft_rgb((uint8_t)r, (uint8_t)g, (uint8_t)b);
+	color.intensity = reflection_color.intensity + refraction_color.intensity + scattering_color.intensity;
+	
+	return color;
 }
 
 t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
@@ -165,6 +260,7 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 	t_ray		reflection_ray;
 	t_vec		hitpoint;
 	t_vec		normal;
+	t_color		color;
 
 	hitpoint = get_hitpoint(ray, closest_object_distance);
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
@@ -180,22 +276,34 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 		if (closest_object->type == NB_SPHERE)
 		{
 			if (closest_object->sphere->material == REFLECTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
+			{
+				color = rt_cast_ray(rt, &reflection_ray);
+				return ((t_color){color.color, color.intensity * 0.8});
+			}
 		}
 		else if (closest_object->type == NB_PLANE)
 		{
 			if (closest_object->plane->material == REFLECTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
+			{
+				color = rt_cast_ray(rt, &reflection_ray);
+				return ((t_color){color.color, color.intensity * 0.8});
+			}
 		}
 		else if (closest_object->type == NB_CYLINDER)
 		{
 			if (closest_object->cylinder->material == REFLECTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
+			{
+				color = rt_cast_ray(rt, &reflection_ray);
+				return ((t_color){color.color, color.intensity * 0.8});
+			}
 		}
 		else if (closest_object->type == NB_CONE)
 		{
 			if (closest_object->cone->material == REFLECTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, &reflection_ray).color), 0.8), 1});
+			{
+				color = rt_cast_ray(rt, &reflection_ray);
+				return ((t_color){color.color, color.intensity * 0.8});
+			}
 		}
 	}
 	return ((t_color){0x000000, 0});
@@ -283,7 +391,7 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 	if (INTERSECTION_OBJ)
 	{
 		reflection_color = define_and_cast_reflected_ray(rt, ray, closest_object, closest_object_distance);
-		refraction_color = define_and_cast_refracted_ray(rt,ray, closest_object, closest_object_distance);
+		refraction_color = define_and_cast_refracted_ray(rt, ray, closest_object, closest_object_distance);
 		scattering_color = define_and_cast_shadow_rays(rt, ray, closest_object, closest_object_distance);
 		return (combine_colors(reflection_color, refraction_color,
 								scattering_color));
@@ -291,28 +399,3 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 	else
 		return ((t_color){DEFAULT_BACKGROUND[ray->pix_nb], 1});
 }
-
-/*
-** ----------------------------------------------------------------------------
-** Main rendering function for the scene, parses all the pixels and casts rays
-** through them to check for intersection with objects, and get informations
-** on light, shadows and overall shade applied on the color of said object.
-**
-** @param {t_rt *} rt - Main structure for RT.
-** ----------------------------------------------------------------------------
-*/
-
-// void				rt_render(t_rt *rt)
-// {
-// 	int		i;
-// 	t_ray	current_ray;
-// 	t_color	pixel_color;
-
-// 	i = -1;
-// 	while ((current_ray.pix_nb = ++i) < (HEIGHT * WIDTH))
-// 	{
-// 		get_primary_ray_info(rt, &current_ray);
-// 		pixel_color = rt_cast_ray(rt, &current_ray);
-// 		FRAMEBUFF[i] = pixel_color.color;
-// 	}
-// }

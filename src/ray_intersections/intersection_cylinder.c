@@ -104,10 +104,35 @@ bool			find_intersection_cylinder(t_ray *ray, t_object *obj, double *object_dist
         //     if (z[1] > MIN_Z && z[1] < MAX_Z && sols[1] < *object_dist)
         //         *object_dist = sols[1];
         // }
+
         if (sols[0] > EPSILON && sols[0] < *object_dist)
 			*object_dist = sols[0];
 		if (sols[1] > EPSILON && sols[1] < *object_dist)
 			*object_dist = sols[1];
+        
+        t_vec hitpoint;
+        double scale;
+
+        hitpoint = vec_add(RAY_O, vec_scale(RAY_D, *object_dist));
+        scale = vec_dot_product(hitpoint, obj->cylinder->direction);
+        scale -= vec_dot_product(obj->cylinder->base,
+                                    obj->cylinder->direction);
+        scale /= vec_dot_product(obj->cylinder->direction,
+                                    obj->cylinder->direction);
+
+        if (scale > obj->cylinder->height || scale < 0)
+        {
+            double  othersol;
+            othersol = (*object_dist == sols[0]) ? sols[1] : sols[0];
+            hitpoint = vec_add(RAY_O, vec_scale(RAY_D, othersol));
+            scale = vec_dot_product(hitpoint, obj->cylinder->direction);
+            scale -= vec_dot_product(obj->cylinder->base,
+                                        obj->cylinder->direction);
+            scale /= vec_dot_product(obj->cylinder->direction,
+                                        obj->cylinder->direction);
+            if (scale > obj->cylinder->height || scale < 0)
+                *object_dist = INFINITY;
+        }
 
         // Need to find a way to get the caps at the top and bottom
         // ->   it's written on your website https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html#eqn:rectray

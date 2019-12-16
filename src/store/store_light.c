@@ -76,7 +76,7 @@ should be [position(x y z)] | [direction(xyz)] | (intensity).\n"));
 	store_vector(infos[0], pos);
 	store_vector(infos[1], dir);
 	store_number(infos[2], &intensity);
-	intensity = (double)(intensity / 33.34);			// GHISLAIN -> T'en penses quoi ?
+	intensity = (double)(intensity / 100);			// GHISLAIN -> T'en penses quoi ?
 	light_add(&light, pos, dir, intensity);
 	if (!rt->light)
 		rt->light = light;
