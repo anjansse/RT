@@ -12,9 +12,6 @@ int			rt_thread_1(void *data)
 	while ((current_ray.pix_nb = ++i) < (WIDTH * HEIGHT / 4)) {
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		// FRAMEBUFF[i] = pixel_color.color;
-		// if (pixel_color.intensity > 1)
-		// 	pixel_color.intensity = 1;
 		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
     }
 	return (0);
@@ -32,9 +29,6 @@ int			rt_thread_2(void *data)
 	while ((current_ray.pix_nb = ++i) < (WIDTH * HEIGHT / 4) * 2) {
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		// FRAMEBUFF[i] = pixel_color.color;
-		// if (pixel_color.intensity > 1)
-		// 	pixel_color.intensity = 1;
 		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
     }
 	return (0);
@@ -52,9 +46,6 @@ int			rt_thread_3(void *data)
 	while ((current_ray.pix_nb = ++i) < (WIDTH * HEIGHT / 4) * 3) {
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		// FRAMEBUFF[i] = pixel_color.color;
-		// if (pixel_color.intensity > 1)
-		// 	pixel_color.intensity = 1;
 		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
     }
 	return (0);
@@ -72,9 +63,6 @@ int			rt_thread_4(void *data)
 	while ((current_ray.pix_nb = ++i) < WIDTH * HEIGHT) {
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		// FRAMEBUFF[i] = pixel_color.color;
-		// if (pixel_color.intensity > 1)
-		// 	pixel_color.intensity = 1;
 		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
     }
 	return (0);

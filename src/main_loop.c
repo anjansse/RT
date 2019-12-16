@@ -183,82 +183,31 @@ static void			loading_screen(t_rt *rt)
 
 static void			handle_cmd(t_rt *rt)
 {
-	if (KEYS[SDL_SCANCODE_KP_PLUS])
-		rt->LiveModeValue += 5;
-	if (KEYS[SDL_SCANCODE_KP_MINUS])
-		rt->LiveModeValue -= 5;
-	if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_D])
+	int				reload;
+
+	reload = 0;
+	if (KEYS[SDL_SCANCODE_KP_PLUS] || KEYS[SDL_SCANCODE_KP_MINUS]) 
+		rt->LiveModeValue += KEYS[SDL_SCANCODE_KP_PLUS] ? 5 : -5;
+	else
 	{
-		CAM_MAT[0][3] += rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
+		if (KEYS[SDL_SCANCODE_D] && (reload = 1) == 1)
+			CAM_MAT[0][3] += rt->LiveModeValue;
+		else if (KEYS[SDL_SCANCODE_A] && (reload = 1) == 1)
+			CAM_MAT[0][3] -= rt->LiveModeValue;
+		else if (KEYS[SDL_SCANCODE_UP] && (reload = 1) == 1)
+			CAM_MAT[1][3] += rt->LiveModeValue;
+		else if (KEYS[SDL_SCANCODE_DOWN] && (reload = 1) == 1)
+			CAM_MAT[1][3] -= rt->LiveModeValue;
+		else if (KEYS[SDL_SCANCODE_W] && (reload = 1) == 1)
+			CAM_MAT[2][3] += rt->LiveModeValue;
+		else if (KEYS[SDL_SCANCODE_S] && (reload = 1) == 1)
+			CAM_MAT[2][3] -= rt->LiveModeValue;
+		if (reload == 1)
+		{
+			loading_screen(rt);
+			rt_print(rt);
+		}
 	}
-	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_A])
-	{
-		CAM_MAT[0][3] -= rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
-	}
-	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_W])
-	{
-		CAM_MAT[2][3] += rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
-	}
-	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_S])
-	{
-		CAM_MAT[2][3] -= rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
-	}
-	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_DOWN])
-	{
-		CAM_MAT[1][3] -= rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
-	}
-	else if (LIVE_MODE == 0 && KEYS[SDL_SCANCODE_UP])
-	{
-		CAM_MAT[1][3] += rt->LiveModeValue;
-		loading_screen(rt);
-		rt_print(rt);
-	}
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_D])
-	// {
-	// 	CAM_TO.x += rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_A])
-	// {
-	// 	CAM_TO.x -= rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_UP])
-	// {
-	// 	CAM_TO.y += rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_DOWN])
-	// {
-	// 	CAM_TO.y -= rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_W])
-	// {
-	// 	CAM_TO.z += rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
-	// else if (LIVE_MODE && KEYS[SDL_SCANCODE_S])
-	// {
-	// 	CAM_TO.z -= rt->LiveModeValue;
-	// 	loading_screen(rt);
-	// 	rt_print(rt);
-	// }
 }
 
 void				rt_main_loop(t_rt *rt)
@@ -275,8 +224,6 @@ void				rt_main_loop(t_rt *rt)
 			{
 				if (KEYS[SDL_SCANCODE_ESCAPE])
 					exit(0);
-				if (KEYS[SDL_SCANCODE_L])
-					LIVE_MODE = (LIVE_MODE == 1) ? 0 : 1;
 				handle_cmd(rt);
 			}
 		}
