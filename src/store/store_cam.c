@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   store_cam.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/16 11:51:06 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/16 11:58:12 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "RT.h"
 
 /*
 ** ----------------------------------------------------------------------------
-** Function that gets and stores the camera's informations. 
+** Function that gets and stores the camera's informations.
 ** Available infos are: position.
 **
 ** @param {t_rt *} rt - Main structure for RT.
@@ -10,10 +22,10 @@
 ** ----------------------------------------------------------------------------
 */
 
-void            rt_store_cam(t_rt *rt, char *info)
+void			rt_store_cam(t_rt *rt, char *info)
 {
 	char		**infos;
-	double      xyz[3];
+	double		xyz[3];
 
 	infos = ft_strsplit(info, '|');
 	if (ft_array_len(infos) != 2)
