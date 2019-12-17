@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_cylinder.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:58:24 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 17:02:22 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 13:00:36 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,6 @@ static void             find_quadratic_equa_coefs_cylinder(t_ray *ray, t_object 
 {
     t_vec               diff;
 
-/*
-    Might need a bit of change in this line because I get the
-    diff between origin and BASE of the cylinder
-*/
     diff = vec_sub(RAY_O, CYLINDER->base);
 
 	coefs[0] = get_a(ray, obj);
@@ -110,9 +106,6 @@ bool			find_intersection_cylinder(t_ray *ray, t_object *obj, double *object_dist
                 ray->inside_flag = FALSE;
             }
         }
-
-        // Need to find a way to get the caps at the top and bottom
-        // ->   it's written on your website https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html#eqn:rectray
     }       
     if (*object_dist != INFINITY)
 		return (TRUE);
