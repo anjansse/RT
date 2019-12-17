@@ -115,6 +115,8 @@ void				rt_render(t_rt *rt);
 void				get_primary_ray_info(t_rt *rt, t_ray *ray);
 void				get_refracted_ray_infos(t_ray *ray, t_ray *refraction_ray,\
 					t_object *closest_object, double clos_obj_dist);
+double				*get_intersection_cylinder(t_ray *ray, t_object *obj,\
+					double *object_dist, double *sols);
 
 t_vec				get_normal_intersection_sphere(t_object *closest_object, t_vec hitpoint);
 t_vec				get_normal_intersection_plane(t_ray *ray, t_object *closest_object);
