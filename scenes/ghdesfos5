@@ -1,0 +1,7 @@
+C: position: (0 130 -120) | direction: (0 75 -50)
+P: distance-origin: (9) | normal: (0 -1 0) | color: (255 125 125) | (1)
+P: distance-origin: (20) | normal: (0 0 1) | color: (255 125 125) | (1)
+P: distance-origin: (100) | normal: (1 0 0) | color: (255 125 125) | (1)
+P: distance-origin: (100) | normal: (-1 0 0) | color: (255 125 125) | (1)
+L: pos: (0 200 -120) | direction: (0 -1 0) | intensity: (60)
+Y: position: (0 75 -50) | direction: (0 0 1) | radius: (6) | height: (20) | color: (0 255 0) | (1)

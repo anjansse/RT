@@ -1,0 +1,6 @@
+C: position: (0 75 -100) | direction: (0 50 -50)
+S: center-pos: (-40 75 0) | radius: (12) | color: (255 0 25) | (2)
+S: center-pos: (40 75 0) | radius: (12) | color: (255 0 25) | (2)
+P: distance-origin: (9) | normal: (0 -1 0) | color: (200 54 80) | (1)
+O: cone_top pos: (0 50 -50) | axe_vector: (1 1 0) | radius: (35) | color: (12 169 42) | (1)
+L: pos: (-100 200 0) | direction: (0 -1 0) | intensity: (50)
