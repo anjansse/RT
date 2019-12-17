@@ -6,7 +6,7 @@
 /*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 17:00:06 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/16 20:32:17 by amagnan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,22 @@ t_vec			get_normal_intersection_cylinder(t_object *closest_object,\
 }
 
 t_vec			get_normal_intersection_cone(t_object *closest_object,\
-												t_vec hitpoint)
+											t_vec hitpoint)
 {
-	t_vec		normal;
-	t_vec		new_vec;
+	t_vec	normal;
+	t_vec	new_vec;
+	t_vec	cone_tip;
+	t_vec	axis_vector;
+	double	scale;
 
-	new_vec = vec_new(closest_object->cone->cone_tips.x,
-						hitpoint.y, closest_object->cone->cone_tips.z);
+	cone_tip = closest_object->cone->cone_tips;
+	axis_vector = closest_object->cone->axis_vector;
+	scale = 2 * vec_dot_product(cone_tip, hitpoint);
+	scale -= vec_dot_product(cone_tip, cone_tip);
+	scale -= vec_dot_product(hitpoint, hitpoint);
+	scale /= vec_dot_product(vec_sub(cone_tip, hitpoint), axis_vector);
+	new_vec = vec_scale(axis_vector, scale);
+	new_vec = vec_add(new_vec, cone_tip);
 	normal = vec_normalize(vec_sub(hitpoint, new_vec));
 	return (normal);
 }
