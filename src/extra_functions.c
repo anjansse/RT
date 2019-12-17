@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra.c                                            :+:      :+:    :+:   */
+/*   extra_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:58:29 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 12:58:30 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 14:10:51 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RT.h"
+
+int					check_material(t_object *closest_object, int material)
+{
+	if (closest_object->type == NB_CONE)
+		return (1);
+	else if (closest_object->type == NB_CYLINDER)
+	{
+		if (closest_object->cylinder->material == material)
+			return (1);
+	}
+	else if (closest_object->type == NB_PLANE)
+	{
+		if (closest_object->plane->material == material)
+			return (1);
+	}
+	else if (closest_object->type == NB_SPHERE)
+	{
+		if (closest_object->sphere->material == material)
+			return (1);
+	}
+	return (0);
+}
 
 /*
 ** ----------------------------------------------------------------------------

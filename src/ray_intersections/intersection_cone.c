@@ -1,23 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersection_cone.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 14:29:56 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/17 14:29:58 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "RT.h"
 
-# define AX_VEC		obj->cone->axis_vector
-# define HALF_ANGLE	obj->cone->half_angle
-# define CONE_TIPS	obj->cone->cone_tips
-# define COS2		pow(cos(HALF_ANGLE), 2.0)
-# define dot_DV		vec_dot_product(RAY_D, AX_VEC)
-# define CO			vec_sub(RAY_O, CONE_TIPS)
-
-# define MIN_Y		obj->cone->axis_vector.y
-# define MAX_Y		obj->cone->cone_tips.y
-
-static void		find_quadratic_equa_coefs_cone(t_ray *ray, t_object *obj, double *coefs)
+static void		find_quadratic_equa_coefs_cone(t_ray *ray,
+				t_object *obj, double *coefs)
 {
-	coefs[0] = pow(dot_DV, 2.0) - COS2;
-	coefs[1] = 2 * ((vec_dot_product(RAY_D, AX_VEC) * vec_dot_product(CO, AX_VEC) - vec_dot_product(RAY_D, CO) * COS2));
-	coefs[2] = pow(vec_dot_product(CO, AX_VEC), 2.0) - vec_dot_product(CO, CO) * COS2;
+	double		cos_squ;
+	double		dot_dv;
+	t_vec		vec_co;
+
+	cos_squ = pow(cos(obj->cone->half_angle), 2.0);
+	dot_dv = vec_dot_product(RAY_D, obj->cone->axis_vector);
+	vec_co = vec_sub(RAY_O, obj->cone->cone_tips);
+	coefs[0] = pow(dot_dv, 2.0) - cos_squ;
+	coefs[1] = 2 * ((dot_dv * vec_dot_product(vec_co, obj->cone->axis_vector)
+	- vec_dot_product(RAY_D, vec_co) * cos_squ));
+	coefs[2] = pow(vec_dot_product(vec_co, obj->cone->axis_vector), 2.0)
+	- vec_dot_product(vec_co, vec_co) * cos_squ;
 }
 
-bool			find_intersection_cone(t_ray *ray, t_object *obj, double *object_dist)
+bool			find_intersection_cone(t_ray *ray,
+				t_object *obj, double *object_dist)
 {
 	double		coefs[3];
 	double		sols[2];

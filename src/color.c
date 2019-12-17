@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 15:23:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 15:29:39 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 14:05:49 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RT.h"
+
+t_color					get_reflected_ray_color(t_rt *rt,
+						t_ray *reflection_ray, t_object *object)
+{
+	t_color		color;
+
+	if (object->type == NB_SPHERE && object->sphere->material == REFLECTION)
+	{
+		color = rt_cast_ray(rt, reflection_ray);
+		return ((t_color){color.color, color.intensity * 0.8});
+	}
+	else if (object->type == NB_PLANE && object->plane->material == REFLECTION)
+	{
+		color = rt_cast_ray(rt, reflection_ray);
+		return ((t_color){color.color, color.intensity * 0.8});
+	}
+	else if (object->type == NB_CYLINDER &&
+	object->cylinder->material == REFLECTION)
+	{
+		color = rt_cast_ray(rt, reflection_ray);
+		return ((t_color){color.color, color.intensity * 0.8});
+	}
+	else if (object->type == NB_CONE && object->cone->material == REFLECTION)
+	{
+		color = rt_cast_ray(rt, reflection_ray);
+		return ((t_color){color.color, color.intensity * 0.8});
+	}
+	return ((t_color){0x000000, 0});
+}
 
 static uint8_t			average_color(t_color reflect, t_color refract,\
 						t_color scatter, int shift)
@@ -30,23 +59,20 @@ static uint8_t			average_color(t_color reflect, t_color refract,\
 
 uint32_t				calculate_scalar(uint32_t color, double delta_intensity)
 {
-	double				old_r;
-	double				old_g;
-	double				old_b;
 	double				r;
 	double				g;
 	double				b;
 	double				mult_intesity;
 
 	mult_intesity = 100000 - delta_intensity * 100000;
-	old_r = (color & 0xff0000) >> 16;
-	old_g = (color & 0x00ff00) >> 8;
-	old_b = (color & 0x0000ff);
-	r = (double)(255 - old_r) / 1500;
+	r = (color & 0xff0000) >> 16;
+	g = (color & 0x00ff00) >> 8;
+	b = (color & 0x0000ff);
+	r = (double)(255 - r) / 1500;
 	r = 255 - (r * mult_intesity);
-	g = (double)(255 - old_g) / 1500;
+	g = (double)(255 - g) / 1500;
 	g = 255 - (g * mult_intesity);
-	b = (double)(255 - old_b) / 1500;
+	b = (double)(255 - b) / 1500;
 	b = 255 - (b * mult_intesity);
 	return (ft_rgb((unsigned char)r, (unsigned char)g, (unsigned char)b));
 }

@@ -113,8 +113,15 @@ t_color				rt_cast_ray(t_rt *rt, t_ray *ray);
 void				rt_render(t_rt *rt);
 
 void				get_primary_ray_info(t_rt *rt, t_ray *ray);
-void				get_shadow_ray_info(t_ray *ray,\
-					t_object *closest_object, double closes_object_distance, t_light *light);
+void				get_refracted_ray_infos(t_ray *ray, t_ray *refraction_ray,\
+					t_object *closest_object, double clos_obj_dist);
+
+t_vec				get_normal_intersection_sphere(t_object *closest_object, t_vec hitpoint);
+t_vec				get_normal_intersection_plane(t_ray *ray, t_object *closest_object);
+t_vec				get_normal_intersection_cone(t_object *closest_object, t_vec hitpoint);
+t_vec				get_normal_intersection_cylinder(t_object *closest_object, t_vec hitpoint);
+t_vec				get_normal_at_hitpoint(t_ray *ray, t_object *closest_object, t_vec hitpoint);
+
 void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
 void				rt_info_reflection_ray(t_rt *rt, t_ray *ray, t_object *closest_object, double closest_object_distance);
 
@@ -122,11 +129,13 @@ void				rt_info_reflection_ray(t_rt *rt, t_ray *ray, t_object *closest_object, d
 **	COLOR FUNCTIONS
 */
 
-uint32_t		ft_luminosity(uint32_t color, double scale);
-t_color			combine_colors(t_color reflection_color,
+uint32_t			ft_luminosity(uint32_t color, double scale);
+t_color				combine_colors(t_color reflection_color,
 								t_color refraction_color,
 								t_color scattering_color);
-uint32_t		calculate_scalar(uint32_t color, double delta_intensity);
+t_color				get_reflected_ray_color(t_rt *rt, t_ray *reflection_ray,
+								t_object *object);
+uint32_t			calculate_scalar(uint32_t color, double delta_intensity);
 
 /*
 **	EXTRA FUNCTIONS.
@@ -134,6 +143,7 @@ uint32_t		calculate_scalar(uint32_t color, double delta_intensity);
 
 int      			find_open_p(char *str, int pos);
 int      			find_close_p(char *str, int pos);
+int					check_material(t_object *closest_object, int material);
 
 t_vec       		vec_x_mat(t_vec v, double m[4][4]);
 t_vec       		dir_x_mat(t_vec v, double m[4][4]);

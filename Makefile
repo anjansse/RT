@@ -6,7 +6,7 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/12/17 11:29:02 by anjansse         ###   ########.fr        #
+#    Updated: 2019/12/17 13:58:20 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,16 @@ STORE			=	store_objects.c store_cam.c store_light.c store_sphere.c\
 PARSER			=	parser.c
 
 RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c\
-					intersection_cone.c intersection_cylinder.c
+					intersection_cone.c intersection_cylinder.c get_normal_intersection_objects.c
 
-RAY_INFO		=	ray_info_primary.c
+RAY_INFO		=	refracted_ray_infos.c 
 
 RAY_CAST		=	cast_rays.c
 
-EXTRA_FUNC		=	extra.c matrix.c color.c threads.c make_threads.c
+EXTRA_FUNC		=	extra_functions.c matrix.c color.c threads.c make_threads.c
 
 GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
-					$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
+					$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC) $(RAY_INFO)
 
 SRCS			=	$(addprefix src/, $(GENERAL))
 
