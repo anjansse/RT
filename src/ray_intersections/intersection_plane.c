@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_plane.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:30:26 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 14:30:27 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 15:38:24 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 ** ----------------------------------------------------------------------------
 */
 
-bool			find_intersection_plane(t_ray *ray, t_object *obj, double *object_dist)
+bool			find_intersection_plane(t_ray *ray, t_object *obj,
+										double *object_dist)
 {
 	double	denominator;
 	double	numerator;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 15:37:15 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 16:00:46 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:45:07 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,11 @@
 
 static void			rt_store_background(t_rt *rt)
 {
-	double			rgb;
-	int				y;
-	int				x;
+	int i;
 
-	y = 0;
-	rgb = 85.0;
-	while (y < HEIGHT)
-	{
-		x = y * WIDTH;
-		while (x < (y + 1) * WIDTH)
-		{
-			DEFAULT_BACKGROUND[x] = ft_rgb(rgb, rgb, rgb);
-			++x;
-		}
-		rgb -= 0.10625;
-		++y;
-	}
+	i = -1;
+	while (++i < WIDTH * HEIGHT)
+		DEFAULT_BACKGROUND[i] = 0x000000;
 }
 
 /*
