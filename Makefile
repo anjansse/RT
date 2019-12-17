@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
+#    By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/11/26 12:41:18 by anjansse         ###   ########.fr        #
+#    Updated: 2019/12/16 16:15:55 by amagnan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= 	RT
 
-MAIN			=	RT.c main_loop.c
+MAIN			=	rt.c main_loop.c
 
 STORE			=	store_objects.c store_cam.c store_light.c store_sphere.c\
 					store_plane.c store_cone.c store_cyclinder.c
@@ -22,12 +22,11 @@ PARSER			=	parser.c
 RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c\
 					intersection_cone.c intersection_cylinder.c
 
-RAY_INFO		=	ray_info_light.c ray_info_primary.c ray_info_refraction.c\
-					ray_info_reflection.c
+RAY_INFO		=	ray_info_primary.c
 
-RAY_CAST		=	cast_rays.c dispatch_rays.c
+RAY_CAST		=	cast_rays.c
 
-EXTRA_FUNC		=	extra.c matrix.c color.c threads.c
+EXTRA_FUNC		=	extra.c matrix.c color.c threads.c make_threads.c
 
 GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
 					$(addprefix ray_info/, $(RAY_INFO)) $(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
