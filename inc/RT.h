@@ -46,6 +46,7 @@
 # define DIFFUSE                1
 # define REFLECTION             2
 # define REFRACTION             3
+# define SCALAR                 4
 
 # define MAX_DEPTH  			5
 

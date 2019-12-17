@@ -6,7 +6,7 @@
 /*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 13:08:39 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 13:16:52 by amagnan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	t_object	*new_closest_object;
 	double		new_distance;
 
-	if (!check_material(closest_object, DIFFUSE))
+	if (!check_material(closest_object, DIFFUSE) && !check_material(closest_object, SCALAR))
 		return ((t_color){0x000000, 0});
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
@@ -173,7 +173,7 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 			else if (closest_object->type == NB_CONE)
 				color.color = closest_object->cone->color;
 			if (closest_object->type != NB_PLANE &&
-			facing_ratio >= 0.98500 && facing_ratio <= 1)
+			facing_ratio >= 0.98500 && facing_ratio <= 1 && check_material(closest_object, SCALAR))
 			{
 				color.color = calculate_scalar(ft_luminosity(color.color, color.intensity), facing_ratio);
 				color.intensity = 1;
