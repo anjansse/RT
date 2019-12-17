@@ -84,6 +84,7 @@ typedef struct 			s_ray
 	uint32_t			pix_color;
 	int					pix_nb;
 	int					depth;
+	int					inside_flag;
 }						t_ray;
 
 /*

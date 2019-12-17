@@ -47,7 +47,7 @@
 # define REFLECTION             2
 # define REFRACTION             3
 
-# define MAX_DEPTH  			5
+# define MAX_DEPTH  			15
 
 # define CAM_FROM				rt->cam.pos
 # define CAM_TO					rt->cam.look_at

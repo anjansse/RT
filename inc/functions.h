@@ -79,6 +79,13 @@ void				store_number(char *info, double *number);
 
 void				rt_main_loop(t_rt *rt);
 void				rt_print_scene(t_rt *rt);
+int					rt_thread_1(void *data);
+int					rt_thread_2(void *data);
+int					rt_thread_3(void *data);
+int					rt_thread_4(void *data);
+void				rt_main_thread(t_rt *rt, void *fun1, void *fun2, void *fun3);
+void				rt_main_thread_too(t_rt *rt, void *fun4);
+
 
 /*
 **	INTERSECTION FUNCTIONS.
