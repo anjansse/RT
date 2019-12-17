@@ -29,6 +29,27 @@ typedef struct s_ray	t_ray;
 ** ----------------------------------------------------------------------------
 */
 
+typedef struct			s_store
+{
+	double				vec_store_1[3];
+	double				vec_store_2[3];
+	double				vec_store_3[3];
+	double				num_store_1;
+	double				num_store_2;
+	double				num_store_3;
+}						t_store;
+
+/*
+** ----------------------------------------------------------------------------
+** Camera structure.
+**
+** @element {t_vec} pos - Camera's location stored in a vector (x y z).
+** @element {t_vec} dir - Camera's direction stored in a vector (x y z).
+** @element {t_vec} right - ?? (Arnaud fill plz gracias)
+** @element {t_vec} down - ?? (Arnaud fill plz gracias)
+** ----------------------------------------------------------------------------
+*/
+
 typedef struct			s_camera
 {
 	t_vec				pos;
