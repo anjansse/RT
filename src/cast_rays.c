@@ -6,7 +6,7 @@
 /*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 20:32:17 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 13:08:39 by amagnan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 		&new_distance) && (new_distance > vec_magnitude(vec_sub(\
 		current_light->pos, hitpoint)))))
 		{
-			if (shadow_ray.inside_flag)
+			if (shadow_ray.inside_flag && closest_object->type == NB_CYLINDER)
 				normal = vec_scale(normal, -1);
 			if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)
 				facing_ratio = 0;
@@ -172,12 +172,12 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 				color.color = closest_object->cylinder->color;
 			else if (closest_object->type == NB_CONE)
 				color.color = closest_object->cone->color;
-			// if (closest_object->type != NB_PLANE &&
-			// facing_ratio >= 0.98500 && facing_ratio <= 1)
-			// {
-			// 	color.color = calculate_scalar(color.color, facing_ratio);
-			// 	color.intensity = 1;
-			// }
+			if (closest_object->type != NB_PLANE &&
+			facing_ratio >= 0.98500 && facing_ratio <= 1)
+			{
+				color.color = calculate_scalar(ft_luminosity(color.color, color.intensity), facing_ratio);
+				color.intensity = 1;
+			}
 		}
 		current_light = current_light->next;
 	}
