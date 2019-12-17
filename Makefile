@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+         #
+#    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/12/16 16:15:55 by amagnan          ###   ########.fr        #
+#    Updated: 2019/12/17 11:29:02 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ RAY_CAST		=	cast_rays.c
 EXTRA_FUNC		=	extra.c matrix.c color.c threads.c make_threads.c
 
 GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
-					$(addprefix ray_info/, $(RAY_INFO)) $(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
+					$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC)
 
 SRCS			=	$(addprefix src/, $(GENERAL))
 
