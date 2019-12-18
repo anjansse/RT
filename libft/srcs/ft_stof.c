@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_stof.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 18:54:59 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/17 18:56:03 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static void		handle_precision(float *rez, float *fact, char *s)
@@ -24,7 +36,7 @@ static void		handle_precision(float *rez, float *fact, char *s)
 	}
 }
 
-float			ft_stof(char* s)
+float			ft_stof(char *s)
 {
 	float	rez;
 	float	fact;
@@ -37,5 +49,5 @@ float			ft_stof(char* s)
 		fact = -1;
 	}
 	handle_precision(&rez, &fact, s);
-	return rez * fact;
+	return (rez * fact);
 }

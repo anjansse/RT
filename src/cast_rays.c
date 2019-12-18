@@ -6,15 +6,16 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 14:03:29 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:53:39 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RT.h"
 
-#define INTERSECTION_OBJ (TRUE == find_closest_intersected_object(rt, ray, &closest_object, &closest_object_distance))
+#define LUM		ft_luminosity
 
 /*
+** ----------------------------------------------------------------------------
 **	Looping through all the lights and looking for intersections
 **	Getting the new ray direction and origin
 **	If intersection then it's in shadow so we don't do anything,
@@ -22,6 +23,7 @@
 **	Getting the facing ratio (exposure to light source)
 **	Adding the color contributions. I cap the color value to the
 **	intersected object's original color for now.
+** ----------------------------------------------------------------------------
 */
 
 t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
@@ -31,10 +33,7 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	t_vec		hitpoint;
 	t_vec		normal;
 	t_light		*current_light;
-	double		facing_ratio;
 	t_color		color;
-	t_object	*new_closest_object;
-	double		new_distance;
 
 	if (!check_material(closest_object, DIFFUSE) &&
 	!check_material(closest_object, SCALAR))
@@ -42,46 +41,28 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
 	current_light = rt->light;
-	color.color = 0x000000;
-	color.intensity = 0;
 	shadow_ray.inside_flag = 0;
 	while (current_light)
 	{
-		new_closest_object = NULL;
-		new_distance = INFINITY;
 		shadow_ray.ray_d = vec_normalize(vec_sub(current_light->pos, hitpoint));
 		shadow_ray.ray_o = hitpoint;
-		if (!find_closest_intersected_object(rt, &shadow_ray,\
-		&new_closest_object, &new_distance) ||
-		(find_closest_intersected_object(rt, &shadow_ray, &new_closest_object,\
-		&new_distance) && (new_distance > vec_magnitude(vec_sub(\
-		current_light->pos, hitpoint)))))
-		{
-			if (shadow_ray.inside_flag && closest_object->type == NB_CYLINDER)
-				normal = vec_scale(normal, -1);
-			if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)
-				facing_ratio = 0;
-			color.intensity += current_light->intensity * facing_ratio;
-			if (closest_object->type == NB_SPHERE)
-				color.color = closest_object->sphere->color;
-			else if (closest_object->type == NB_PLANE)
-				color.color = closest_object->plane->color;
-			else if (closest_object->type == NB_CYLINDER)
-				color.color = closest_object->cylinder->color;
-			else if (closest_object->type == NB_CONE)
-				color.color = closest_object->cone->color;
-			if (closest_object->type != NB_PLANE &&
-			facing_ratio >= 0.98500 && facing_ratio <= 1 && check_material(closest_object, SCALAR))
-			{
-				color.color = calculate_scalar(ft_luminosity(color.color, color.intensity), facing_ratio);
-				color.intensity = 1;
-			}
-		}
+		if (check_obstructing_object_before_light(
+			rt, shadow_ray, current_light, hitpoint))
+			color = get_color_object(current_light,
+			closest_object, normal, shadow_ray);
 		current_light = current_light->next;
 	}
 	return (color);
 }
 
+/*
+** ----------------------------------------------------------------------------
+** Function being called by `rt_game_loop` to update everything
+** to the frame buffer. (objects, background, ..)
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
 
 t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 				t_object *closest_object, double closest_object_distance)
@@ -109,33 +90,43 @@ static t_color	get_color(t_rt *rt, t_ray *ray, t_object *closest_object)
 		if (closest_object->type == NB_SPHERE)
 		{
 			if (closest_object->sphere->material == REFRACTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, ray).color), 0.8), 1});
+				return ((t_color){LUM((rt_cast_ray(rt, ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_PLANE)
 		{
 			if (closest_object->plane->material == REFRACTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, ray).color), 0.8), 1});
+				return ((t_color){LUM((rt_cast_ray(rt, ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_CYLINDER)
 		{
 			if (closest_object->cylinder->material == REFRACTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, ray).color), 0.8), 1});
+				return ((t_color){LUM((rt_cast_ray(rt, ray).color), 0.8), 1});
 		}
 		else if (closest_object->type == NB_CONE)
 		{
 			if (closest_object->cone->material == REFRACTION)
-				return ((t_color){ft_luminosity((rt_cast_ray(rt, ray).color), 0.8), 1});
+				return ((t_color){LUM((rt_cast_ray(rt, ray).color), 0.8), 1});
 		}
 	}
 	return ((t_color){0x000000, 0});
 }
+
+/*
+** ----------------------------------------------------------------------------
+** Function being called by `rt_game_loop` to update everything
+** to the frame buffer. (objects, background, ..)
+**
+** @param {t_rt *} rt - Main structure for RT.
+** ----------------------------------------------------------------------------
+*/
 
 t_color			define_and_cast_refracted_ray(t_rt *rt, t_ray *ray,\
 				t_object *closest_object, double clos_obj_dist)
 {
 	t_ray		refraction_ray;
 
-	get_refracted_ray_infos(ray, &refraction_ray, closest_object, clos_obj_dist);
+	get_refracted_ray_infos(ray, &refraction_ray,
+	closest_object, clos_obj_dist);
 	return (get_color(rt, &refraction_ray, closest_object));
 }
 
@@ -162,7 +153,8 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 
 	closest_object_distance = INFINITY;
 	closest_object = NULL;
-	if (INTERSECTION_OBJ)
+	if ((TRUE == find_closest_intersected_object(rt, ray,
+	&closest_object, &closest_object_distance)))
 	{
 		refl = define_and_cast_reflected_ray(rt, ray,\
 					closest_object, closest_object_distance);

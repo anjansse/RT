@@ -123,6 +123,8 @@ t_vec				get_normal_intersection_plane(t_ray *ray, t_object *closest_object);
 t_vec				get_normal_intersection_cone(t_object *closest_object, t_vec hitpoint);
 t_vec				get_normal_intersection_cylinder(t_object *closest_object, t_vec hitpoint);
 t_vec				get_normal_at_hitpoint(t_ray *ray, t_object *closest_object, t_vec hitpoint);
+int					check_obstructing_object_before_light(t_rt *rt,\
+					t_ray shadow_ray, t_light *current_light, t_vec hitpoint);
 
 void				rt_info_refraction_ray(t_rt *rt, t_ray *ray);
 void				rt_info_reflection_ray(t_rt *rt, t_ray *ray, t_object *closest_object, double closest_object_distance);
@@ -138,6 +140,8 @@ t_color				combine_colors(t_color reflection_color,
 t_color				get_reflected_ray_color(t_rt *rt, t_ray *reflection_ray,
 								t_object *object);
 uint32_t			calculate_scalar(uint32_t color, double delta_intensity);
+t_color				get_color_object(t_light *current_light,
+					t_object *closest_object, t_vec normal, t_ray shadow_ray);
 
 /*
 **	EXTRA FUNCTIONS.

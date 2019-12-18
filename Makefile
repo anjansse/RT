@@ -6,11 +6,11 @@
 #    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/12/17 13:58:20 by anjansse         ###   ########.fr        #
+#    Updated: 2019/12/17 19:01:36 by anjansse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= 	RT
+NAME			= 	rtv1
 
 MAIN			=	rt.c main_loop.c
 
@@ -22,11 +22,9 @@ PARSER			=	parser.c
 RAY_INTERSEC	=	intersection_plane.c intersection_sphere.c intersection_dispatch.c\
 					intersection_cone.c intersection_cylinder.c get_normal_intersection_objects.c
 
-RAY_INFO		=	refracted_ray_infos.c 
-
 RAY_CAST		=	cast_rays.c
 
-EXTRA_FUNC		=	extra_functions.c matrix.c color.c threads.c make_threads.c
+EXTRA_FUNC		=	extra_functions.c extra_functions_2.c matrix.c color.c threads.c make_threads.c
 
 GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
 					$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC) $(RAY_INFO)
@@ -106,7 +104,7 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LLIB)
-	@rm -rf RT.dSYM
+	@rm -rf rtv1.dSYM
 	@echo "\t\n\x1b[96mRT \x1b[91mlibrary has been cleaned!\x1b[0m\n"
 
 totfclean: fclean

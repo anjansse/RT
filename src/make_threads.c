@@ -6,11 +6,28 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:08:05 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 14:12:40 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:54:07 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RT.h"
+
+int					check_obstructing_object_before_light(t_rt *rt,\
+				t_ray shadow_ray, t_light *current_light, t_vec hitpoint)
+{
+	t_object	*new_closest_object;
+	double		new_distance;
+
+	new_closest_object = NULL;
+	new_distance = INFINITY;
+	if (!find_closest_intersected_object(rt, &shadow_ray,\
+	&new_closest_object, &new_distance)
+	|| (find_closest_intersected_object(rt, &shadow_ray, &new_closest_object,\
+	&new_distance) && (new_distance >
+	vec_magnitude(vec_sub(current_light->pos, hitpoint)))))
+		return (1);
+	return (0);
+}
 
 void				rt_main_thread_too(t_rt *rt, void *fun4)
 {
