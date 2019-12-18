@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_cone.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:29:56 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:36:48 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:51:22 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void		find_quadratic_equa_coefs_cone(t_ray *ray,
 	t_vec		vec_co;
 
 	cos_squ = pow(cos(obj->cone->half_angle), 2.0);
-	dot_dv = vec_dot_product(RAY_D, obj->cone->axis_vector);
-	vec_co = vec_sub(RAY_O, obj->cone->cone_tips);
+	dot_dv = vec_dot_product(ray->ray_d, obj->cone->axis_vector);
+	vec_co = vec_sub(ray->ray_o, obj->cone->cone_tips);
 	coefs[0] = pow(dot_dv, 2.0) - cos_squ;
 	coefs[1] = 2 * ((dot_dv * vec_dot_product(vec_co, obj->cone->axis_vector)
-	- vec_dot_product(RAY_D, vec_co) * cos_squ));
+	- vec_dot_product(ray->ray_d, vec_co) * cos_squ));
 	coefs[2] = pow(vec_dot_product(vec_co, obj->cone->axis_vector), 2.0)
 	- vec_dot_product(vec_co, vec_co) * cos_squ;
 }

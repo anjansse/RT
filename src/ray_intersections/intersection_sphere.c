@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:30:33 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:37:28 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:12:35 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 void			find_quadratic_equa_coefs_sphere(t_ray *ray, t_object *obj,
 												double *coefs)
 {
-	coefs[0] = vec_dot_product(RAY_D, RAY_D);
-	coefs[1] = 2 * vec_dot_product(RAY_D, vec_sub(RAY_O, SPHERE->center));
-	coefs[2] = vec_dot_product(vec_sub(RAY_O, SPHERE->center),\
-	vec_sub(RAY_O, SPHERE->center)) - SPHERE->radius * SPHERE->radius;
+	coefs[0] = vec_dot_product(ray->ray_d, ray->ray_d);
+	coefs[1] = 2 * vec_dot_product(ray->ray_d,
+	vec_sub(ray->ray_o, obj->sphere->center));
+	coefs[2] = vec_dot_product(vec_sub(ray->ray_o, obj->sphere->center),
+	vec_sub(ray->ray_o, obj->sphere->center)) -
+	obj->sphere->radius * obj->sphere->radius;
 }
 
 bool			find_intersection_sphere(t_ray *ray, t_object *obj,

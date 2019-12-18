@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:08:05 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 19:35:40 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:10:39 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ void				get_primary_ray_info(t_rt *rt, t_ray *ray)
 	pix_camera_x = (2.0 * (pix_screen_x + 0.5) /
 	(double)WIDTH - 1) * image_ratio * SCALE;
 	pix_camera_y = (1.0 - 2.0 * (pix_screen_y + 0.5) / (double)HEIGHT) * SCALE;
-	RAY_O = vec_x_mat(vec_new(0, 0, 0), CAM_MAT);
-	RAY_D = dir_x_mat(vec_new(pix_camera_x, pix_camera_y, -1), CAM_MAT);
-	RAY_D = vec_normalize(RAY_D);
+	ray->ray_o = vec_x_mat(vec_new(0, 0, 0), rt->cam_matrix);
+	ray->ray_d = dir_x_mat(vec_new(pix_camera_x, pix_camera_y, -1),
+	rt->cam_matrix);
+	ray->ray_d = vec_normalize(ray->ray_d);
 	ray->depth = -1;
 	ray->ray_type = PRIMARY_RAY;
-	ray->pix_color = DEFAULT_BACKGROUND[ray->pix_nb];
+	ray->pix_color = rt->win.d_background[ray->pix_nb];
 }
 
 void				rt_render(t_rt *rt)

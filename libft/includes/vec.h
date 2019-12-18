@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:15:05 by anjansse          #+#    #+#             */
-/*   Updated: 2019/11/20 11:00:09 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:16:21 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 /*
 ** Angle to radian macro.
 */
-
-# define ATR(a) (a * (PI / 180))
 
 typedef struct	s_vec
 {

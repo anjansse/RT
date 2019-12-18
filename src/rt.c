@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:26:47 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 19:36:16 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:05:22 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
 {
-	CAM_MAT[0][0] = right.x;
-	CAM_MAT[1][0] = right.y;
-	CAM_MAT[2][0] = right.z;
-	CAM_MAT[3][0] = 0;
-	CAM_MAT[0][1] = up.x;
-	CAM_MAT[1][1] = up.y;
-	CAM_MAT[2][1] = up.z;
-	CAM_MAT[3][1] = 0;
-	CAM_MAT[0][2] = forward.x;
-	CAM_MAT[1][2] = forward.y;
-	CAM_MAT[2][2] = forward.z;
-	CAM_MAT[3][2] = 0;
-	CAM_MAT[0][3] = CAM_FROM.x;
-	CAM_MAT[1][3] = CAM_FROM.y;
-	CAM_MAT[2][3] = CAM_FROM.z;
-	CAM_MAT[3][3] = 1;
+	rt->cam_matrix[0][0] = right.x;
+	rt->cam_matrix[1][0] = right.y;
+	rt->cam_matrix[2][0] = right.z;
+	rt->cam_matrix[3][0] = 0;
+	rt->cam_matrix[0][1] = up.x;
+	rt->cam_matrix[1][1] = up.y;
+	rt->cam_matrix[2][1] = up.z;
+	rt->cam_matrix[3][1] = 0;
+	rt->cam_matrix[0][2] = forward.x;
+	rt->cam_matrix[1][2] = forward.y;
+	rt->cam_matrix[2][2] = forward.z;
+	rt->cam_matrix[3][2] = 0;
+	rt->cam_matrix[0][3] = rt->cam.pos.x;
+	rt->cam_matrix[1][3] = rt->cam.pos.y;
+	rt->cam_matrix[2][3] = rt->cam.pos.z;
+	rt->cam_matrix[3][3] = 1;
 }
 
 static void		init_camera(t_rt *rt)
@@ -38,7 +38,7 @@ static void		init_camera(t_rt *rt)
 	t_vec		right;
 	t_vec		up;
 
-	forward = vec_normalize(vec_sub(CAM_FROM, CAM_TO));
+	forward = vec_normalize(vec_sub(rt->cam.pos, rt->cam.look_at));
 	right = vec_cross_product(vec_new(0.0, 1.0, 0.0), forward);
 	up = vec_cross_product(forward, right);
 	make_cam_matrix(rt, forward, right, up);
@@ -58,11 +58,11 @@ static void		rt_init_window(t_rt *rt)
 {
 	rt->win.win = SDL_CreateWindow("SDL_test", SDL_WINDOWPOS_UNDEFINED,\
 	SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
-	RENDERER = SDL_CreateRenderer(rt->win.win, -1, 0);
-	IMG_POINT = SDL_CreateTexture(rt->win.rend, SDL_PIXELFORMAT_ARGB8888,\
-	SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
-	FRAMEBUFF = (uint32_t *)malloc(sizeof(uint32_t) * HEIGHT * WIDTH);
-	KEYS = SDL_GetKeyboardState(NULL);
+	rt->win.rend = SDL_CreateRenderer(rt->win.win, -1, 0);
+	rt->win.img_pointer = SDL_CreateTexture(rt->win.rend,
+	SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+	rt->win.framebuff = (uint32_t *)malloc(sizeof(uint32_t) * HEIGHT * WIDTH);
+	rt->win.keys = SDL_GetKeyboardState(NULL);
 	init_camera(rt);
 }
 
@@ -76,9 +76,9 @@ static void		rt_init_window(t_rt *rt)
 
 static void		rt_quit(t_rt *rt)
 {
-	SDL_DestroyRenderer(RENDERER);
+	SDL_DestroyRenderer(rt->win.rend);
 	SDL_DestroyWindow(rt->win.win);
-	free(FRAMEBUFF);
+	free(rt->win.framebuff);
 	SDL_Quit();
 }
 

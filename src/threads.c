@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:14:01 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 19:36:26 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:11:22 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int					rt_thread_1(void *data)
 	{
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
+		rt->win.framebuff[i] = ft_luminosity(pixel_color.color,
+		pixel_color.intensity);
 	}
 	return (0);
 }
@@ -43,7 +44,8 @@ int					rt_thread_2(void *data)
 	{
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
+		rt->win.framebuff[i] = ft_luminosity(pixel_color.color,
+		pixel_color.intensity);
 	}
 	return (0);
 }
@@ -61,7 +63,8 @@ int					rt_thread_3(void *data)
 	{
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
+		rt->win.framebuff[i] = ft_luminosity(pixel_color.color,
+		pixel_color.intensity);
 	}
 	return (0);
 }
@@ -79,7 +82,8 @@ int					rt_thread_4(void *data)
 	{
 		get_primary_ray_info(rt, &current_ray);
 		pixel_color = rt_cast_ray(rt, &current_ray);
-		FRAMEBUFF[i] = ft_luminosity(pixel_color.color, pixel_color.intensity);
+		rt->win.framebuff[i] = ft_luminosity(pixel_color.color,
+		pixel_color.intensity);
 	}
 	return (0);
 }

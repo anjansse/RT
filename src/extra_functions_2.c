@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:55:12 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:35:13 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:06:41 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ void				get_refracted_ray_infos(t_ray *ray, t_ray *refraction_ray,\
 
 	refraction_ray->pix_nb = ray->pix_nb;
 	refraction_ray->depth = ++ray->depth;
-	refraction_ray->ray_o = vec_add(RAY_O, vec_scale(RAY_D, clos_obj_dist));
-	vec_i = RAY_D;
+	refraction_ray->ray_o = vec_add(ray->ray_o, vec_scale(ray->ray_d,
+	clos_obj_dist));
+	vec_i = ray->ray_d;
 	vec_n = get_normal_at_hitpoint(ray, closest_object, refraction_ray->ray_o);
 	ndelta = 1 / 1.3;
 	c1 = vec_dot_product(vec_n, vec_i);
@@ -75,7 +76,7 @@ static double		get_hitpoint_scale(t_ray *ray, t_vec *hitpoint,
 {
 	double		scale;
 
-	*hitpoint = vec_add(RAY_O, vec_scale(RAY_D, *object_dist));
+	*hitpoint = vec_add(ray->ray_o, vec_scale(ray->ray_d, *object_dist));
 	scale = (vec_dot_product(*hitpoint, obj->cylinder->direction)
 	- vec_dot_product(obj->cylinder->base, obj->cylinder->direction))
 	/ vec_dot_product(obj->cylinder->direction, obj->cylinder->direction);

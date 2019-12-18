@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:32:13 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:39:14 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:50:23 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vec			get_normal_intersection_plane(t_ray *ray,
 {
 	t_vec		normal;
 
-	if (vec_dot_product(RAY_D, closest_object->plane->normal) > 0)
+	if (vec_dot_product(ray->ray_d, closest_object->plane->normal) > 0)
 		normal = vec_scale(closest_object->plane->normal, -1);
 	else
 		normal = closest_object->plane->normal;

@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:30:26 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:37:20 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:14:13 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ bool			find_intersection_plane(t_ray *ray, t_object *obj,
 	t_vec	p0;
 
 	*object_dist = INFINITY;
-	denominator = vec_dot_product(RAY_D, PLANE->normal);
+	denominator = vec_dot_product(ray->ray_d, obj->plane->normal);
 	if (denominator > EPSILON || denominator < -EPSILON)
 	{
-		vec_set(&p0, PLANE->normal.x * PLANE->dist_to_origin, \
-						PLANE->normal.y * PLANE->dist_to_origin, \
-						PLANE->normal.z * PLANE->dist_to_origin);
-		numerator = vec_dot_product(vec_sub(p0, RAY_O), PLANE->normal);
+		vec_set(&p0, obj->plane->normal.x * obj->plane->dist_to_origin, \
+						obj->plane->normal.y * obj->plane->dist_to_origin, \
+						obj->plane->normal.z * obj->plane->dist_to_origin);
+		numerator = vec_dot_product(vec_sub(p0, ray->ray_o),
+		obj->plane->normal);
 		intersection_dist = numerator / denominator;
 		if (intersection_dist > EPSILON && intersection_dist < *object_dist)
 			*object_dist = intersection_dist;

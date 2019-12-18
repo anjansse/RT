@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RT.h                                               :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:07:32 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:31:52 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:04:37 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
-
-/*
-** ----------------------------------------------------------------------------
-** Main header file that calls all auxilaries structures.
-** ----------------------------------------------------------------------------
-*/
 
 /*
 ** ----------------------------------------------------------------------------
@@ -32,22 +26,13 @@
 ** ----------------------------------------------------------------------------
 */
 
-# define DEFAULT_BACKGROUND		rt->win.d_background
-
-# define VEC(x,y,z) 			((t_vec){x,y,z})
-
 # define TRUE					1
 # define FALSE					0
 
-// # define NB_LIGHT				0
 # define NB_SPHERE				1
 # define NB_PLANE				2
 # define NB_CYLINDER			3
 # define NB_CONE				4
-
-# define RAY_O					ray->ray_o
-# define RAY_D					ray->ray_d
-# define RAY_TYPE				ray->ray_type
 
 # define PRIMARY_RAY			1
 # define SHADOW_RAY				2
@@ -62,54 +47,33 @@
 
 # define MAX_DEPTH  			5
 
-# define CAM_FROM				rt->cam.pos
-# define CAM_TO					rt->cam.look_at
-# define CAM_MAT				rt->cam_matrix
-
-# define LIGHT_FROM				rt->obj->light->pos
-# define LIGHT_TO				rt->obj->light->dir
-# define LIGHT_MAT				rt->obj->light->matrix
-
-# define SPHERE					obj->sphere
-# define PLANE					obj->plane
-# define CYLINDER				obj->cylinder
-# define CONE					obj->cone
-
-# define FRAMEBUFF				rt->win.framebuff
-# define RENDERER				rt->win.rend
-# define KEYS					rt->win.keys
-# define EVENT					rt->win.event
-# define LIVE_MODE              rt->gui_live_mode
-# define IMG_POINT				rt->win.img_pointer
-
 # define ELEM					6
 # define NB_OBJECTS				4
 # define MIN_LINE_SIZE			11
 # define NUMBER					"-. 0123456789"
 
 # define FOV					60
-// # define SCALE					tan(FOV * 0.5 * (M_PI / 180))	
 # define SCALE                  1
 # define WIDTH					1600
 # define HEIGHT					800
 
 # define EPSILON				0.001
 
-#ifndef SYSTEM_H
-# include "system.h"
-#endif
+# ifndef SYSTEM_H
+#  include "system.h"
+# endif
 
-#ifndef OBJECTS_H
-# include "objects.h"
-#endif
+# ifndef OBJECTS_H
+#  include "objects.h"
+# endif
 
-#ifndef FUCNTIONS_H
-# include "functions.h"
-#endif
+# ifndef FUCNTIONS_H
+#  include "functions.h"
+# endif
 
-#include <math.h>
-#include <SDL.h>
-#include <SDL_thread.h>
-#include "../libft/includes/libft.h"
+# include <math.h>
+# include <SDL.h>
+# include <SDL_thread.h>
+# include "../libft/includes/libft.h"
 
 #endif

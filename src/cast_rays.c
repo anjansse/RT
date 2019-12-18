@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 19:34:44 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 20:05:58 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	if (!check_material(closest_object, DIFFUSE) &&
 	!check_material(closest_object, SCALAR))
 		return ((t_color){0x000000, 0});
-	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+	hitpoint = vec_add(ray->ray_o, vec_scale(ray->ray_d,
+	closest_object_distance));
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
 	current_light = rt->light;
 	shadow_ray.inside_flag = 0;
@@ -71,13 +72,14 @@ t_color			define_and_cast_reflected_ray(t_rt *rt, t_ray *ray,\
 	t_vec		hitpoint;
 	t_vec		normal;
 
-	hitpoint = vec_add(RAY_O, vec_scale(RAY_D, closest_object_distance));
+	hitpoint = vec_add(ray->ray_o, vec_scale(ray->ray_d,
+	closest_object_distance));
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
 	ref_ray.depth = ++ray->depth;
 	ref_ray.pix_nb = ray->pix_nb;
 	ref_ray.ray_o = hitpoint;
-	ref_ray.ray_d = vec_sub(RAY_D, vec_scale(normal, 2 *\
-						vec_dot_product(RAY_D, normal)));
+	ref_ray.ray_d = vec_sub(ray->ray_d, vec_scale(normal, 2 *\
+						vec_dot_product(ray->ray_d, normal)));
 	if (ref_ray.depth < MAX_DEPTH)
 		return (get_reflected_ray_color(rt, &ref_ray, closest_object));
 	return ((t_color){0x000000, 0});
@@ -166,5 +168,5 @@ t_color			rt_cast_ray(t_rt *rt, t_ray *ray)
 								scat));
 	}
 	else
-		return ((t_color){DEFAULT_BACKGROUND[ray->pix_nb], 1});
+		return ((t_color){rt->win.d_background[ray->pix_nb], 1});
 }

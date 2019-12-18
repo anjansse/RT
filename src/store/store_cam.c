@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 11:51:06 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:37:40 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:53:06 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void			rt_store_cam(t_rt *rt, char *info)
 		send_error(ft_strjoin(info, " is invalid: Error in camera options \
 -- should be [position(x y z)] | [look_at(xyz)].\n"));
 	store_vector(infos[0], xyz);
-	vec_set(&(CAM_FROM), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(rt->cam.pos), xyz[0], xyz[1], xyz[2]);
 	store_vector(infos[1], xyz);
-	vec_set(&(CAM_TO), xyz[0], xyz[1], xyz[2]);
+	vec_set(&(rt->cam.look_at), xyz[0], xyz[1], xyz[2]);
 	ft_free_db_tab(infos);
 }
