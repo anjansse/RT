@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 15:23:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 14:05:49 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:34:53 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 t_color					get_reflected_ray_color(t_rt *rt,
 						t_ray *reflection_ray, t_object *object)

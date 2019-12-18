@@ -1,20 +1,32 @@
-#ifndef	GAME_H
-# define GAME_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   system.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 19:07:50 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/17 19:32:31 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SYSTEM_H
+# define SYSTEM_H
 
 /*
 ** ----------------------------------------------------------------------------
-** Game header file, contains the object struct and window struct (used for 
+** Game header file, contains the object struct and window struct (used for
 ** storing all the infos of the current opened window and frame buffer).
 ** ----------------------------------------------------------------------------
 */
 
-#include <math.h>
-#include <SDL.h>
-#include "../libft/includes/libft.h"
+# include <math.h>
+# include <SDL.h>
+# include "../libft/includes/libft.h"
 
-#ifndef OBJECTS_H
-# include "objects.h"
-#endif
+# ifndef OBJECTS_H
+#  include "objects.h"
+# endif
 
 /*
 ** ----------------------------------------------------------------------------
@@ -31,11 +43,14 @@
 ** Window structure, contains all infos for opened SDL window.
 **
 ** @element {SDL_Window*} win - Holds all info about the Window itself.
-** @element {SDL_Renderer*} rend - Keeps track the settings related to the rendering.
-** @element {SDL_Texture*} img_pointer - Stores the pixel information of one element.
+** @element {SDL_Renderer*} rend - Keeps track the settings related
+**									to the rendering.
+** @element {SDL_Texture*} img_pointer - Stores the pixel information of
+**									one element.
 ** @element {SDL_Event} event - Keeps track of what event has been enabled.
 ** @element {uint8_t} keys - Contains all the keys's informations.
-** @element {uint32_t*} framebuff - Used to modify each pixels for the current frame.
+** @element {uint32_t*} framebuff - Used to modify each pixels for
+**								the current frame.
 ** ----------------------------------------------------------------------------
 */
 
@@ -56,7 +71,8 @@ typedef struct			s_window
 **
 ** @element {SDL_Thread*} thread - Pointer to the correct thread's id created
 **								   by SDL_CreateThread.
-** @element {void*} data - Any data used by the threads (most likely qa function).
+** @element {void*} data - Any data used by the threads
+** 							(most likely qa function).
 ** ----------------------------------------------------------------------------
 */
 
@@ -76,7 +92,7 @@ typedef struct			s_thread
 ** ----------------------------------------------------------------------------
 */
 
-typedef struct 			s_ray
+typedef struct			s_ray
 {
 	t_vec				ray_o;
 	t_vec				ray_d;
@@ -105,11 +121,11 @@ typedef struct			s_rt
 	t_camera			cam;
 	t_light				*light;
 	t_object			*obj;
-	double				camMatrix[4][4];
+	double				cam_matrix[4][4];
 	int					pix;
 	t_thread			thread[4];
 	char				gui_live_mode;
-	short				LiveModeValue;
+	short				l_mode;
 }						t_rt;
 
 /*

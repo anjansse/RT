@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 11:51:21 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/16 11:55:30 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:37:49 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void		cone_add(t_cone **cone, t_store *storage)
 {

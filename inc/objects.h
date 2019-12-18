@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 19:07:45 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/17 19:28:45 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef OBJECTS_H
 # define OBJECTS_H
 
@@ -7,13 +19,13 @@
 ** ----------------------------------------------------------------------------
 */
 
-#include <math.h>
-#include <SDL.h>
-#include "../libft/includes/libft.h"
+# include <math.h>
+# include <SDL.h>
+# include "../libft/includes/libft.h"
 
-#ifndef SYSTEM_H
-# include "system.h"
-#endif
+# ifndef SYSTEM_H
+#  include "system.h"
+# endif
 
 typedef struct s_rt		t_rt;
 typedef struct s_ray	t_ray;
@@ -67,13 +79,13 @@ typedef struct			s_camera
 ** ----------------------------------------------------------------------------
 */
 
-typedef struct          s_light
+typedef struct			s_light
 {
-    t_vec               pos;
+	t_vec				pos;
 	t_vec				dir;
 	double				intensity;
 	struct s_light		*next;
-}                       t_light;
+}						t_light;
 
 /*
 ** ----------------------------------------------------------------------------
@@ -143,7 +155,8 @@ typedef struct			s_cone
 ** ----------------------------------------------------------------------------
 ** Main object's structure. Contains all elements used for RT.
 **
-** @element {int} type - Contains the type of object that this node contains --> only the pointer of this type will be non-NULL
+** @element {int} type - Contains the type of object that this node contains
+** --> only the pointer of this type will be non-NULL
 ** @element {t_light} light - Pointer to light's structure (see above).
 ** @element {t_sphere} sphere - Pointer to sphere's structure (see above).d
 ** @element {t_object} next - Pointer to the next object in the sphere

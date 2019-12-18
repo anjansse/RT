@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 11:51:33 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/16 11:59:13 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:37:57 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void		cylinder_add(t_cylinder **cylinder, t_store *storage)
 {

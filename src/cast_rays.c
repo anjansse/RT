@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 18:53:39 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:34:44 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 #define LUM		ft_luminosity
 

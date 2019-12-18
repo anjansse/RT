@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:55:12 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 18:42:47 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:35:13 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void			get_object_color(t_color *color, t_object *closest_object)
 {

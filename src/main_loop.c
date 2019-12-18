@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 15:37:15 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 16:55:58 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:35:31 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void			rt_store_background(t_rt *rt)
 {
@@ -68,21 +68,21 @@ static void			handle_cmd(t_rt *rt)
 
 	reload = 0;
 	if (KEYS[SDL_SCANCODE_KP_PLUS] || KEYS[SDL_SCANCODE_KP_MINUS])
-		rt->LiveModeValue += KEYS[SDL_SCANCODE_KP_PLUS] ? 5 : -5;
+		rt->l_mode += KEYS[SDL_SCANCODE_KP_PLUS] ? 5 : -5;
 	else
 	{
 		if (KEYS[SDL_SCANCODE_D] && (reload = 1) == 1)
-			CAM_MAT[0][3] += rt->LiveModeValue;
+			CAM_MAT[0][3] += rt->l_mode;
 		else if (KEYS[SDL_SCANCODE_A] && (reload = 1) == 1)
-			CAM_MAT[0][3] -= rt->LiveModeValue;
+			CAM_MAT[0][3] -= rt->l_mode;
 		else if (KEYS[SDL_SCANCODE_UP] && (reload = 1) == 1)
-			CAM_MAT[1][3] += rt->LiveModeValue;
+			CAM_MAT[1][3] += rt->l_mode;
 		else if (KEYS[SDL_SCANCODE_DOWN] && (reload = 1) == 1)
-			CAM_MAT[1][3] -= rt->LiveModeValue;
+			CAM_MAT[1][3] -= rt->l_mode;
 		else if (KEYS[SDL_SCANCODE_W] && (reload = 1) == 1)
-			CAM_MAT[2][3] += rt->LiveModeValue;
+			CAM_MAT[2][3] += rt->l_mode;
 		else if (KEYS[SDL_SCANCODE_S] && (reload = 1) == 1)
-			CAM_MAT[2][3] -= rt->LiveModeValue;
+			CAM_MAT[2][3] -= rt->l_mode;
 		if (reload == 1)
 		{
 			loading_screen(rt);

@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:08:05 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 18:54:07 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:35:40 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 int					check_obstructing_object_before_light(t_rt *rt,\
 				t_ray shadow_ray, t_light *current_light, t_vec hitpoint)

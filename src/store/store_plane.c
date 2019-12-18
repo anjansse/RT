@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 11:51:56 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/16 11:56:59 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:38:32 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void			plane_add(t_plane **plane, t_store *storage)
 {

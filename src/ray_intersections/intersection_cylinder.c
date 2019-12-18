@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:58:24 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 15:47:47 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:37:00 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static double		get_a(t_ray *ray, t_object *obj)
 {

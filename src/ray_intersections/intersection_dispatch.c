@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:30:18 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 15:37:50 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:37:09 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 /*
 ** ----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ bool		check_intersection_with_specific_object(t_ray *ray,
 	flag_intersect = FALSE;
 	i = -1;
 	while (++i < NB_OBJECTS)
-		if (object->type == g_disp_intersection[i].objType)
+		if (object->type == g_disp_intersection[i].obj_type)
 			flag_intersect = g_disp_intersection[i].function(ray, object,\
 															object_dist);
 	return (flag_intersect);

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RT.c                                               :+:      :+:    :+:   */
+/*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:26:47 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 13:30:38 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 19:36:16 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 void			make_cam_matrix(t_rt *rt, t_vec forward, t_vec right, t_vec up)
 {
@@ -99,7 +99,7 @@ int				main(int ac, char *av[])
 		send_error(ft_strdup(ERROR_USAGE));
 	rt.obj = NULL;
 	rt.light = NULL;
-	rt.LiveModeValue = 5;
+	rt.l_mode = 5;
 	rt_parser(av[1], &rt);
 	rt_init_window(&rt);
 	rt_main_loop(&rt);

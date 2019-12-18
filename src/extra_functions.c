@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:58:29 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 14:10:51 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:35:03 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 int					check_material(t_object *closest_object, int material)
 {

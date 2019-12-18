@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:14:01 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 14:14:13 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:36:26 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 int					rt_thread_1(void *data)
 {

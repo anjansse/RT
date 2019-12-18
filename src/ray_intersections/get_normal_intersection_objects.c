@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:32:13 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 15:44:48 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:39:14 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 t_vec			get_normal_intersection_sphere(t_object *closest_object,
 												t_vec hitpoint)

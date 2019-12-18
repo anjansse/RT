@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RT.h                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 19:07:32 by anjansse          #+#    #+#             */
+/*   Updated: 2019/12/17 19:31:52 by anjansse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RT_H
 # define RT_H
 
@@ -52,7 +64,7 @@
 
 # define CAM_FROM				rt->cam.pos
 # define CAM_TO					rt->cam.look_at
-# define CAM_MAT				rt->camMatrix
+# define CAM_MAT				rt->cam_matrix
 
 # define LIGHT_FROM				rt->obj->light->pos
 # define LIGHT_TO				rt->obj->light->dir

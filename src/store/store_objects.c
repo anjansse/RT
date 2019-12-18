@@ -6,11 +6,11 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 11:51:49 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/16 12:00:42 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:38:13 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 /*
 ** ----------------------------------------------------------------------------
@@ -18,9 +18,9 @@
 ** object type, and fill in the corresponding pointer of the t_object structure.
 **
 ** @param {t_rt *} rt - Main structure for RT.
-** @param {int} objType - flag that indicates the type of object we want
+** @param {int} obj_type - flag that indicates the type of object we want
 **							to create a t_object node for.
-** @param {void*} objNode - pointer to either s t_sphere or a t_light or...
+** @param {void*} obj_node - pointer to either s t_sphere or a t_light or...
 **							based on the object type passed.
 ** ----------------------------------------------------------------------------
 */

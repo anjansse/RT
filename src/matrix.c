@@ -6,11 +6,11 @@
 /*   By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:01:50 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/16 16:03:41 by amagnan          ###   ########.fr       */
+/*   Updated: 2019/12/17 19:35:52 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 t_vec			vec_x_mat(t_vec v, double m[4][4])
 {

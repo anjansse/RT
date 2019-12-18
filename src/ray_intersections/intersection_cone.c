@@ -6,11 +6,11 @@
 /*   By: anjansse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 14:29:56 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 14:29:58 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:36:48 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RT.h"
+#include "rt.h"
 
 static void		find_quadratic_equa_coefs_cone(t_ray *ray,
 				t_object *obj, double *coefs)
