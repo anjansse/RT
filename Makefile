@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+         #
+#    By: amagnan <amagnan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 21:57:22 by anjansse          #+#    #+#              #
-#    Updated: 2019/12/17 13:58:20 by anjansse         ###   ########.fr        #
+#    Updated: 2019/12/17 17:29:03 by amagnan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RAY_INFO		=	refracted_ray_infos.c
 
 RAY_CAST		=	cast_rays.c
 
-EXTRA_FUNC		=	extra_functions.c matrix.c color.c threads.c make_threads.c
+EXTRA_FUNC		=	extra_functions.c matrix.c color.c threads.c make_threads.c free.c
 
 GENERAL			=	$(addprefix store/, $(STORE)) $(addprefix ray_intersections/, $(RAY_INTERSEC))\
 					$(MAIN) $(PARSER) $(RAY_CAST) $(EXTRA_FUNC) $(RAY_INFO)

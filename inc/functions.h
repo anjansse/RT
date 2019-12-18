@@ -149,5 +149,6 @@ int					check_material(t_object *closest_object, int material);
 
 t_vec       		vec_x_mat(t_vec v, double m[4][4]);
 t_vec       		dir_x_mat(t_vec v, double m[4][4]);
+void        		free_objects(t_rt **rt);
 
 #endif
