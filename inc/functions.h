@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:07:39 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 19:24:30 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/22 09:18:11 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ t_color						get_reflected_ray_color(t_rt *rt,
 							t_ray *reflection_ray, t_object *object);
 uint32_t					calculate_scalar(uint32_t color,
 							double delta_intensity);
-t_color						get_color_object(t_light *current_light,
+t_color						get_color_object(t_color color, t_light *current_light,
 				t_object *closest_object, t_vec normal, t_ray shadow_ray);
 
 /*

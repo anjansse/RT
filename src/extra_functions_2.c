@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:55:12 by anjansse          #+#    #+#             */
-/*   Updated: 2019/12/17 20:06:41 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/22 09:17:47 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ static void			get_object_color(t_color *color, t_object *closest_object)
 		color->color = closest_object->cone->color;
 }
 
-t_color				get_color_object(t_light *current_light,
+t_color				get_color_object(t_color color, t_light *current_light,
 					t_object *closest_object, t_vec normal, t_ray shadow_ray)
 {
 	double		facing_ratio;
-	t_color		color;
 
-	color.color = 0x000000;
-	color.intensity = 0;
 	if (shadow_ray.inside_flag && closest_object->type == NB_CYLINDER)
 		normal = vec_scale(normal, -1);
 	if ((facing_ratio = vec_dot_product(normal, shadow_ray.ray_d)) < 0)

@@ -6,7 +6,7 @@
 /*   By: anjansse <anjansse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:35:03 by amagnan           #+#    #+#             */
-/*   Updated: 2019/12/17 20:05:58 by anjansse         ###   ########.fr       */
+/*   Updated: 2019/12/22 09:18:28 by anjansse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ t_color			define_and_cast_shadow_rays(t_rt *rt, t_ray *ray,\
 	normal = get_normal_at_hitpoint(ray, closest_object, hitpoint);
 	current_light = rt->light;
 	shadow_ray.inside_flag = 0;
+	color.color = 0x000000;
+	color.intensity = 0;
 	while (current_light)
 	{
 		shadow_ray.ray_d = vec_normalize(vec_sub(current_light->pos, hitpoint));
 		shadow_ray.ray_o = hitpoint;
 		if (check_obstructing_object_before_light(
 			rt, shadow_ray, current_light, hitpoint))
-			color = get_color_object(current_light,
+			color = get_color_object(color, current_light,
 			closest_object, normal, shadow_ray);
 		current_light = current_light->next;
 	}
