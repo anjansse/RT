@@ -58,6 +58,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo -n 'Compiling RT...'
+	@make -C libft/
 	@cp libft/libft.a .
 	@$(CC) $(CFLAGS) $(SRCS) $(INCLUDES) $(LLIB) -o $(NAME)
 	@echo "\t\t\x1b[92m✓✓\x1b[0m\n"
@@ -73,22 +74,24 @@ totall: lib all
 sdl_install:
 	@brew install sdl2
 	@brew switch sdl2 2.0.10
-	@clear
-	@echo -n 'Adapting SDL to your computer...'
+	@echo 'Adapting SDL to your computer...'
 	@rm -rf SDL2/include/*
 	@rm -rf SDL2/lib/*
-	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
-	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+#	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+	@cp -R /usr/local/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+#	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+	@cp -R /usr/local/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
 	@echo "\t\x1b[92mDone\x1b[0m\n"
 	@sleep 0.3
-	@clear
 
 sdl:
-	@echo -n 'Adapting SDL to your computer...'
+	@echo 'Adapting SDL to your computer...'
 	@rm -rf SDL2/include/*
 	@rm -rf SDL2/lib/*
-	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
-	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+#	@cp -R ~/.brew/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+	@cp -R /usr/local/Cellar/sdl2/2.0.10/include/SDL2/* SDL2/include/
+#	@cp -R ~/.brew/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
+	@cp -R /usr/local/Cellar/sdl2/2.0.10/lib/* SDL2/lib/
 	@echo "\t\x1b[92mDone\x1b[0m\n"
 	@sleep 0.3
 	@clear

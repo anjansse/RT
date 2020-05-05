@@ -1,10 +1,10 @@
 # sdl2 cmake project-config input for ./configure scripts
 
-set(prefix "/nfs/2018/a/anjansse/.brew/Cellar/sdl2/2.0.10") 
+set(prefix "/usr/local/Cellar/sdl2/2.0.10") 
 set(exec_prefix "${prefix}")
 set(libdir "${exec_prefix}/lib")
-set(SDL2_PREFIX "/nfs/2018/a/anjansse/.brew/Cellar/sdl2/2.0.10")
-set(SDL2_EXEC_PREFIX "/nfs/2018/a/anjansse/.brew/Cellar/sdl2/2.0.10")
+set(SDL2_PREFIX "/usr/local/Cellar/sdl2/2.0.10")
+set(SDL2_EXEC_PREFIX "/usr/local/Cellar/sdl2/2.0.10")
 set(SDL2_LIBDIR "${exec_prefix}/lib")
 set(SDL2_INCLUDE_DIRS "${prefix}/include/SDL2")
 set(SDL2_LIBRARIES "-L${SDL2_LIBDIR}  -lSDL2")
