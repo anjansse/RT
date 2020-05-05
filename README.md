@@ -50,8 +50,11 @@ __'W' and 'S' keys__ are used to navigate on the _Z axis_ by n unit. <br />
 __'+' and '-' keys__ are used to change the number of unit used to navigate. <br />
 __'ESC' key__ is used to exit program properly. <br />
 
-## Screenshots
+## Images
 
+![Screenshot](screenshots/sphere_screenshot.png)
+![Screenshot](screenshots/refraction_cone_screenshot.png)
+![Screenshot](screenshots/multi_effect_screenshot.png)
 
 @Antoine: inspiration:
 https://github.com/VolodymyrKuksa/RT#installation
