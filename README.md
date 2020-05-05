@@ -55,8 +55,3 @@ __'ESC' key__ is used to exit program properly. <br />
 ![Screenshot](screenshots/sphere_screenshot.png)
 ![Screenshot](screenshots/refraction_cone_screenshot.png)
 ![Screenshot](screenshots/multi_effect_screenshot.png)
-
-@Antoine: inspiration:
-https://github.com/VolodymyrKuksa/RT#installation
-https://github.com/wwatkins42/RT
-https://github.com/ldehaudt/SimpleRaytracer
